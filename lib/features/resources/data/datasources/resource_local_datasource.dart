@@ -7,12 +7,12 @@
 library;
 
 import 'package:drift/drift.dart';
-import 'package:prepgraph/core/data/database/database.dart' hide Bookmark;
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/features/resources/domain/entities/bookmark.dart';
-import 'package:prepgraph/features/resources/domain/entities/download_status.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_category.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/core/data/database/database.dart' hide Bookmark;
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/features/resources/domain/entities/bookmark.dart';
+import 'package:prepnode/features/resources/domain/entities/download_status.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_category.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
 
 class ResourceLocalDataSource {
   final DatabaseService _databaseService;

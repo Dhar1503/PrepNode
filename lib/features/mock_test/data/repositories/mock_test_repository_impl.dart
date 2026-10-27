@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/mock_test/data/datasources/mock_test_local_datasource.dart';
-import 'package:prepgraph/features/mock_test/data/datasources/mock_test_remote_datasource.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_attempt.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_question.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_result.dart';
-import 'package:prepgraph/features/mock_test/domain/repositories/mock_test_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/mock_test/data/datasources/mock_test_local_datasource.dart';
+import 'package:prepnode/features/mock_test/data/datasources/mock_test_remote_datasource.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_attempt.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_question.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_result.dart';
+import 'package:prepnode/features/mock_test/domain/repositories/mock_test_repository.dart';
 
 /// Production Mock Test Repository Implementation
 /// Uses remote API and local database with offline-first strategy

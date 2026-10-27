@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/widgets/empty_state.dart';
-import 'package:prepgraph/core/widgets/error_state.dart';
-import 'package:prepgraph/core/widgets/skeleton_loader.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/insights/domain/entities/weak_area.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
-import 'package:prepgraph/features/planner/presentation/providers/planner_providers.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/widgets/empty_state.dart';
+import 'package:prepnode/core/widgets/error_state.dart';
+import 'package:prepnode/core/widgets/skeleton_loader.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/insights/domain/entities/weak_area.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/features/planner/presentation/providers/planner_providers.dart';
 
 /// Notifications Screen
 /// There is no push-notification infrastructure in this app (no backend,

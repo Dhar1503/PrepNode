@@ -2,14 +2,14 @@
 /// Handles all API calls for mock test data
 library;
 
-import 'package:prepgraph/core/network/api_client.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
-import 'package:prepgraph/core/network/models/requests/mock_test_requests.dart';
-import 'package:prepgraph/core/network/models/api_response.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_attempt.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_question.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_result.dart';
+import 'package:prepnode/core/network/api_client.dart';
+import 'package:prepnode/core/network/api_constants.dart';
+import 'package:prepnode/core/network/models/requests/mock_test_requests.dart';
+import 'package:prepnode/core/network/models/api_response.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_attempt.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_question.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_result.dart';
 
 class MockTestRemoteDataSource {
   final ApiClient _apiClient;

@@ -2,10 +2,10 @@
 /// Converts API responses to DTOs
 library;
 
-import 'package:prepgraph/core/data/dtos/content_dto.dart';
-import 'package:prepgraph/core/data/dtos/engagement_dto.dart';
-import 'package:prepgraph/core/data/dtos/planning_dto.dart';
-import 'package:prepgraph/core/data/dtos/user_dto.dart';
+import 'package:prepnode/core/data/dtos/content_dto.dart';
+import 'package:prepnode/core/data/dtos/engagement_dto.dart';
+import 'package:prepnode/core/data/dtos/planning_dto.dart';
+import 'package:prepnode/core/data/dtos/user_dto.dart';
 
 class DtoMapper {
   // User DTO Mappers

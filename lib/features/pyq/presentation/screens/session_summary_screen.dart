@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_session.dart';
-import 'package:prepgraph/features/resources/presentation/providers/resource_providers.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/resource_card.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_session.dart';
+import 'package:prepnode/features/resources/presentation/providers/resource_providers.dart';
+import 'package:prepnode/features/resources/presentation/widgets/resource_card.dart';
 
 /// Session Summary Screen (S5.6)
 /// Displays summary after completing a practice session
@@ -171,7 +171,10 @@ class SessionSummaryScreen extends ConsumerWidget {
     required String value,
   }) {
     return Container(
-      padding: const EdgeInsets.all(AppConstants.spaceMd),
+      // spaceSm, not spaceMd: three cards across a phone leave ~120px each,
+      // and 48px of inset forced "Questions" and "Avg/Question" to wrap
+      // mid-word ("Quest / ions").
+      padding: const EdgeInsets.all(AppConstants.spaceSm),
       decoration: BoxDecoration(
         color: AppColors.paper50,
         borderRadius: BorderRadius.circular(AppConstants.radiusMd),
@@ -181,20 +184,30 @@ class SessionSummaryScreen extends ConsumerWidget {
         children: [
           Icon(icon, color: AppColors.ink900, size: 24),
           const SizedBox(height: AppConstants.spaceSm),
-          Text(
-            value,
-            style: GoogleFonts.inter(
-              fontSize: AppConstants.fontSizeBodyLarge,
-              fontWeight: FontWeight.w700,
-              color: AppColors.ink900,
+          // Both lines scale down rather than wrapping: these are short
+          // stat labels where a broken word reads as a rendering fault.
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              maxLines: 1,
+              style: GoogleFonts.inter(
+                fontSize: AppConstants.fontSizeBodyLarge,
+                fontWeight: FontWeight.w700,
+                color: AppColors.ink900,
+              ),
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            label,
-            style: GoogleFonts.inter(
-              fontSize: AppConstants.fontSizeBodySmall,
-              color: AppColors.graphite700,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              maxLines: 1,
+              style: GoogleFonts.inter(
+                fontSize: AppConstants.fontSizeBodySmall,
+                color: AppColors.graphite700,
+              ),
             ),
           ),
         ],
@@ -309,7 +322,7 @@ class SessionSummaryScreen extends ConsumerWidget {
                     fontWeight: FontWeight.w600,
                     color: AppColors.ink900,
                   ),
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

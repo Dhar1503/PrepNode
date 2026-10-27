@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/network/providers/network_providers.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/resources/data/datasources/resource_local_datasource.dart';
-import 'package:prepgraph/features/resources/data/datasources/resource_remote_datasource.dart';
-import 'package:prepgraph/features/resources/data/repositories/resource_repository_impl.dart';
-import 'package:prepgraph/features/resources/domain/entities/bookmark.dart';
-import 'package:prepgraph/features/resources/domain/entities/download_status.dart';
-import 'package:prepgraph/features/resources/domain/entities/recommended_resource.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_category.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_collection.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
-import 'package:prepgraph/features/resources/domain/repositories/resource_repository.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/network/providers/network_providers.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/resources/data/datasources/resource_local_datasource.dart';
+import 'package:prepnode/features/resources/data/datasources/resource_remote_datasource.dart';
+import 'package:prepnode/features/resources/data/repositories/resource_repository_impl.dart';
+import 'package:prepnode/features/resources/domain/entities/bookmark.dart';
+import 'package:prepnode/features/resources/domain/entities/download_status.dart';
+import 'package:prepnode/features/resources/domain/entities/recommended_resource.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_category.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_collection.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/features/resources/domain/repositories/resource_repository.dart';
 
 // Remote Data Source Provider (resource catalog content) — Phase 1A: now a
 // real Dio-based client, matching every other feature's remote datasource.

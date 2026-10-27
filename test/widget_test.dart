@@ -9,17 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:prepgraph/main.dart';
+import 'package:prepnode/main.dart';
 
 void main() {
   testWidgets('App launches successfully', (WidgetTester tester) async {
-    // Build our app and trigger a frame. PrepGraphApp is a ConsumerWidget —
+    // Build our app and trigger a frame. PrepNodeApp is a ConsumerWidget —
     // it requires a ProviderScope ancestor (exactly as main() provides one
     // at real app startup) or every ref.watch() throws "No ProviderScope
     // found" before a single frame renders. The test never had one; this
     // was a pre-existing failure unrelated to Phase 1B's schema/seed work,
     // caught by actually running the test rather than assuming it worked.
-    await tester.pumpWidget(const ProviderScope(child: PrepGraphApp()));
+    await tester.pumpWidget(const ProviderScope(child: PrepNodeApp()));
     
     // Pump and settle with timeout to handle any async operations
     await tester.pumpAndSettle(const Duration(seconds: 5));

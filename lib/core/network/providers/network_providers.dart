@@ -3,13 +3,13 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/network/api_client.dart';
-import 'package:prepgraph/core/network/secure_storage_service.dart';
-import 'package:prepgraph/core/network/retry_interceptor.dart';
-import 'package:prepgraph/features/cutoff/data/datasources/cutoff_remote_datasource.dart';
-import 'package:prepgraph/features/planner/data/datasources/planner_remote_datasource.dart';
-import 'package:prepgraph/features/pyq/data/datasources/pyq_remote_datasource.dart';
-import 'package:prepgraph/features/mock_test/data/datasources/mock_test_remote_datasource.dart';
+import 'package:prepnode/core/network/api_client.dart';
+import 'package:prepnode/core/network/secure_storage_service.dart';
+import 'package:prepnode/core/network/retry_interceptor.dart';
+import 'package:prepnode/features/cutoff/data/datasources/cutoff_remote_datasource.dart';
+import 'package:prepnode/features/planner/data/datasources/planner_remote_datasource.dart';
+import 'package:prepnode/features/pyq/data/datasources/pyq_remote_datasource.dart';
+import 'package:prepnode/features/mock_test/data/datasources/mock_test_remote_datasource.dart';
 
 /// Secure Storage Service Provider
 final secureStorageServiceProvider = Provider<SecureStorageService>((ref) {

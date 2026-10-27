@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
 
 /// Represents a resource recommended to a user
 class RecommendedResource extends Equatable {

@@ -1,12 +1,12 @@
 import 'package:flutter/animation.dart';
 
-/// PrepGraph Application Constants
+/// PrepNode Application Constants
 /// Centralized constants for the application
 class AppConstants {
   AppConstants._();
 
   // App Information
-  static const String appName = 'PrepGraph';
+  static const String appName = 'PrepNode';
   static const String login = '/auth/login';
   static const String register = '/auth/register';
   static const String googleAuth = '/auth/google';

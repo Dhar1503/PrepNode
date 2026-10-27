@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/auth/domain/entities/onboarding_page.dart';
-import 'package:prepgraph/features/auth/presentation/widgets/onboarding_page.dart';
-import 'package:prepgraph/features/auth/presentation/widgets/onboarding_page_indicator.dart';
-import 'package:prepgraph/features/auth/presentation/widgets/onboarding_skip_button.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/auth/domain/entities/onboarding_page.dart';
+import 'package:prepnode/features/auth/presentation/widgets/onboarding_page.dart';
+import 'package:prepnode/features/auth/presentation/widgets/onboarding_page_indicator.dart';
+import 'package:prepnode/features/auth/presentation/widgets/onboarding_skip_button.dart';
 
 /// Onboarding Carousel Screen (S0.2)
-/// 4-page carousel introducing PrepGraph features
+/// 4-page carousel introducing PrepNode features
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -23,7 +23,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardingPage> _pages = const [
     OnboardingPage(
-      headline: 'Welcome to PrepGraph.',
+      headline: 'Welcome to PrepNode.',
       supportingText:
           'A companion for your exam preparation — built around your syllabus, your pace, and your goals.',
       illustrationType: OnboardingIllustrationType.welcome,

@@ -7,13 +7,13 @@
 // database is exercised.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/pyq/data/datasources/pyq_local_datasource.dart';
-import 'package:prepgraph/features/pyq/data/datasources/pyq_remote_datasource.dart';
-import 'package:prepgraph/features/pyq/data/repositories/pyq_repository_impl.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_question.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_session.dart';
-import 'package:prepgraph/features/pyq/domain/repositories/pyq_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/pyq/data/datasources/pyq_local_datasource.dart';
+import 'package:prepnode/features/pyq/data/datasources/pyq_remote_datasource.dart';
+import 'package:prepnode/features/pyq/data/repositories/pyq_repository_impl.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_question.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_session.dart';
+import 'package:prepnode/features/pyq/domain/repositories/pyq_repository.dart';
 
 class MockPyqLocalDataSource extends Mock implements PyqLocalDataSource {}
 

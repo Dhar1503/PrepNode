@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
 
 /// Task Card Widget
 /// Reusable card for displaying planner tasks with expandable reasoning

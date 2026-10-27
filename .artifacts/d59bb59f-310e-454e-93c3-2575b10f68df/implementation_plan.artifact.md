@@ -1,6 +1,6 @@
 # Roadmap to a Compilable and Runnable App
 
-The PrepGraph project currently has **431 analyzer errors**. These errors prevent the app from compiling and running. This plan outlines the systematic approach to resolving these errors and achieving a stable, runnable state.
+The PrepNode project currently has **431 analyzer errors**. These errors prevent the app from compiling and running. This plan outlines the systematic approach to resolving these errors and achieving a stable, runnable state.
 
 ## Core Strategy
 

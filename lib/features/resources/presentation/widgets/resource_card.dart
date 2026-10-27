@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
 
 /// Resource Card Widget
 /// Displays a study resource with thumbnail, title, type, and metadata
@@ -63,20 +63,26 @@ class ResourceCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppConstants.spaceXs),
                   
-                  // Type and metadata
-                  Row(
+                  // Type and metadata. A Wrap, not a Row of Flexibles: the
+                  // Flexibles were squeezing the chips to "Vi…" and "Int…".
+                  // A chip whose label is clipped tells the reader nothing,
+                  // so these now keep their intrinsic width and drop to a
+                  // second line if the card is too narrow.
+                  Wrap(
+                    spacing: AppConstants.spaceXs,
+                    runSpacing: AppConstants.spaceXs,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Flexible(child: _buildTypeChip()),
-                      if (resource.difficulty.isNotEmpty) ...[
-                        const SizedBox(width: AppConstants.spaceXs),
-                        Flexible(child: _buildDifficultyChip()),
-                      ],
-                      const Spacer(),
-                      _buildRating(),
+                      _buildTypeChip(),
+                      if (resource.difficulty.isNotEmpty) _buildDifficultyChip(),
+                      // Nothing has been rated in this build, so every card
+                      // was showing a meaningless "0.0" next to a full star.
+                      // An absent rating is more honest than a zero one.
+                      if (resource.rating > 0) _buildRating(),
                     ],
                   ),
                   const SizedBox(height: AppConstants.spaceXs),
-                  
+
                   // Author and views
                   Row(
                     children: [
@@ -93,24 +99,32 @@ class ResourceCard extends StatelessWidget {
                             fontSize: AppConstants.fontSizeBodySmall,
                             color: AppColors.graphite700,
                           ),
-                          maxLines: 1,
+                          // Two lines: channel names like "TNPSC prep
+                          // channel (Tamil)" do not fit one line on a phone
+                          // and were arriving as "TNPSC prep channel (T…".
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SizedBox(width: AppConstants.spaceSm),
-                      Icon(
-                        Icons.visibility_outlined,
-                        size: 14,
-                        color: AppColors.graphite700,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        _formatViewCount(resource.viewCount),
-                        style: GoogleFonts.inter(
-                          fontSize: AppConstants.fontSizeBodySmall,
+                      // Dropping the always-zero view count is also what
+                      // gives the author line room to render in full —
+                      // "TNPSC prep chan…" was being squeezed by a "0".
+                      if (resource.viewCount > 0) ...[
+                        const SizedBox(width: AppConstants.spaceSm),
+                        Icon(
+                          Icons.visibility_outlined,
+                          size: 14,
                           color: AppColors.graphite700,
                         ),
-                      ),
+                        const SizedBox(width: 4),
+                        Text(
+                          _formatViewCount(resource.viewCount),
+                          style: GoogleFonts.inter(
+                            fontSize: AppConstants.fontSizeBodySmall,
+                            color: AppColors.graphite700,
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ],

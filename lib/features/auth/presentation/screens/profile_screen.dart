@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/core/widgets/error_state.dart';
-import 'package:prepgraph/core/widgets/skeleton_loader.dart';
-import 'package:prepgraph/features/auth/domain/entities/exam.dart';
-import 'package:prepgraph/features/auth/domain/entities/learner_profile.dart';
-import 'package:prepgraph/features/auth/domain/entities/user.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/core/widgets/error_state.dart';
+import 'package:prepnode/core/widgets/skeleton_loader.dart';
+import 'package:prepnode/features/auth/domain/entities/exam.dart';
+import 'package:prepnode/features/auth/domain/entities/learner_profile.dart';
+import 'package:prepnode/features/auth/domain/entities/user.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/progression/presentation/widgets/profile_activity.dart';
 
 /// Profile Screen (S10.1/S10.2)
 /// Identity display + inline editing + logout, built on the existing
@@ -241,12 +242,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.paper50,
         elevation: 0,
-        title: Text(
-          'Profile',
-          style: GoogleFonts.fraunces(
-            fontSize: AppConstants.fontSizeHeadlineSmall,
-            fontWeight: FontWeight.w500,
-            color: AppColors.ink900,
+        // scaleDown: this bar carries several action icons, so the title
+        // must shrink rather than ellipsize at a large font scale.
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Profile',
+            style: GoogleFonts.fraunces(
+              fontSize: AppConstants.fontSizeHeadlineSmall,
+              fontWeight: FontWeight.w500,
+              color: AppColors.ink900,
+            ),
           ),
         ),
         actions: [
@@ -285,6 +292,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildHeaderCard(user),
+          const SizedBox(height: AppConstants.spaceMd),
+          // Record before settings: what the user has actually done is more
+          // interesting than the fields they filled in at signup.
+          const ProfileStatsRow(),
+          const SizedBox(height: AppConstants.spaceMd),
+          const ProfileActivityGrid(),
           const SizedBox(height: AppConstants.spaceLg),
           if (_errorMessage != null) ...[
             _buildErrorBanner(),
@@ -391,16 +404,50 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 4),
+          // The exam goal, not just the email. What an aspirant is working
+          // toward belongs directly under their name — the address is
+          // account admin, and it already appears in the details list below.
+          Text(
+            _examGoalLabel(user),
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              fontSize: AppConstants.fontSizeBodyMedium,
+              fontWeight: FontWeight.w500,
+              color: AppColors.sage500,
+            ),
+          ),
+          const SizedBox(height: 2),
           Text(
             user.email,
             style: GoogleFonts.inter(
-              fontSize: AppConstants.fontSizeBodyMedium,
+              fontSize: AppConstants.fontSizeBodySmall,
               color: AppColors.graphite700,
             ),
           ),
         ],
       ),
     );
+  }
+
+  /// Exam plus target month when both are known. Falls back gracefully so
+  /// a half-finished profile never renders "null" or an empty line.
+  String _examGoalLabel(User user) {
+    final exam = switch (user.examId) {
+      'tnpsc-group2' => 'TNPSC Group 2 / 2A',
+      'tnpsc-group4' => 'TNPSC Group 4',
+      'tnpsc-group1' => 'TNPSC Group 1',
+      _ => null,
+    };
+    if (exam == null) return 'Set your exam goal';
+
+    final target = user.targetDate;
+    if (target == null) return exam;
+
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    ];
+    return '$exam · ${months[target.month - 1]} ${target.year}';
   }
 
   Widget _buildInfoList(User user) {

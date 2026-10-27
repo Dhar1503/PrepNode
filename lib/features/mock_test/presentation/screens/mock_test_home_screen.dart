@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test.dart';
-import 'package:prepgraph/features/mock_test/presentation/providers/mock_test_providers.dart';
-import 'package:prepgraph/features/mock_test/presentation/widgets/test_type_card.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test.dart';
+import 'package:prepnode/features/mock_test/presentation/providers/mock_test_providers.dart';
+import 'package:prepnode/features/mock_test/presentation/widgets/test_type_card.dart';
 
 /// Mock Test Home Screen (S6.1)
 /// Test type selection with topic/subject/full mock options
@@ -110,17 +110,25 @@ class _MockTestHomeScreenState extends ConsumerState<MockTestHomeScreen> {
   }
 
   Widget _buildTestTypes() {
-    return Row(
+    // A Wrap, not four equal Expanded slots and not a horizontal scroller.
+    // Equal slots gave each label ~78dp, which squeezed "Sectional" and
+    // "Full Mock" through FittedBox until they were barely legible; a
+    // scroller then pushed "Sectional" half off the screen edge, which
+    // reads as truncation even though the text is intact. Wrapping keeps
+    // every chip at its natural width and fully on screen, flowing onto a
+    // second line when four do not fit across.
+    return Wrap(
+      spacing: AppConstants.spaceSm,
+      runSpacing: AppConstants.spaceSm,
       children: MockTestType.values.map((type) {
         final isSelected = _selectedType == type;
-        return Expanded(
-          child: GestureDetector(
-            onTap: () => _handleTypeSelect(type),
-            child: Container(
-              margin: EdgeInsets.only(
-                right: type != MockTestType.values.last ? AppConstants.spaceSm : 0,
+        return GestureDetector(
+          onTap: () => _handleTypeSelect(type),
+          child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: AppConstants.spaceSm,
+                horizontal: AppConstants.spaceMd,
               ),
-              padding: const EdgeInsets.symmetric(vertical: AppConstants.spaceMd),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.ink900 : AppColors.paper50,
                 borderRadius: BorderRadius.circular(AppConstants.radiusMd),
@@ -128,20 +136,15 @@ class _MockTestHomeScreenState extends ConsumerState<MockTestHomeScreen> {
                   color: isSelected ? AppColors.ink900 : AppColors.lightOutline,
                 ),
               ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  _getTypeLabel(type),
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  style: GoogleFonts.inter(
-                    fontSize: AppConstants.fontSizeBodyMedium,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                    color: isSelected ? AppColors.lightOnPrimary : AppColors.ink900,
-                  ),
+              child: Text(
+                _getTypeLabel(type),
+                maxLines: 1,
+                style: GoogleFonts.inter(
+                  fontSize: AppConstants.fontSizeBodyMedium,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                  color: isSelected ? AppColors.lightOnPrimary : AppColors.ink900,
                 ),
               ),
-            ),
           ),
         );
       }).toList(),

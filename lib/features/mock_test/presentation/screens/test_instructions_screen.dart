@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test.dart';
-import 'package:prepgraph/features/mock_test/presentation/providers/mock_test_providers.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test.dart';
+import 'package:prepnode/features/mock_test/presentation/providers/mock_test_providers.dart';
 
 /// Test Instructions Screen (S6.2)
 /// Displays test rules and instructions before starting
@@ -171,7 +171,10 @@ class TestInstructionsScreen extends ConsumerWidget {
           _buildInstruction('Mark questions for review if unsure'),
           _buildInstruction('Timer will auto-submit when time expires'),
           _buildInstruction('No negative marking for unanswered questions'),
-          _buildInstruction('Ensure stable internet connection'),
+          // The app is offline-first — the whole test runs from the local
+          // database. Telling candidates they need a connection was both
+          // untrue and alarming right before a timed test.
+          _buildInstruction('Works fully offline — no connection required'),
         ],
       ),
     );

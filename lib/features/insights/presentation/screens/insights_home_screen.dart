@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/study_habits.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/insights/presentation/widgets/score_hero_card.dart';
-import 'package:prepgraph/features/insights/presentation/widgets/strength_map_preview.dart';
-import 'package:prepgraph/features/insights/presentation/widgets/headline_stats_row.dart';
-import 'package:prepgraph/features/insights/presentation/widgets/subject_performance_card.dart';
-import 'package:prepgraph/features/cutoff/presentation/providers/cutoff_providers.dart';
-import 'package:prepgraph/features/cutoff/presentation/widgets/readiness_meter.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/readiness_prediction.dart';
-import 'package:prepgraph/features/resources/presentation/providers/resource_providers.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/resource_card.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/study_habits.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/insights/presentation/widgets/score_hero_card.dart';
+import 'package:prepnode/features/insights/presentation/widgets/strength_map_preview.dart';
+import 'package:prepnode/features/insights/presentation/widgets/headline_stats_row.dart';
+import 'package:prepnode/features/insights/presentation/widgets/subject_performance_card.dart';
+import 'package:prepnode/features/cutoff/presentation/providers/cutoff_providers.dart';
+import 'package:prepnode/features/cutoff/presentation/widgets/readiness_meter.dart';
+import 'package:prepnode/features/cutoff/domain/entities/readiness_prediction.dart';
+import 'package:prepnode/features/resources/presentation/providers/resource_providers.dart';
+import 'package:prepnode/features/resources/presentation/widgets/resource_card.dart';
+import 'package:prepnode/core/widgets/empty_state.dart';
 
 /// Insights Home Screen (S8.1)
 /// Personal-only reflection on progress — never comparative
@@ -62,7 +63,7 @@ class _InsightsHomeScreenState extends ConsumerState<InsightsHomeScreen> {
           children: [
             const SizedBox(height: AppConstants.spaceLg),
             
-            // PrepGraph Score Hero
+            // PrepNode Score Hero
             learnerProgressAsync.when(
               data: (progress) => _buildScoreHero(progress),
               loading: () => _buildScoreSkeleton(),
@@ -118,9 +119,34 @@ class _InsightsHomeScreenState extends ConsumerState<InsightsHomeScreen> {
   }
 
   Widget _buildScoreHero(LearnerProgress progress) {
+    final components = progress.scoreComponents;
+    // A card reading 0.0 with five empty bars looks like a failing grade
+    // rather than an untouched account. Until there is a single data point,
+    // say so instead.
+    final hasNoData = progress.prepNodeScore <= 0 &&
+        components.topicCompletion <= 0 &&
+        components.pyqPerformance <= 0 &&
+        components.mockAccuracy <= 0 &&
+        components.consistency <= 0 &&
+        components.revisionDiscipline <= 0;
+
+    if (hasNoData) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppConstants.spaceLg),
+        child: EmptyState(
+          icon: Icons.insights_outlined,
+          title: 'No score yet',
+          subtitle: 'Answer a few PYQs or finish a mock test and your PrepNode '
+              'Score will appear here, broken down by what drove it.',
+          actionLabel: 'Practice PYQs',
+          onAction: () => context.go('/practice'),
+        ),
+      );
+    }
+
     return ScoreHeroCard(
-      score: progress.prepGraphScore,
-      scoreComponents: progress.scoreComponents,
+      score: progress.prepNodeScore,
+      scoreComponents: components,
       onTap: () {
         // Navigate to Score Detail screen
         context.push('/insights/score-detail');
@@ -398,7 +424,7 @@ class _InsightsHomeScreenState extends ConsumerState<InsightsHomeScreen> {
                     fontWeight: FontWeight.w600,
                     color: AppColors.ink900,
                   ),
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

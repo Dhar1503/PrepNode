@@ -3,10 +3,10 @@
 library;
 
 import 'package:drift/drift.dart';
-import 'package:prepgraph/core/data/database/database.dart';
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
-import 'package:prepgraph/features/planner/domain/entities/study_session.dart';
+import 'package:prepnode/core/data/database/database.dart';
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/features/planner/domain/entities/study_session.dart';
 
 class PlannerLocalDataSource {
   final DatabaseService _databaseService;

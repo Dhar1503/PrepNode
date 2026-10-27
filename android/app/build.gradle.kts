@@ -17,7 +17,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "in.prepgraph.app"
+    namespace = "in.prepnode.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -29,7 +29,7 @@ android {
     defaultConfig {
         // Play permanently rejects com.example.* package names, and the
         // applicationId can never be changed after publication.
-        applicationId = "in.prepgraph.app"
+        applicationId = "in.prepnode.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

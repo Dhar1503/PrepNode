@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/ai_recommendation.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/ai_recommendation.dart';
 
 /// AI Recommendation Card Widget
 /// Displays an AI-generated recommendation with action button

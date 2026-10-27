@@ -1,16 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/cutoff/presentation/providers/cutoff_providers.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
-import 'package:prepgraph/features/planner/presentation/providers/planner_providers.dart';
-import 'package:prepgraph/features/pyq/presentation/providers/pyq_providers.dart';
-import 'package:prepgraph/features/strategy/data/repositories/strategy_repository_impl.dart';
-import 'package:prepgraph/features/strategy/domain/entities/roadmap.dart';
-import 'package:prepgraph/features/strategy/domain/entities/strategy_recommendation.dart';
-import 'package:prepgraph/features/strategy/domain/entities/strategy_summary.dart';
-import 'package:prepgraph/features/strategy/domain/entities/study_capacity.dart';
-import 'package:prepgraph/features/strategy/domain/repositories/strategy_repository.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/cutoff/presentation/providers/cutoff_providers.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
+import 'package:prepnode/features/planner/presentation/providers/planner_providers.dart';
+import 'package:prepnode/features/pyq/presentation/providers/pyq_providers.dart';
+import 'package:prepnode/features/strategy/data/repositories/strategy_repository_impl.dart';
+import 'package:prepnode/features/strategy/domain/entities/roadmap.dart';
+import 'package:prepnode/features/strategy/domain/entities/strategy_recommendation.dart';
+import 'package:prepnode/features/strategy/domain/entities/strategy_summary.dart';
+import 'package:prepnode/features/strategy/domain/entities/study_capacity.dart';
+import 'package:prepnode/features/strategy/domain/repositories/strategy_repository.dart';
 
 /// Composes existing repositories — no new datasource, no new database
 /// table. Same pattern as DashboardRepositoryImpl / CutoffRepositoryImpl.

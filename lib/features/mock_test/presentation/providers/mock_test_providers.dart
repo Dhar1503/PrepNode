@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/network/providers/network_providers.dart';
-import 'package:prepgraph/features/mock_test/data/repositories/mock_test_repository_impl.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_attempt.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_question.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_result.dart';
-import 'package:prepgraph/features/mock_test/domain/repositories/mock_test_repository.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/network/providers/network_providers.dart';
+import 'package:prepnode/features/mock_test/data/repositories/mock_test_repository_impl.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_attempt.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_question.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_result.dart';
+import 'package:prepnode/features/mock_test/domain/repositories/mock_test_repository.dart';
 
 /// Mock Test Repository Provider
 final mockTestRepositoryProvider = Provider<MockTestRepository>((ref) {

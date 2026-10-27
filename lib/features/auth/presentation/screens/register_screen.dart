@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/core/widgets/app_text_field.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/auth/presentation/widgets/logo_mark.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/core/widgets/app_text_field.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/auth/presentation/widgets/logo_mark.dart';
 
 /// Register Screen (S0.4)
 /// Create a new account
@@ -50,9 +50,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   }
 
   Future<void> _handleRegister() async {
+    // AppButton already nulls out onPressed while loading, but a second tap
+    // can still land in the frame between the tap and the state update.
+    if (ref.read(authProvider).isLoading) return;
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
+
+    // Dismiss the keyboard so the result (snackbar or route change) is not
+    // competing with it for the bottom of the screen.
+    FocusScope.of(context).unfocus();
 
     await ref.read(authProvider.notifier).register(
           name: _nameController.text.trim(),
@@ -76,36 +84,81 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.paper50,
+      // Default (true) so the Column below is laid out inside the space the
+      // keyboard leaves behind, which is what keeps the pinned footer above
+      // the keyboard instead of under it.
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(AppConstants.spaceLg),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: AppConstants.spaceXl),
-                _buildLogo(),
-                const SizedBox(height: AppConstants.spaceLg),
-                _buildHeadline(),
-                const SizedBox(height: AppConstants.spaceXl),
-                _buildNameField(),
-                const SizedBox(height: AppConstants.spaceMd),
-                _buildEmailField(),
-                const SizedBox(height: AppConstants.spaceMd),
-                _buildPasswordField(),
-                const SizedBox(height: AppConstants.spaceMd),
-                _buildConfirmPasswordField(),
-                const SizedBox(height: AppConstants.spaceLg),
-                _buildRegisterButton(),
-                // "Continue with Google" removed — see login_screen.dart for
-                // why (no OAuth package, so it always dead-ends).
-                const SizedBox(height: AppConstants.spaceXl),
-                _buildLoginLink(),
-              ],
+        child: Column(
+          children: [
+            // Only the form scrolls. The action footer is a sibling, not the
+            // last child of the scroll view, so the Create Account button can
+            // never scroll out of reach or end up behind the keyboard — the
+            // scrollable simply gets shorter.
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(
+                  AppConstants.spaceLg,
+                  AppConstants.spaceLg,
+                  AppConstants.spaceLg,
+                  AppConstants.spaceMd,
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: AppConstants.spaceLg),
+                      _buildLogo(),
+                      const SizedBox(height: AppConstants.spaceLg),
+                      _buildHeadline(),
+                      const SizedBox(height: AppConstants.spaceXl),
+                      // Uniform spaceMd between every field, so the four
+                      // inputs read as one evenly spaced group.
+                      _buildNameField(),
+                      const SizedBox(height: AppConstants.spaceMd),
+                      _buildEmailField(),
+                      const SizedBox(height: AppConstants.spaceMd),
+                      _buildPasswordField(),
+                      const SizedBox(height: AppConstants.spaceMd),
+                      _buildConfirmPasswordField(),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
+            _buildActionFooter(),
+          ],
         ),
+      ),
+    );
+  }
+
+  /// Pinned footer: the primary action plus the link back to login.
+  /// "Continue with Google" was removed — see login_screen.dart for why
+  /// (no OAuth package, so it always dead-ends).
+  Widget _buildActionFooter() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(
+        AppConstants.spaceLg,
+        AppConstants.spaceMd,
+        AppConstants.spaceLg,
+        AppConstants.spaceMd,
+      ),
+      decoration: const BoxDecoration(
+        color: AppColors.paper50,
+        border: Border(
+          top: BorderSide(color: AppColors.lightOutlineVariant, width: 1),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildRegisterButton(),
+          const SizedBox(height: AppConstants.spaceSm),
+          _buildLoginLink(),
+        ],
       ),
     );
   }
@@ -215,28 +268,36 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     );
   }
 
+  /// Centred "Already have an account? Log in" prompt.
+  ///
+  /// Laid out as a [Wrap], not the previous `Text.rich` + `WidgetSpan`. A
+  /// WidgetSpan embeds the 48px-tall AppTextButton into a line of body
+  /// text, so the line box could not contain it and "Log in" was pushed
+  /// onto its own line, indented to wherever the span happened to break.
+  /// A Wrap centres both parts on one line, and on a narrow screen (or at
+  /// the 1.3x font scale this device runs) it drops "Log in" to a second
+  /// *centred* line instead of overflowing. Mirrors the same fix on the
+  /// login screen's register prompt.
   Widget _buildLoginLink() {
-    return Center(
-      child: Text.rich(
-        TextSpan(
-          text: 'Already have an account? ',
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Text(
+          'Already have an account?',
           style: GoogleFonts.inter(
             fontSize: AppConstants.fontSizeBodyMedium,
             color: AppColors.graphite700,
           ),
-          children: [
-            WidgetSpan(
-              child: AppTextButton(
-                label: 'Log in',
-                onPressed: () {
-                  context.pop();
-                },
-                textColor: AppColors.ink900,
-              ),
-            ),
-          ],
         ),
-      ),
+        AppTextButton(
+          label: 'Log in',
+          onPressed: () {
+            context.pop();
+          },
+          textColor: AppColors.ink900,
+        ),
+      ],
     );
   }
 }

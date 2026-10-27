@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/resources/data/datasources/resource_local_datasource.dart';
-import 'package:prepgraph/features/resources/data/datasources/resource_remote_datasource.dart';
-import 'package:prepgraph/features/resources/domain/entities/bookmark.dart';
-import 'package:prepgraph/features/resources/domain/entities/download_status.dart';
-import 'package:prepgraph/features/resources/domain/entities/recommended_resource.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_category.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_collection.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
-import 'package:prepgraph/features/resources/domain/repositories/resource_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/resources/data/datasources/resource_local_datasource.dart';
+import 'package:prepnode/features/resources/data/datasources/resource_remote_datasource.dart';
+import 'package:prepnode/features/resources/domain/entities/bookmark.dart';
+import 'package:prepnode/features/resources/domain/entities/download_status.dart';
+import 'package:prepnode/features/resources/domain/entities/recommended_resource.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_category.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_collection.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/features/resources/domain/repositories/resource_repository.dart';
 
 /// Resource Repository Implementation — Phase 1A.
 ///
@@ -33,28 +33,42 @@ class ResourceRepositoryImpl implements ResourceRepository {
   // A handful of curated groupings over real, local resourceIds — this is
   // editorial curation (which resources belong together), not raw content,
   // so it doesn't need its own Drift table the way the catalog itself did.
+  // Every id below exists in the seeded catalog and has a link that
+  // actually resolves. The previous lists were written against the
+  // example.com placeholder rows that have since been deleted, so all
+  // three collections opened as empty screens.
   static const _collections = [
     ResourceCollectionDef(
       id: 'coll-1',
       title: 'TNPSC Group 2 Complete Package',
-      description: 'Complete study material package for TNPSC Group 2 preparation including all subjects.',
-      resourceIds: ['res-1', 'res-2', 'res-8', 'res-10', 'res-17', 'res-18'],
-      curator: 'TNPSC Academy',
+      description: 'One resource per major Group 2 subject — the official syllabus, polity, history, economy, geography and aptitude.',
+      resourceIds: ['res-6', 'res-4', 'res-21', 'res-23', 'res-27', 'res-24'],
+      curator: 'PrepNode',
       isOfficial: false,
     ),
     ResourceCollectionDef(
       id: 'coll-2',
-      title: 'TNPSC Group 4 Starter Kit',
-      description: 'Essential resources for TNPSC Group 4 beginners. Covers all important topics.',
-      resourceIds: ['res-1', 'res-3', 'res-9', 'res-11', 'res-14'],
-      curator: 'Success Academy',
+      title: 'Tamil-Medium Video Lectures',
+      description: 'Free YouTube lecture series in Tamil, covering polity, history, economy, geography, English and aptitude.',
+      resourceIds: [
+        'res-21',
+        'res-22',
+        'res-23',
+        'res-24',
+        'res-25',
+        'res-26',
+        'res-27',
+        'res-28',
+        'res-29',
+      ],
+      curator: 'PrepNode',
       isOfficial: false,
     ),
     ResourceCollectionDef(
       id: 'coll-3',
       title: 'Official TNPSC Materials',
-      description: 'Collection of official TNPSC documents and government materials.',
-      resourceIds: ['res-6', 'res-7', 'res-8', 'res-9', 'res-11', 'res-12'],
+      description: 'Documents published by TNPSC itself. Deliberately short — only genuinely official sources belong here.',
+      resourceIds: ['res-6'],
       curator: 'TNPSC',
       isOfficial: true,
     ),

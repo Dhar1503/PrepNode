@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/auth/domain/entities/onboarding_page.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/auth/domain/entities/onboarding_page.dart';
 
 /// Onboarding Page Widget
 /// Single page in the carousel with illustration, headline, and supporting text

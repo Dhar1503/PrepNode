@@ -6,30 +6,30 @@
 /// data yet" message; nothing here is fabricated placeholder text.
 library;
 
-import 'package:prepgraph/features/auth/domain/entities/user.dart';
-import 'package:prepgraph/features/auth/domain/repositories/profile_repository.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/repositories/cutoff_repository.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/pyq_performance.dart';
-import 'package:prepgraph/features/insights/domain/entities/study_habits.dart';
-import 'package:prepgraph/features/insights/domain/entities/weak_area.dart';
-import 'package:prepgraph/features/insights/domain/repositories/insights_repository.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/topic_detail.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_result.dart';
-import 'package:prepgraph/features/mock_test/domain/repositories/mock_test_repository.dart';
-import 'package:prepgraph/features/planner/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
-import 'package:prepgraph/features/planner/domain/repositories/planner_repository.dart';
-import 'package:prepgraph/features/pyq/domain/repositories/pyq_repository.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
-import 'package:prepgraph/features/resources/domain/repositories/resource_repository.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/ai_insight.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/ai_recommendation.dart';
-import 'package:prepgraph/features/strategy/domain/entities/study_capacity.dart';
-import 'package:prepgraph/features/strategy/domain/repositories/strategy_repository.dart';
+import 'package:prepnode/features/auth/domain/entities/user.dart';
+import 'package:prepnode/features/auth/domain/repositories/profile_repository.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/repositories/cutoff_repository.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/pyq_performance.dart';
+import 'package:prepnode/features/insights/domain/entities/study_habits.dart';
+import 'package:prepnode/features/insights/domain/entities/weak_area.dart';
+import 'package:prepnode/features/insights/domain/repositories/insights_repository.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/topic_detail.dart';
+import 'package:prepnode/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_result.dart';
+import 'package:prepnode/features/mock_test/domain/repositories/mock_test_repository.dart';
+import 'package:prepnode/features/planner/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/features/planner/domain/repositories/planner_repository.dart';
+import 'package:prepnode/features/pyq/domain/repositories/pyq_repository.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/features/resources/domain/repositories/resource_repository.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/ai_insight.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/ai_recommendation.dart';
+import 'package:prepnode/features/strategy/domain/entities/study_capacity.dart';
+import 'package:prepnode/features/strategy/domain/repositories/strategy_repository.dart';
 
 class AiResponseEngine {
   final InsightsRepository _insights;
@@ -163,7 +163,7 @@ class AiResponseEngine {
   }
 
   String _capabilitiesMessage() {
-    return "I can help using your real PrepGraph data — try asking things like:\n\n"
+    return "I can help using your real PrepNode data — try asking things like:\n\n"
         '• "What\'s the fastest way to clear the cutoff?"\n'
         '• "I have only 20 days — what\'s my plan?"\n'
         '• "I am BC — how far am I from the cutoff?"\n'
@@ -175,7 +175,7 @@ class AiResponseEngine {
         '• "How close am I to the cutoff?"\n'
         '• "What\'s my target exam and study plan?"\n'
         '• "What career does this post lead to?"\n\n'
-        "I only answer from your actual PrepGraph activity — not general web knowledge — so the more you've practiced, the more specific I can be.";
+        "I only answer from your actual PrepNode activity — not general web knowledge — so the more you've practiced, the more specific I can be.";
   }
 
   Future<String> _strategyMessage(String userId) async {
@@ -223,7 +223,7 @@ class AiResponseEngine {
         ? "you're projected ${gap.abs().toStringAsFixed(1)} marks above the $category cutoff (${prediction.targetCutoff.toStringAsFixed(1)})"
         : "you're projected ${gap.toStringAsFixed(1)} marks below the $category cutoff (${prediction.targetCutoff.toStringAsFixed(1)})";
 
-    return "Comparing you against the $category cutoff specifically (not OC): $gapText, based on your current PrepGraph Score. "
+    return "Comparing you against the $category cutoff specifically (not OC): $gapText, based on your current PrepNode Score. "
         "${gap > 0 && prediction.weakAreas.isNotEmpty ? 'Closing the gap in ${prediction.weakAreas.first} would help most.' : ''}\n\n"
         'This uses the $category-specific cutoff from Cutoff Intelligence, not a generic OC comparison.';
   }
@@ -274,7 +274,7 @@ class AiResponseEngine {
   }
 
   String _fallbackMessage() {
-    return "I'm not sure how to answer that from your PrepGraph data specifically. I can help with your weak areas, today's plan, recent mock test results, PYQ practice, topic mastery, cutoff comparison, or your study profile — try asking about one of those, or say \"help\" for examples.";
+    return "I'm not sure how to answer that from your PrepNode data specifically. I can help with your weak areas, today's plan, recent mock test results, PYQ practice, topic mastery, cutoff comparison, or your study profile — try asking about one of those, or say \"help\" for examples.";
   }
 
   Future<String> _weakAreasMessage(String userId) async {
@@ -442,7 +442,7 @@ class AiResponseEngine {
       'an average of ${latest.averageCutoff.toStringAsFixed(1)} marks across ${latest.totalVacancies} vacancies.',
     );
     if (progress != null) {
-      buffer.write('\n\nYour PrepGraph Score is ${progress!.prepGraphScore.toStringAsFixed(0)}/100 — '
+      buffer.write('\n\nYour PrepNode Score is ${progress!.prepNodeScore.toStringAsFixed(0)}/100 — '
           'a rough comparison, not a certified prediction.');
     }
     buffer.write('\n\nCheck the Cutoff Intelligence tab for the full category-wise breakdown.');
@@ -495,7 +495,7 @@ class AiResponseEngine {
       pieces.add("you're on a $streak-day study streak");
     }
     if (progress != null) {
-      pieces.add('your PrepGraph Score is ${progress!.prepGraphScore.toStringAsFixed(0)}/100');
+      pieces.add('your PrepNode Score is ${progress!.prepNodeScore.toStringAsFixed(0)}/100');
     }
 
     if (pieces.isEmpty) {
@@ -694,7 +694,7 @@ class AiResponseEngine {
         '${result.accuracy < 0.5 ? 'Review the topics behind your incorrect answers before your next attempt.' : 'Solid result — keep reinforcing your weaker topics to push this higher.'}';
   }
 
-  /// Explains readiness by comparing the real PrepGraph Score against real
+  /// Explains readiness by comparing the real PrepNode Score against real
   /// historical cutoff data — the same sources _cutoffMessage uses.
   Future<String> explainReadinessText({required String examId, required String userId}) async {
     LearnerProgress? progress;
@@ -706,7 +706,7 @@ class AiResponseEngine {
       return "I don't have enough real data yet to compare your readiness against the cutoff for this exam.";
     }
     final latest = cutoff!.yearlyTrends.last;
-    return 'Your PrepGraph Score is ${progress!.prepGraphScore.toStringAsFixed(0)}/100.\n\n'
+    return 'Your PrepNode Score is ${progress!.prepNodeScore.toStringAsFixed(0)}/100.\n\n'
         'The most recent (${latest.year}) average cutoff for ${cutoff!.examName} was '
         '${latest.averageCutoff.toStringAsFixed(1)} marks.\n\n'
         'This is a rough comparison, not a certified prediction — see the Cutoff Intelligence tab for the full breakdown.';

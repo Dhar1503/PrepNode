@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/empty_state.dart';
-import 'package:prepgraph/features/insights/domain/entities/pyq_performance.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/insights/presentation/widgets/subject_pyq_card.dart';
-import 'package:prepgraph/features/insights/presentation/widgets/accuracy_trend_card.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/empty_state.dart';
+import 'package:prepnode/features/insights/domain/entities/pyq_performance.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/insights/presentation/widgets/subject_pyq_card.dart';
+import 'package:prepnode/features/insights/presentation/widgets/accuracy_trend_card.dart';
 
 /// PYQ Performance Analytics Screen
 /// Detailed PYQ practice performance analysis

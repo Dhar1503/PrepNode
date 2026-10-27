@@ -2,8 +2,8 @@
 /// Handles local storage and caching for insights data
 library;
 
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/core/data/database/database.dart';
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/core/data/database/database.dart';
 import 'package:drift/drift.dart';
 
 class InsightsLocalDataSource {
@@ -16,7 +16,7 @@ class InsightsLocalDataSource {
   /// Save learner progress to local database
   Future<void> saveLearnerProgress({
     required String userId,
-    required double prepGraphScore,
+    required double prepNodeScore,
     required double topicCompletion,
     required double pyqPerformance,
     required double mockAccuracy,
@@ -34,7 +34,7 @@ class InsightsLocalDataSource {
       await db.customUpdate(
         '''
         UPDATE user_analytics
-        SET prep_graph_score = ?,
+        SET prep_node_score = ?,
             topic_completion = ?,
             pyq_performance = ?,
             mock_accuracy = ?,
@@ -44,7 +44,7 @@ class InsightsLocalDataSource {
         WHERE user_id = ?
         ''',
         variables: [
-          Variable<double>(prepGraphScore),
+          Variable<double>(prepNodeScore),
           Variable<double>(topicCompletion),
           Variable<double>(pyqPerformance),
           Variable<double>(mockAccuracy),
@@ -59,7 +59,7 @@ class InsightsLocalDataSource {
         '''
         INSERT INTO user_analytics (
           user_id,
-          prep_graph_score,
+          prep_node_score,
           topic_completion,
           pyq_performance,
           mock_accuracy,
@@ -70,7 +70,7 @@ class InsightsLocalDataSource {
         ''',
         variables: [
           Variable<String>(userId),
-          Variable<double>(prepGraphScore),
+          Variable<double>(prepNodeScore),
           Variable<double>(topicCompletion),
           Variable<double>(pyqPerformance),
           Variable<double>(mockAccuracy),
@@ -87,7 +87,7 @@ class InsightsLocalDataSource {
     final db = _databaseService.database;
     final progress = await db.customSelect(
       '''
-      SELECT user_id, prep_graph_score, topic_completion, pyq_performance,
+      SELECT user_id, prep_node_score, topic_completion, pyq_performance,
              mock_accuracy, consistency, revision_discipline, last_updated
       FROM user_analytics
       WHERE user_id = ?
@@ -100,7 +100,7 @@ class InsightsLocalDataSource {
 
     return {
       'userId': progress.read<String>('user_id'),
-      'prepGraphScore': progress.read<double>('prep_graph_score'),
+      'prepNodeScore': progress.read<double>('prep_node_score'),
       'topicCompletion': progress.read<double>('topic_completion'),
       'pyqPerformance': progress.read<double>('pyq_performance'),
       'mockAccuracy': progress.read<double>('mock_accuracy'),
@@ -349,7 +349,7 @@ class InsightsLocalDataSource {
   // user_topic_progress, topics/subjects) instead of relying on a remote
   // API or hand-entered numbers.
 
-  /// Computes the five PrepGraph Score components (0-100 scale each) from
+  /// Computes the five PrepNode Score components (0-100 scale each) from
   /// real user data, matching the weights documented on ScoreComponents:
   /// topic completion 30%, PYQ performance 25%, mock accuracy 20%,
   /// consistency 15%, revision discipline 10%.
@@ -424,7 +424,7 @@ class InsightsLocalDataSource {
       'mockAccuracy': mockAccuracy,
       'consistency': consistency,
       'revisionDiscipline': revisionDiscipline,
-      'prepGraphScore': topicCompletion * 0.30 +
+      'prepNodeScore': topicCompletion * 0.30 +
           pyqPerformance * 0.25 +
           mockAccuracy * 0.20 +
           consistency * 0.15 +

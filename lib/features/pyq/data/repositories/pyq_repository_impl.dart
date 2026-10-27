@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/pyq/data/datasources/pyq_local_datasource.dart';
-import 'package:prepgraph/features/pyq/data/datasources/pyq_remote_datasource.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_question.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_session.dart';
-import 'package:prepgraph/features/pyq/domain/entities/topic_pyq_summary.dart';
-import 'package:prepgraph/features/pyq/domain/repositories/pyq_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/pyq/data/datasources/pyq_local_datasource.dart';
+import 'package:prepnode/features/pyq/data/datasources/pyq_remote_datasource.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_question.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_session.dart';
+import 'package:prepnode/features/pyq/domain/entities/topic_pyq_summary.dart';
+import 'package:prepnode/features/pyq/domain/repositories/pyq_repository.dart';
 
 /// Production PYQ Repository Implementation
 /// Uses remote API and local database with offline-first strategy

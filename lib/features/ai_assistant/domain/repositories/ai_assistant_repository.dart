@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/ai_insight.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/ai_recommendation.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/chat_message.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/conversation.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/conversation_history.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/doubt_context.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/suggested_question.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/ai_insight.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/ai_recommendation.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/chat_message.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/conversation.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/conversation_history.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/doubt_context.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/suggested_question.dart';
 
 /// Repository interface for AI Assistant operations
 /// Backend-ready abstraction for AI-powered features

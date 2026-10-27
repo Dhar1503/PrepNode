@@ -1,5 +1,5 @@
-import 'package:prepgraph/features/strategy/domain/entities/study_capacity.dart';
-import 'package:prepgraph/features/strategy/domain/entities/strategy_recommendation.dart';
+import 'package:prepnode/features/strategy/domain/entities/study_capacity.dart';
+import 'package:prepnode/features/strategy/domain/entities/strategy_recommendation.dart';
 
 /// Strategy Summary Entity
 ///

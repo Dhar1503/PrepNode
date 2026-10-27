@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/network/providers/network_providers.dart';
-import 'package:prepgraph/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:prepgraph/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:prepgraph/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:prepgraph/features/auth/data/repositories/profile_repository_impl.dart';
-import 'package:prepgraph/features/auth/domain/entities/user.dart';
-import 'package:prepgraph/features/auth/domain/repositories/auth_repository.dart';
-import 'package:prepgraph/features/auth/domain/repositories/profile_repository.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/network/providers/network_providers.dart';
+import 'package:prepnode/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:prepnode/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:prepnode/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:prepnode/features/auth/data/repositories/profile_repository_impl.dart';
+import 'package:prepnode/features/auth/domain/entities/user.dart';
+import 'package:prepnode/features/auth/domain/repositories/auth_repository.dart';
+import 'package:prepnode/features/auth/domain/repositories/profile_repository.dart';
 
 final authLocalDataSourceProvider = Provider<AuthLocalDataSource>((ref) {
   final databaseService = ref.watch(databaseServiceProvider);
@@ -29,10 +29,8 @@ final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
 
 /// Auth Repository Provider
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  final remoteDataSource = ref.watch(authRemoteDataSourceProvider);
   final localDataSource = ref.watch(authLocalDataSourceProvider);
   return AuthRepositoryImpl(
-    remoteDataSource: remoteDataSource,
     localDataSource: localDataSource,
   );
 });

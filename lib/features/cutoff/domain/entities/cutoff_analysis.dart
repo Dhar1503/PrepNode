@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/readiness_prediction.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/recommendation.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/readiness_prediction.dart';
+import 'package:prepnode/features/cutoff/domain/entities/recommendation.dart';
 
 /// Represents comprehensive cutoff analysis for a user
 class CutoffAnalysis extends Equatable {

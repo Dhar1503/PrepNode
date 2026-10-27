@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/category_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/category_cutoff.dart';
 
 /// Represents trend data for a specific year
 class YearlyTrend extends Equatable {

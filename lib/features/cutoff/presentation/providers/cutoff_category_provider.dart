@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const _cutoffCategoryPrefKey = 'prepgraph_cutoff_category';
+const _cutoffCategoryPrefKey = 'prepnode_cutoff_category';
 
 /// The seven real TNPSC reservation categories (matches the category values
 /// seeded in cutoff_data — see seed_data.dart).

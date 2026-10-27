@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/resources/domain/entities/download_status.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
-import 'package:prepgraph/features/resources/presentation/providers/resource_providers.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/bookmark_button.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/download_button.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/resources/domain/entities/download_status.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/features/resources/presentation/providers/resource_providers.dart';
+import 'package:prepnode/features/resources/presentation/widgets/bookmark_button.dart';
+import 'package:prepnode/features/resources/presentation/widgets/download_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Resource Detail Screen (S9.2)
@@ -188,7 +188,7 @@ class _ResourceDetailScreenState extends ConsumerState<ResourceDetailScreen> {
       children: [
         // Two independent badges on purpose: `isOfficial` is a claim about
         // the resource's origin (govt/official body), `verificationStatus`
-        // is whether PrepGraph actually checked the link. A resource can be
+        // is whether PrepNode actually checked the link. A resource can be
         // claimed-official but link-unverified — showing one green checkmark
         // for both would let an unverified/placeholder link masquerade as
         // confirmed official content (Phase 1C data-integrity fix).
@@ -323,7 +323,7 @@ class _ResourceDetailScreenState extends ConsumerState<ResourceDetailScreen> {
   }
 
   // A resource can be genuinely verified, honestly unverified (real-looking
-  // link PrepGraph hasn't confirmed yet), or a placeholder (example.com —
+  // link PrepNode hasn't confirmed yet), or a placeholder (example.com —
   // not a real destination at all). These need visibly different treatment
   // so a placeholder link can never read as "probably fine, just unchecked".
   Widget _buildVerificationBadge(StudyResource resource) {

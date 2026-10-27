@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/cutoff/presentation/providers/cutoff_providers.dart';
-import 'package:prepgraph/features/cutoff/presentation/widgets/cutoff_card.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/cutoff/presentation/providers/cutoff_providers.dart';
+import 'package:prepnode/features/cutoff/presentation/widgets/cutoff_card.dart';
 
 /// Cutoff Home Screen
 /// Entry point for Cutoff Intelligence module

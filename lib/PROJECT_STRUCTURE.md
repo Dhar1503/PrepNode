@@ -1,4 +1,4 @@
-# PrepGraph Flutter Project Structure
+# PrepNode Flutter Project Structure
 
 ## Overview
 Production-ready Flutter application following Clean Architecture, Feature-first organization, SOLID principles, Repository Pattern, and MVVM.

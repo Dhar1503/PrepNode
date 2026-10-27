@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
 
 /// Label style for all buttons in this file.
 ///
@@ -57,7 +57,12 @@ class AppButton extends StatelessWidget {
           // less than a 14px line needs — so descenders (the tail on "g" in
           // "Login"/"Log out") were clipped off. Height is already fixed by
           // the SizedBox; the Row below centres the label within it.
-          padding: const EdgeInsets.symmetric(horizontal: AppConstants.spaceLg),
+          // spaceXs, not spaceLg: these buttons are width:infinity with a
+          // centred label, so horizontal padding only ever acts as a minimum
+          // inset. At spaceLg (32) it reserved 64px, which left no room for
+          // the label in a narrow slot — the mock-test action row rendered
+          // "Prev"/"Mark"/"Skip" as completely blank buttons.
+          padding: const EdgeInsets.symmetric(horizontal: AppConstants.spaceXs),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.radiusSm),
           ),
@@ -124,7 +129,12 @@ class AppSecondaryButton extends StatelessWidget {
           foregroundColor: AppColors.ink900,
           side: const BorderSide(color: AppColors.lightOutline),
           // See AppButton — same clipped-descender fix.
-          padding: const EdgeInsets.symmetric(horizontal: AppConstants.spaceLg),
+          // spaceXs, not spaceLg: these buttons are width:infinity with a
+          // centred label, so horizontal padding only ever acts as a minimum
+          // inset. At spaceLg (32) it reserved 64px, which left no room for
+          // the label in a narrow slot — the mock-test action row rendered
+          // "Prev"/"Mark"/"Skip" as completely blank buttons.
+          padding: const EdgeInsets.symmetric(horizontal: AppConstants.spaceXs),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.radiusSm),
           ),

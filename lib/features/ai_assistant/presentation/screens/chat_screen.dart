@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/suggested_question.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/providers/ai_assistant_providers.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/widgets/chat_bubble.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/widgets/input_bar.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/widgets/suggested_question_card.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/widgets/typing_indicator.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/suggested_question.dart';
+import 'package:prepnode/features/ai_assistant/presentation/providers/ai_assistant_providers.dart';
+import 'package:prepnode/features/ai_assistant/presentation/widgets/chat_bubble.dart';
+import 'package:prepnode/features/ai_assistant/presentation/widgets/input_bar.dart';
+import 'package:prepnode/features/ai_assistant/presentation/widgets/suggested_question_card.dart';
+import 'package:prepnode/features/ai_assistant/presentation/widgets/typing_indicator.dart';
 
 /// Chat Screen
 /// Main chat interface for AI Assistant conversations

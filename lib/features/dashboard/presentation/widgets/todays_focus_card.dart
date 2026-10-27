@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/core/widgets/skeleton_loader.dart';
-import 'package:prepgraph/core/widgets/empty_state.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/daily_task.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/core/widgets/empty_state.dart';
+import 'package:prepnode/features/dashboard/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/dashboard/domain/entities/daily_task.dart';
 
 /// Today's Focus Card
 /// Shows AI study recommendation with continue button

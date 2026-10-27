@@ -9,21 +9,21 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/auth/domain/entities/user.dart';
-import 'package:prepgraph/features/auth/domain/repositories/profile_repository.dart';
-import 'package:prepgraph/features/cutoff/data/datasources/cutoff_local_datasource.dart';
-import 'package:prepgraph/features/cutoff/data/repositories/cutoff_repository_impl.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/category_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/mock_test_analytics.dart';
-import 'package:prepgraph/features/insights/domain/repositories/insights_repository.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
-import 'package:prepgraph/features/pyq/domain/entities/topic_pyq_summary.dart';
-import 'package:prepgraph/features/pyq/domain/repositories/pyq_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/auth/domain/entities/user.dart';
+import 'package:prepnode/features/auth/domain/repositories/profile_repository.dart';
+import 'package:prepnode/features/cutoff/data/datasources/cutoff_local_datasource.dart';
+import 'package:prepnode/features/cutoff/data/repositories/cutoff_repository_impl.dart';
+import 'package:prepnode/features/cutoff/domain/entities/category_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/mock_test_analytics.dart';
+import 'package:prepnode/features/insights/domain/repositories/insights_repository.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
+import 'package:prepnode/features/pyq/domain/entities/topic_pyq_summary.dart';
+import 'package:prepnode/features/pyq/domain/repositories/pyq_repository.dart';
 
 class MockCutoffLocalDataSource extends Mock implements CutoffLocalDataSource {}
 
@@ -109,7 +109,7 @@ void main() {
 
   group('getReadinessPrediction — exam mark-scale correctness', () {
     test(
-      'projects PrepGraph Score onto the real 300-mark TNPSC Group 2 scale, '
+      'projects PrepNode Score onto the real 300-mark TNPSC Group 2 scale, '
       'not the old (incorrect) 200-mark assumption',
       () async {
         when(() => localDataSource.getExamCutoffLocal(examId)).thenAnswer(
@@ -122,7 +122,7 @@ void main() {
         when(() => insightsRepository.getLearnerProgress(userId)).thenAnswer(
           (_) async => Right(LearnerProgress(
             userId: userId,
-            prepGraphScore: 50.0,
+            prepNodeScore: 50.0,
             scoreComponents: const ScoreComponents(
               topicCompletion: 0.5,
               pyqPerformance: 0.5,
@@ -159,7 +159,7 @@ void main() {
       when(() => insightsRepository.getLearnerProgress(userId)).thenAnswer(
         (_) async => Right(LearnerProgress(
           userId: userId,
-          prepGraphScore: 0.0,
+          prepNodeScore: 0.0,
           scoreComponents: const ScoreComponents(
             topicCompletion: 0,
             pyqPerformance: 0,
@@ -189,7 +189,7 @@ void main() {
       when(() => insightsRepository.getLearnerProgress(any())).thenAnswer(
         (_) async => Right(LearnerProgress(
           userId: userId,
-          prepGraphScore: 50.0,
+          prepNodeScore: 50.0,
           scoreComponents: const ScoreComponents(
             topicCompletion: 0.5,
             pyqPerformance: 0.5,
@@ -223,7 +223,7 @@ void main() {
       when(() => insightsRepository.getLearnerProgress(userId)).thenAnswer(
         (_) async => Right(LearnerProgress(
           userId: userId,
-          prepGraphScore: 50.0,
+          prepNodeScore: 50.0,
           scoreComponents: const ScoreComponents(
             topicCompletion: 0.5,
             pyqPerformance: 0.5,

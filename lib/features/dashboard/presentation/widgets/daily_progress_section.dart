@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/skeleton_loader.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/progress_summary.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/skeleton_loader.dart';
+import 'package:prepnode/features/dashboard/domain/entities/progress_summary.dart';
 
 /// Daily Progress Section
 /// Shows study hours, completed tasks, and circular progress indicator

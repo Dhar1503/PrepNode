@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/network/providers/network_providers.dart';
-import 'package:prepgraph/features/pyq/data/repositories/pyq_repository_impl.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_question.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_session.dart';
-import 'package:prepgraph/features/pyq/domain/entities/topic_pyq_summary.dart';
-import 'package:prepgraph/features/pyq/domain/repositories/pyq_repository.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/network/providers/network_providers.dart';
+import 'package:prepnode/features/pyq/data/repositories/pyq_repository_impl.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_question.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_session.dart';
+import 'package:prepnode/features/pyq/domain/entities/topic_pyq_summary.dart';
+import 'package:prepnode/features/pyq/domain/repositories/pyq_repository.dart';
 
 /// PYQ Repository Provider
 final pyqRepositoryProvider = Provider<PyqRepository>((ref) {

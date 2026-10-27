@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/insights/data/datasources/insights_local_datasource.dart';
-import 'package:prepgraph/features/insights/data/datasources/insights_remote_datasource.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/pyq_performance.dart';
-import 'package:prepgraph/features/insights/domain/entities/mock_test_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/study_habits.dart';
-import 'package:prepgraph/features/insights/domain/entities/weak_area.dart';
-import 'package:prepgraph/features/insights/domain/repositories/insights_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/insights/data/datasources/insights_local_datasource.dart';
+import 'package:prepnode/features/insights/data/datasources/insights_remote_datasource.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/pyq_performance.dart';
+import 'package:prepnode/features/insights/domain/entities/mock_test_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/study_habits.dart';
+import 'package:prepnode/features/insights/domain/entities/weak_area.dart';
+import 'package:prepnode/features/insights/domain/repositories/insights_repository.dart';
 
 /// Insights Repository Implementation
 /// Every read is computed from the existing local Drift tables (attempts,
@@ -36,7 +36,7 @@ class InsightsRepositoryImpl implements InsightsRepository {
 
       await _localDataSource.saveLearnerProgress(
         userId: userId,
-        prepGraphScore: components['prepGraphScore']!,
+        prepNodeScore: components['prepNodeScore']!,
         topicCompletion: components['topicCompletion']!,
         pyqPerformance: components['pyqPerformance']!,
         mockAccuracy: components['mockAccuracy']!,
@@ -46,7 +46,7 @@ class InsightsRepositoryImpl implements InsightsRepository {
 
       return Right(LearnerProgress(
         userId: userId,
-        prepGraphScore: components['prepGraphScore']!,
+        prepNodeScore: components['prepNodeScore']!,
         scoreComponents: ScoreComponents(
           topicCompletion: components['topicCompletion']!,
           pyqPerformance: components['pyqPerformance']!,

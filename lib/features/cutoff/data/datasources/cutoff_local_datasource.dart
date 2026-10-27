@@ -2,10 +2,10 @@
 /// Handles local storage and caching for cutoff intelligence data
 library;
 
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/category_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/yearly_trend.dart';
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/features/cutoff/domain/entities/category_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/yearly_trend.dart';
 
 class CutoffLocalDataSource {
   final DatabaseService _databaseService;

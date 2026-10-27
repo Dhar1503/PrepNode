@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
 
 /// Card displaying exam cutoff summary — the entry point into Cutoff
 /// Intelligence, so it needs to read as more than "one card, one year": it
@@ -152,7 +152,7 @@ class CutoffCard extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         color: AppColors.ink500,
                       ),
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

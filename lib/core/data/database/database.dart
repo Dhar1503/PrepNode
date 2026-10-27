@@ -6,8 +6,8 @@ import 'dart:io';
 
 part 'database.g.dart';
 
-/// PrepGraph Local Database
-/// Based on docs/07_PrepGraph-Database-Schema.md
+/// PrepNode Local Database
+/// Based on docs/07_PrepNode-Database-Schema.md
 /// Engine: SQLite (via Drift)
 /// Charset: utf8mb4 (handled by SQLite)
 @DriftDatabase(tables: [
@@ -34,12 +34,21 @@ part 'database.g.dart';
   Achievements,
   Bookmarks,
   ContentSyncMetadata,
+  // Adaptive learning platform (schema v7)
+  RoadmapPreferences,
+  RoadmapDays,
+  RoadmapTasks,
+  Streaks,
+  XpHistory,
+  Badges,
+  DailyChallenges,
+  WeeklyMissions,
 ])
-class PrepGraphDatabase extends _$PrepGraphDatabase {
-  PrepGraphDatabase(super.e);
+class PrepNodeDatabase extends _$PrepNodeDatabase {
+  PrepNodeDatabase(super.e);
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 7;
 
   /// Schema v2 -> v3: additive-only (Phase 1A — real content foundation).
   /// No table is dropped or recreated, so every existing local row survives
@@ -57,7 +66,10 @@ class PrepGraphDatabase extends _$PrepGraphDatabase {
   /// finally hold what it was always declared to hold.
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        onCreate: (Migrator m) => m.createAll(),
+        onCreate: (Migrator m) async {
+          await m.createAll();
+          await _createIndexes();
+        },
         onUpgrade: (Migrator m, int from, int to) async {
           if (from < 3) {
             // Resources: bring the table up to the full StudyResource shape
@@ -104,21 +116,108 @@ class PrepGraphDatabase extends _$PrepGraphDatabase {
           if (from < 5) {
             await m.addColumn(mockTests, mockTests.domainTestId);
           }
+          if (from < 6) {
+            await _migrateToUniqueEmails();
+            await _createIndexes();
+          }
+          if (from < 7) {
+            // v6 -> v7: the adaptive learning platform. Purely additive —
+            // eight new tables, no existing table touched — so every
+            // account, attempt and plan on an upgrading device survives.
+            await m.createTable(roadmapPreferences);
+            await m.createTable(roadmapDays);
+            await m.createTable(roadmapTasks);
+            await m.createTable(streaks);
+            await m.createTable(xpHistory);
+            await m.createTable(badges);
+            await m.createTable(dailyChallenges);
+            await m.createTable(weeklyMissions);
+            await _createIndexes();
+          }
         },
       );
 
+  /// v5 -> v6: make the account store actually enforce one account per
+  /// email, and normalize what is already there.
+  ///
+  /// `users.email` was declared with no unique constraint and was written
+  /// verbatim, so a device could hold both "Aspirant@Gmail.com" and
+  /// "aspirant@gmail.com" as separate accounts — and the login lookup, which
+  /// used `getSingleOrNull()`, threw on any duplicate instead of logging the
+  /// user in. This lowercases every stored email, collapses duplicates onto
+  /// the earliest-created row, and only then adds the unique index, because
+  /// SQLite refuses to build a unique index over existing duplicate values.
+  Future<void> _migrateToUniqueEmails() async {
+    await customStatement('UPDATE users SET email = lower(trim(email))');
+    await customStatement('''
+      DELETE FROM users
+      WHERE rowid NOT IN (
+        SELECT min(rowid) FROM users GROUP BY email
+      )
+    ''');
+  }
+
+  /// Indexes for the columns this app actually filters and joins on.
+  /// Created with IF NOT EXISTS so this is safe to run on both a fresh
+  /// database (onCreate) and an upgraded one (onUpgrade).
+  Future<void> _createIndexes() async {
+    const statements = [
+      // Account store: the constraint that makes duplicate registration
+      // impossible rather than merely discouraged by an app-level check.
+      'CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users (email)',
+      // Syllabus hierarchy — walked on every Knowledge Graph build.
+      'CREATE INDEX IF NOT EXISTS idx_subjects_exam ON subjects (exam_id)',
+      'CREATE INDEX IF NOT EXISTS idx_topics_subject ON topics (subject_id)',
+      'CREATE INDEX IF NOT EXISTS idx_topics_parent ON topics (parent_topic_id)',
+      // Question bank — filtered by exam/subject/topic on every PYQ screen.
+      'CREATE INDEX IF NOT EXISTS idx_questions_exam ON questions (exam_id)',
+      'CREATE INDEX IF NOT EXISTS idx_questions_subject ON questions (subject_id)',
+      'CREATE INDEX IF NOT EXISTS idx_questions_topic ON questions (topic_id)',
+      // Per-user progress — the hot path for mastery and the score.
+      'CREATE INDEX IF NOT EXISTS idx_attempts_user ON user_question_attempts (user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_attempts_user_question ON user_question_attempts (user_id, question_id)',
+      'CREATE INDEX IF NOT EXISTS idx_progress_user ON user_topic_progress (user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_progress_user_topic ON user_topic_progress (user_id, topic_id)',
+      'CREATE INDEX IF NOT EXISTS idx_mock_tests_user ON mock_tests (user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_mock_answers_test ON mock_test_answers (test_id)',
+      'CREATE INDEX IF NOT EXISTS idx_study_plans_user ON study_plans (user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_bookmarks_user ON bookmarks (user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_resources_subject ON resources (subject_id)',
+      'CREATE INDEX IF NOT EXISTS idx_refresh_tokens_user ON refresh_tokens (user_id)',
+      // Adaptive learning platform (v7) — every one of these is read on
+      // each dashboard build, so none of them should ever table-scan.
+      'CREATE INDEX IF NOT EXISTS idx_roadmap_days_user ON roadmap_days (user_id, day_number)',
+      'CREATE INDEX IF NOT EXISTS idx_roadmap_days_user_date ON roadmap_days (user_id, date)',
+      'CREATE INDEX IF NOT EXISTS idx_roadmap_tasks_day ON roadmap_tasks (day_id)',
+      'CREATE INDEX IF NOT EXISTS idx_roadmap_tasks_user ON roadmap_tasks (user_id, status)',
+      'CREATE INDEX IF NOT EXISTS idx_xp_history_user ON xp_history (user_id, earned_at)',
+      'CREATE UNIQUE INDEX IF NOT EXISTS idx_xp_history_dedupe ON xp_history (user_id, dedupe_key)',
+      'CREATE INDEX IF NOT EXISTS idx_badges_user ON badges (user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_daily_challenges_user ON daily_challenges (user_id, date)',
+      'CREATE INDEX IF NOT EXISTS idx_weekly_missions_user ON weekly_missions (user_id, week_start)',
+    ];
+    for (final statement in statements) {
+      try {
+        await customStatement(statement);
+      } catch (_) {
+        // A column named in an index may not exist on a database that
+        // predates it; the rest of the indexes are still worth creating.
+      }
+    }
+  }
+
   /// Create database from file
-  static Future<PrepGraphDatabase> create() async {
+  static Future<PrepNodeDatabase> create() async {
     final dbDir = await getApplicationDocumentsDirectory();
-    final dbPath = p.join(dbDir.path, 'prepgraph.db');
+    final dbPath = p.join(dbDir.path, 'prepnode.db');
     final file = File(dbPath);
     
-    return PrepGraphDatabase(NativeDatabase.createInBackground(file));
+    return PrepNodeDatabase(NativeDatabase.createInBackground(file));
   }
 
   /// Create in-memory database for testing
-  static Future<PrepGraphDatabase> createInMemory() async {
-    return PrepGraphDatabase(NativeDatabase.memory());
+  static Future<PrepNodeDatabase> createInMemory() async {
+    return PrepNodeDatabase(NativeDatabase.memory());
   }
 }
 
@@ -504,7 +603,7 @@ class UserAnalytics extends Table {
   String get tableName => 'user_analytics';
 
   TextColumn get userId => text().references(Users, #userId)();
-  RealColumn get prepGraphScore => real().withDefault(const Constant(0.0))();
+  RealColumn get prepNodeScore => real().withDefault(const Constant(0.0))();
   RealColumn get topicCompletion => real().withDefault(const Constant(0.0))();
   RealColumn get pyqPerformance => real().withDefault(const Constant(0.0))();
   RealColumn get mockAccuracy => real().withDefault(const Constant(0.0))();
@@ -629,4 +728,197 @@ class Notifications extends Table {
 
   @override
   Set<Column> get primaryKey => {notificationId};
+}
+
+// ==================== ADAPTIVE LEARNING PLATFORM TABLES (v7) ====================
+// These back the roadmap, streak, XP and motivation features. They are
+// deliberately per-user (every table carries userId) so that logging out and
+// back in, or a second account on the same device, never inherits someone
+// else's progress.
+
+/// The answers from the roadmap wizard. One row per user — re-running the
+/// wizard overwrites it rather than accumulating, because the roadmap is
+/// always generated from the *current* preferences.
+@DataClassName('RoadmapPreference')
+class RoadmapPreferences extends Table {
+  @override
+  String get tableName => 'roadmap_preferences';
+
+  TextColumn get userId => text().references(Users, #userId)();
+  TextColumn get examId => text()();
+  /// beginner | intermediate | advanced
+  TextColumn get level => text()();
+  IntColumn get hoursPerDay => integer()();
+  /// morning | afternoon | night
+  TextColumn get preferredTime => text()();
+  IntColumn get targetMonth => integer()();
+  IntColumn get targetYear => integer()();
+  /// working | fulltime
+  TextColumn get studentType => text()();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {userId};
+}
+
+/// One row per day of the generated roadmap (30 days at a time).
+@DataClassName('RoadmapDay')
+class RoadmapDays extends Table {
+  @override
+  String get tableName => 'roadmap_days';
+
+  TextColumn get dayId => text()();
+  TextColumn get userId => text().references(Users, #userId)();
+  IntColumn get dayNumber => integer()();
+  IntColumn get weekNumber => integer()();
+  DateTimeColumn get date => dateTime()();
+  /// The week's theme, e.g. "Foundations" — shown on the timeline card.
+  TextColumn get focusLabel => text()();
+  /// locked | current | completed | weak | missed
+  TextColumn get status => text().withDefault(const Constant('locked'))();
+  DateTimeColumn get generatedAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {dayId};
+
+  @override
+  List<Set<Column>>? get uniqueKeys => [
+    {userId, dayNumber},
+  ];
+}
+
+/// The individual items inside a roadmap day.
+@DataClassName('RoadmapTask')
+class RoadmapTasks extends Table {
+  @override
+  String get tableName => 'roadmap_tasks';
+
+  TextColumn get taskId => text()();
+  TextColumn get dayId => text().references(RoadmapDays, #dayId)();
+  TextColumn get userId => text().references(Users, #userId)();
+  TextColumn get topicId => text().nullable().references(Topics, #topicId)();
+  TextColumn get title => text()();
+  /// study | pyq | mock | revision | resource | assessment
+  TextColumn get kind => text()();
+  IntColumn get estimatedMinutes => integer()();
+  /// pending | completed | skipped
+  TextColumn get status => text().withDefault(const Constant('pending'))();
+  IntColumn get orderIndex => integer().withDefault(const Constant(0))();
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {taskId};
+}
+
+/// Streak state. One row per user; [lastStudyDate] is stored as a date-only
+/// value at local midnight so "did they study today" is a plain equality
+/// check rather than timezone-sensitive arithmetic.
+@DataClassName('Streak')
+class Streaks extends Table {
+  @override
+  String get tableName => 'streaks';
+
+  TextColumn get userId => text().references(Users, #userId)();
+  IntColumn get currentStreak => integer().withDefault(const Constant(0))();
+  IntColumn get longestStreak => integer().withDefault(const Constant(0))();
+  DateTimeColumn get lastStudyDate => dateTime().nullable()();
+  IntColumn get freezeCount => integer().withDefault(const Constant(0))();
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {userId};
+}
+
+/// Append-only XP ledger. Totals are summed rather than stored, so a bug in
+/// one award can never silently corrupt a running total.
+@DataClassName('XpEntry')
+class XpHistory extends Table {
+  @override
+  String get tableName => 'xp_history';
+
+  TextColumn get entryId => text()();
+  TextColumn get userId => text().references(Users, #userId)();
+  /// planner | pyq | mock | streak | revision | resource
+  TextColumn get source => text()();
+  IntColumn get amount => integer()();
+  TextColumn get note => text().nullable()();
+  /// Set for awards that must only ever happen once (e.g. one streak bonus
+  /// per calendar day). Unique per user, so a repeated award is rejected by
+  /// the database rather than relying on the caller to remember.
+  TextColumn get dedupeKey => text().nullable()();
+  DateTimeColumn get earnedAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {entryId};
+}
+
+/// Unlocked milestone badges.
+@DataClassName('Badge')
+class Badges extends Table {
+  @override
+  String get tableName => 'badges';
+
+  TextColumn get badgeId => text()();
+  TextColumn get userId => text().references(Users, #userId)();
+  /// e.g. streak_7, level_strategist
+  TextColumn get code => text()();
+  DateTimeColumn get earnedAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {badgeId};
+
+  @override
+  List<Set<Column>>? get uniqueKeys => [
+    {userId, code},
+  ];
+}
+
+/// One challenge per user per day.
+@DataClassName('DailyChallenge')
+class DailyChallenges extends Table {
+  @override
+  String get tableName => 'daily_challenges';
+
+  TextColumn get challengeId => text()();
+  TextColumn get userId => text().references(Users, #userId)();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get code => text()();
+  TextColumn get title => text()();
+  IntColumn get targetCount => integer()();
+  IntColumn get progressCount => integer().withDefault(const Constant(0))();
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {challengeId};
+
+  @override
+  List<Set<Column>>? get uniqueKeys => [
+    {userId, date},
+  ];
+}
+
+/// One mission per user per week (weekStart is the local Monday).
+@DataClassName('WeeklyMission')
+class WeeklyMissions extends Table {
+  @override
+  String get tableName => 'weekly_missions';
+
+  TextColumn get missionId => text()();
+  TextColumn get userId => text().references(Users, #userId)();
+  DateTimeColumn get weekStart => dateTime()();
+  TextColumn get code => text()();
+  TextColumn get title => text()();
+  IntColumn get targetCount => integer()();
+  IntColumn get progressCount => integer().withDefault(const Constant(0))();
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {missionId};
+
+  @override
+  List<Set<Column>>? get uniqueKeys => [
+    {userId, weekStart},
+  ];
 }

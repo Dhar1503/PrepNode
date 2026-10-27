@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
 
 /// App Text Field
 /// Reusable text field with consistent styling per Design System
@@ -60,7 +60,15 @@ class _AppTextFieldState extends State<AppTextField> {
           ),
           const SizedBox(height: AppConstants.spaceXs),
         ],
-        TextField(
+        // TextFormField, not TextField. This widget has always exposed a
+        // `validator`, but rendering a plain TextField meant nothing ever
+        // registered with the enclosing Form — so `Form.validate()` had no
+        // fields to check and returned true unconditionally. Every
+        // validator in the app (including "Passwords do not match" on the
+        // register screen) was dead code, and no error text could appear
+        // under a field. Registering as a real form field is what makes
+        // both work.
+        TextFormField(
           controller: widget.controller,
           obscureText: widget.obscureText,
           enabled: widget.enabled,
@@ -68,6 +76,10 @@ class _AppTextFieldState extends State<AppTextField> {
           maxLines: widget.maxLines,
           textInputAction: widget.textInputAction,
           onChanged: widget.onChanged,
+          validator: widget.validator,
+          // Re-validate as the user corrects a field rather than only on
+          // submit, so the message under the field clears itself.
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           // Explicit color so typed text never inherits the ambient
           // theme's text color (which flips light/dark with system theme)
           // while this field's own fill/border stay fixed to the light

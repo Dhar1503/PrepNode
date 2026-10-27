@@ -2,16 +2,16 @@
 /// Handles all API calls for knowledge graph data
 library;
 
-import 'package:prepgraph/core/network/api_client.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
-import 'package:prepgraph/core/network/models/api_response.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/exam.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/subject.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/topic.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_edge.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_data.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/topic_detail.dart';
+import 'package:prepnode/core/network/api_client.dart';
+import 'package:prepnode/core/network/api_constants.dart';
+import 'package:prepnode/core/network/models/api_response.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/exam.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/subject.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/topic.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_edge.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_data.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/topic_detail.dart';
 
 class KnowledgeGraphRemoteDataSource {
   final ApiClient _apiClient;

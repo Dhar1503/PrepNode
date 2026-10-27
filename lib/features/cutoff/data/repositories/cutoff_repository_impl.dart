@@ -1,20 +1,20 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/auth/domain/repositories/profile_repository.dart';
-import 'package:prepgraph/features/cutoff/data/datasources/cutoff_local_datasource.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/cutoff_analysis.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_scale.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/readiness_prediction.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/recommendation.dart';
-import 'package:prepgraph/features/cutoff/domain/repositories/cutoff_repository.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/mock_test_analytics.dart';
-import 'package:prepgraph/features/insights/domain/repositories/insights_repository.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
-import 'package:prepgraph/features/pyq/domain/entities/topic_pyq_summary.dart';
-import 'package:prepgraph/features/pyq/domain/repositories/pyq_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/auth/domain/repositories/profile_repository.dart';
+import 'package:prepnode/features/cutoff/data/datasources/cutoff_local_datasource.dart';
+import 'package:prepnode/features/cutoff/domain/entities/cutoff_analysis.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_scale.dart';
+import 'package:prepnode/features/cutoff/domain/entities/readiness_prediction.dart';
+import 'package:prepnode/features/cutoff/domain/entities/recommendation.dart';
+import 'package:prepnode/features/cutoff/domain/repositories/cutoff_repository.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/mock_test_analytics.dart';
+import 'package:prepnode/features/insights/domain/repositories/insights_repository.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
+import 'package:prepnode/features/pyq/domain/entities/topic_pyq_summary.dart';
+import 'package:prepnode/features/pyq/domain/repositories/pyq_repository.dart';
 
 /// Cutoff Repository Implementation
 ///
@@ -94,7 +94,7 @@ class CutoffRepositoryImpl implements CutoffRepository {
       final masteryResult = await _insightsRepository.getMasteryAnalytics(userId);
       final mockTestResult = await _insightsRepository.getMockTestAnalytics(userId);
 
-      final prepGraphScore = progressResult.fold((_) => 0.0, (p) => p.prepGraphScore);
+      final prepNodeScore = progressResult.fold((_) => 0.0, (p) => p.prepNodeScore);
       final topicMasteries = masteryResult.fold((_) => <TopicMastery>[], (m) => m.topicMasteries);
       final mockTrend = mockTestResult.fold(
         (_) => null,
@@ -105,13 +105,13 @@ class CutoffRepositoryImpl implements CutoffRepository {
       // 300 marks (100 Language + 75 General Studies + 25 Aptitude
       // questions), not 200 marks as previously assumed here — verified
       // against multiple independent sources. The composite 0-100
-      // PrepGraph Score (syllabus coverage + PYQ + mock accuracy +
+      // PrepNode Score (syllabus coverage + PYQ + mock accuracy +
       // consistency + revision, see ScoreComponents) is projected onto
       // the exam's real total-marks scale — looked up via [ExamScale] by
       // examId rather than a bare literal, since not every TNPSC exam
       // necessarily shares Group 2's 300-mark scale.
       final totalMarks = ExamScale.totalMarksFor(examId);
-      final currentScore = prepGraphScore / 100 * totalMarks;
+      final currentScore = prepNodeScore / 100 * totalMarks;
 
       // A bounded, honest nudge from real recent trend data — not a
       // fabricated growth curve. Capped so a short "improving" streak can't

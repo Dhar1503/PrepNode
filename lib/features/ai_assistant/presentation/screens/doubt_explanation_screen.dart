@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/providers/ai_assistant_providers.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/widgets/chat_bubble.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/widgets/input_bar.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/ai_assistant/presentation/providers/ai_assistant_providers.dart';
+import 'package:prepnode/features/ai_assistant/presentation/widgets/chat_bubble.dart';
+import 'package:prepnode/features/ai_assistant/presentation/widgets/input_bar.dart';
 
 /// Doubt Explanation Screen
 /// Context-aware screen for explaining doubts from specific modules (PYQ, Knowledge Graph, etc.)

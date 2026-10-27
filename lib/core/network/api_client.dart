@@ -3,13 +3,13 @@
 library;
 
 import 'package:dio/dio.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
-import 'package:prepgraph/core/network/api_error_mapper.dart';
-import 'package:prepgraph/core/network/models/api_response.dart';
-import 'package:prepgraph/core/network/auth_interceptor.dart';
-import 'package:prepgraph/core/network/logging_interceptor.dart';
-import 'package:prepgraph/core/network/retry_interceptor.dart';
-import 'package:prepgraph/core/network/secure_storage_service.dart';
+import 'package:prepnode/core/network/api_constants.dart';
+import 'package:prepnode/core/network/api_error_mapper.dart';
+import 'package:prepnode/core/network/models/api_response.dart';
+import 'package:prepnode/core/network/auth_interceptor.dart';
+import 'package:prepnode/core/network/logging_interceptor.dart';
+import 'package:prepnode/core/network/retry_interceptor.dart';
+import 'package:prepnode/core/network/secure_storage_service.dart';
 
 class ApiClient {
   late final Dio _dio;

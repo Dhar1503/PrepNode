@@ -1,19 +1,19 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/auth/domain/repositories/profile_repository.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/repositories/cutoff_repository.dart';
-import 'package:prepgraph/features/insights/domain/entities/mock_test_analytics.dart';
-import 'package:prepgraph/features/insights/domain/repositories/insights_repository.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
-import 'package:prepgraph/features/planner/domain/repositories/planner_repository.dart';
-import 'package:prepgraph/features/pyq/domain/entities/topic_pyq_summary.dart';
-import 'package:prepgraph/features/pyq/domain/repositories/pyq_repository.dart';
-import 'package:prepgraph/features/strategy/domain/entities/roadmap.dart';
-import 'package:prepgraph/features/strategy/domain/entities/strategy_recommendation.dart';
-import 'package:prepgraph/features/strategy/domain/entities/strategy_summary.dart';
-import 'package:prepgraph/features/strategy/domain/entities/study_capacity.dart';
-import 'package:prepgraph/features/strategy/domain/repositories/strategy_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/auth/domain/repositories/profile_repository.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/repositories/cutoff_repository.dart';
+import 'package:prepnode/features/insights/domain/entities/mock_test_analytics.dart';
+import 'package:prepnode/features/insights/domain/repositories/insights_repository.dart';
+import 'package:prepnode/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
+import 'package:prepnode/features/planner/domain/repositories/planner_repository.dart';
+import 'package:prepnode/features/pyq/domain/entities/topic_pyq_summary.dart';
+import 'package:prepnode/features/pyq/domain/repositories/pyq_repository.dart';
+import 'package:prepnode/features/strategy/domain/entities/roadmap.dart';
+import 'package:prepnode/features/strategy/domain/entities/strategy_recommendation.dart';
+import 'package:prepnode/features/strategy/domain/entities/strategy_summary.dart';
+import 'package:prepnode/features/strategy/domain/entities/study_capacity.dart';
+import 'package:prepnode/features/strategy/domain/repositories/strategy_repository.dart';
 
 /// Strategy Repository Implementation
 ///

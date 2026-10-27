@@ -7,11 +7,11 @@
 // database or network is exercised — both datasources are mocked.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prepgraph/features/resources/data/datasources/resource_local_datasource.dart';
-import 'package:prepgraph/features/resources/data/datasources/resource_remote_datasource.dart';
-import 'package:prepgraph/features/resources/data/repositories/resource_repository_impl.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
-import 'package:prepgraph/features/resources/domain/repositories/resource_repository.dart';
+import 'package:prepnode/features/resources/data/datasources/resource_local_datasource.dart';
+import 'package:prepnode/features/resources/data/datasources/resource_remote_datasource.dart';
+import 'package:prepnode/features/resources/data/repositories/resource_repository_impl.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/features/resources/domain/repositories/resource_repository.dart';
 
 class MockResourceRemoteDataSource extends Mock implements ResourceRemoteDataSource {}
 

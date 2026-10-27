@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/empty_state.dart';
-import 'package:prepgraph/features/insights/domain/entities/mock_test_analytics.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/insights/presentation/widgets/mock_test_attempt_card.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/empty_state.dart';
+import 'package:prepnode/features/insights/domain/entities/mock_test_analytics.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/insights/presentation/widgets/mock_test_attempt_card.dart';
 
 /// Mock Test Trend Analysis Screen
 /// Detailed mock test performance trends and analysis

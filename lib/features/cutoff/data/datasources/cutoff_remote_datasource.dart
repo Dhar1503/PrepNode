@@ -2,15 +2,15 @@
 /// Handles all API calls for cutoff intelligence data
 library;
 
-import 'package:prepgraph/core/network/api_client.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
-import 'package:prepgraph/core/network/models/api_response.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/category_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/cutoff_analysis.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/readiness_prediction.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/recommendation.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/yearly_trend.dart';
+import 'package:prepnode/core/network/api_client.dart';
+import 'package:prepnode/core/network/api_constants.dart';
+import 'package:prepnode/core/network/models/api_response.dart';
+import 'package:prepnode/features/cutoff/domain/entities/category_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/cutoff_analysis.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/readiness_prediction.dart';
+import 'package:prepnode/features/cutoff/domain/entities/recommendation.dart';
+import 'package:prepnode/features/cutoff/domain/entities/yearly_trend.dart';
 
 class CutoffRemoteDataSource {
   final ApiClient _apiClient;

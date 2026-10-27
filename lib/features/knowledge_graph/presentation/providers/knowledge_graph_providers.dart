@@ -1,13 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/network/providers/network_providers.dart';
-import 'package:prepgraph/features/knowledge_graph/data/datasources/knowledge_graph_local_datasource.dart';
-import 'package:prepgraph/features/knowledge_graph/data/datasources/knowledge_graph_remote_datasource.dart';
-import 'package:prepgraph/features/knowledge_graph/data/repositories/knowledge_graph_repository_impl.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_data.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/topic_detail.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/network/providers/network_providers.dart';
+import 'package:prepnode/features/knowledge_graph/data/datasources/knowledge_graph_local_datasource.dart';
+import 'package:prepnode/features/knowledge_graph/data/datasources/knowledge_graph_remote_datasource.dart';
+import 'package:prepnode/features/knowledge_graph/data/repositories/knowledge_graph_repository_impl.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_data.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/topic_detail.dart';
+import 'package:prepnode/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
 
 /// Knowledge Graph Repository Provider
 final knowledgeGraphRepositoryProvider = Provider<KnowledgeGraphRepository>((ref) {
@@ -353,4 +354,36 @@ class SearchNotifier extends StateNotifier<SearchState> {
 final searchProvider = StateNotifierProvider<SearchNotifier, SearchState>((ref) {
   final repository = ref.watch(knowledgeGraphRepositoryProvider);
   return SearchNotifier(repository);
+});
+
+/// The full syllabus graph (Exam -> Subjects -> Topics -> Subtopics) for the
+/// signed-in user, with live mastery on every node.
+///
+/// A FutureProvider rather than a StateNotifier because the graph is pure
+/// derived state: it is rebuilt from Drift whenever the user changes, and
+/// `ref.invalidate(syllabusGraphProvider)` after practice re-reads mastery.
+final syllabusGraphProvider = FutureProvider<GraphData>((ref) async {
+  final auth = ref.watch(authProvider);
+  final repository = ref.watch(knowledgeGraphRepositoryProvider);
+
+  // The exam the user picked during profile setup, falling back to the only
+  // exam this release ships content for.
+  var examId = 'tnpsc-group2';
+  final userId = auth.userId;
+  if (userId != null && userId.isNotEmpty) {
+    final user = await ref.read(authLocalDataSourceProvider).getUser(userId);
+    if (user?.examId != null && user!.examId!.isNotEmpty) {
+      examId = user.examId!;
+    }
+  }
+
+  final result = await repository.getSyllabusGraph(
+    examId: examId,
+    userId: userId,
+  );
+
+  return result.fold(
+    (failure) => throw Exception(failure.message),
+    (graph) => graph,
+  );
 });

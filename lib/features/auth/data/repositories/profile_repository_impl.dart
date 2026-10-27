@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:prepgraph/features/auth/domain/entities/exam.dart';
-import 'package:prepgraph/features/auth/domain/entities/user.dart';
-import 'package:prepgraph/features/auth/domain/repositories/profile_repository.dart';
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:prepnode/features/auth/domain/entities/exam.dart';
+import 'package:prepnode/features/auth/domain/entities/user.dart';
+import 'package:prepnode/features/auth/domain/repositories/profile_repository.dart';
 
 /// Profile Repository Implementation
 /// Persists profile data via the local Drift database (users/exams tables).

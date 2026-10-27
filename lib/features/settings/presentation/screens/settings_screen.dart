@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/settings/presentation/providers/settings_providers.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/settings/presentation/providers/settings_providers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Settings Screen (S10.4)
 /// App-level configuration, reusing the existing auth/profile/cache
@@ -130,10 +131,13 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: AppConstants.spaceLg),
           _sectionHeader('About'),
           _infoTile('App version', AppConstants.appVersion),
-          _disabledTile(
+          _navTile(
+            context,
             icon: Icons.privacy_tip_outlined,
             label: 'Privacy Policy',
-            note: 'Not available in this prototype yet',
+            subtitle: 'Opens in your browser',
+            trailing: const Icon(Icons.open_in_new, size: 20),
+            onTap: () => _openPrivacyPolicy(context),
           ),
           _disabledTile(
             icon: Icons.description_outlined,
@@ -224,6 +228,10 @@ class SettingsScreen extends ConsumerWidget {
     required String label,
     String? subtitle,
     required VoidCallback onTap,
+    /// Overrides the default chevron. An external link uses an
+    /// open-in-new icon instead, so the row does not promise in-app
+    /// navigation when it actually hands off to the browser.
+    Widget? trailing,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: AppConstants.spaceSm),
@@ -247,10 +255,28 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               )
             : null,
-        trailing: const Icon(Icons.chevron_right),
+        trailing: trailing ?? const Icon(Icons.chevron_right),
         onTap: onTap,
       ),
     );
+  }
+
+  /// The policy is hosted, not bundled — Play requires a reachable URL, and
+  /// a copy inside the app could silently drift from the published one.
+  Future<void> _openPrivacyPolicy(BuildContext context) async {
+    const url = 'https://dhar1503.github.io/prepnode-privacy/';
+    final messenger = ScaffoldMessenger.of(context);
+    final uri = Uri.parse(url);
+
+    // externalApplication, not the in-app webview: this is the one screen
+    // where the user may want to keep the policy open, share it, or check
+    // the address bar to confirm what they are reading.
+    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!opened) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Couldn\'t open the privacy policy: $url')),
+      );
+    }
   }
 
   Widget _disabledTile({

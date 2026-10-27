@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_attempt.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_question.dart';
-import 'package:prepgraph/features/mock_test/presentation/providers/mock_test_providers.dart';
-import 'package:prepgraph/features/mock_test/presentation/widgets/neutral_timer.dart';
-import 'package:prepgraph/features/mock_test/presentation/widgets/question_palette.dart';
-import 'package:prepgraph/features/pyq/presentation/widgets/option_tile.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/strategy/presentation/providers/strategy_providers.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_attempt.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_question.dart';
+import 'package:prepnode/features/mock_test/presentation/providers/mock_test_providers.dart';
+import 'package:prepnode/features/mock_test/presentation/widgets/neutral_timer.dart';
+import 'package:prepnode/features/mock_test/presentation/widgets/question_palette.dart';
+import 'package:prepnode/features/pyq/presentation/widgets/option_tile.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/strategy/presentation/providers/strategy_providers.dart';
 
 /// Test Interface Screen (S6.3)
 /// Full-screen test interface with timer, questions, and navigation.
@@ -205,7 +205,12 @@ class _TestInterfaceScreenState extends ConsumerState<TestInterfaceScreen> {
     ref.invalidate(roadmapProvider);
     ref.invalidate(strategySummaryProvider);
 
-    context.push('/mock-tests/result/${result.attemptId}', extra: result);
+    // Replace rather than push: this attempt is finished, so the test
+    // interface must not stay underneath the result screen. Leaving it there
+    // let the user navigate back into a submitted test whose _isSubmitting
+    // flag was still true, which made the Submit button a permanent no-op
+    // (see the guard on its onPressed) and trapped them on a dead screen.
+    context.pushReplacement('/mock-tests/result/${result.attemptId}', extra: result);
   }
 
   void _handleTimeUp() {

@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/datasources/planner_local_datasource.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/features/dashboard/data/repositories/dashboard_repository_impl.dart';
-import 'package:prepgraph/features/dashboard/domain/repositories/dashboard_repository.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/planner/presentation/providers/planner_providers.dart';
+import 'package:prepnode/core/data/datasources/planner_local_datasource.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/features/dashboard/data/repositories/dashboard_repository_impl.dart';
+import 'package:prepnode/features/dashboard/domain/repositories/dashboard_repository.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/planner/presentation/providers/planner_providers.dart';
 
 /// Dashboard Repository Provider
 /// Composes Progress Summary / Recent Activity / Upcoming Schedule from

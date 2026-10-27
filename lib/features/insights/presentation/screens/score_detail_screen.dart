@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/widgets/error_state.dart';
-import 'package:prepgraph/core/widgets/skeleton_loader.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/widgets/error_state.dart';
+import 'package:prepnode/core/widgets/skeleton_loader.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
 
-/// Score Detail Screen (from S8.1's PrepGraph Score card)
-/// Breaks the real PrepGraph Score down into its five real weighted
+/// Score Detail Screen (from S8.1's PrepNode Score card)
+/// Breaks the real PrepNode Score down into its five real weighted
 /// components (LearnerProgress.scoreComponents, already computed by
 /// InsightsRepository) — replaces the former "Coming Soon" placeholder.
 class ScoreDetailScreen extends ConsumerWidget {
@@ -65,7 +65,7 @@ class ScoreDetailScreen extends ConsumerWidget {
           child: Column(
             children: [
               Text(
-                progress.prepGraphScore.toStringAsFixed(0),
+                progress.prepNodeScore.toStringAsFixed(0),
                 style: GoogleFonts.fraunces(
                   fontSize: 56,
                   fontWeight: FontWeight.w500,
@@ -73,7 +73,7 @@ class ScoreDetailScreen extends ConsumerWidget {
                 ),
               ),
               Text(
-                'PrepGraph Score',
+                'PrepNode Score',
                 style: GoogleFonts.inter(
                   fontSize: AppConstants.fontSizeBodyMedium,
                   color: AppColors.lightOnPrimary.withValues(alpha: 0.8),

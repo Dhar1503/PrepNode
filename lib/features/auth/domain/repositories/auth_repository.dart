@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/auth/domain/entities/auth_response.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/auth/domain/entities/auth_response.dart';
 
 /// Auth Repository Interface
 /// Abstract contract for authentication operations

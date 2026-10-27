@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
 
 /// Typing Indicator Widget
 /// Shows animated dots to indicate AI is typing/generating response

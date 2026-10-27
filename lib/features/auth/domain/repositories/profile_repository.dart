@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/auth/domain/entities/exam.dart';
-import 'package:prepgraph/features/auth/domain/entities/user.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/auth/domain/entities/exam.dart';
+import 'package:prepnode/features/auth/domain/entities/user.dart';
 
 /// Profile Repository Interface
 /// Abstract contract for profile operations

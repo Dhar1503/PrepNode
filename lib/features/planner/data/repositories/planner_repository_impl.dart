@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/planner/data/datasources/planner_local_datasource.dart';
-import 'package:prepgraph/features/planner/data/datasources/planner_remote_datasource.dart';
-import 'package:prepgraph/features/planner/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
-import 'package:prepgraph/features/planner/domain/entities/study_session.dart';
-import 'package:prepgraph/features/planner/domain/entities/weekly_plan.dart';
-import 'package:prepgraph/features/planner/domain/repositories/planner_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/planner/data/datasources/planner_local_datasource.dart';
+import 'package:prepnode/features/planner/data/datasources/planner_remote_datasource.dart';
+import 'package:prepnode/features/planner/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/features/planner/domain/entities/study_session.dart';
+import 'package:prepnode/features/planner/domain/entities/weekly_plan.dart';
+import 'package:prepnode/features/planner/domain/repositories/planner_repository.dart';
 
 /// Production Planner Repository Implementation
 /// Uses remote API and local database with offline-first strategy
@@ -74,30 +74,14 @@ class PlannerRepositoryImpl implements PlannerRepository {
     required String taskId,
     required TaskStatus status,
   }) async {
-    try {
-      // Update via API
-      final updatedTask = await _remoteDataSource.updateTaskStatus(
-        taskId: taskId,
-        status: status,
-      );
-
-      // Update local cache
-      await _localDataSource.updateStudyPlanStatus(
-        planId: taskId,
-        status: status.name,
-      );
-
-      return Right(updatedTask);
-    } catch (e) {
-      final failure = _mapErrorToFailure(e);
-      if (failure is! NetworkFailure) {
-        return Left(failure);
-      }
-      // Backend unreachable — study_plans is the real source of truth for
-      // task status (see getDailyPlan), so this can complete entirely
-      // locally instead of failing the whole complete/skip action.
-      return _updateTaskStatusLocally(taskId: taskId, status: status);
-    }
+    // Local-first, deliberately. `study_plans` is already the source of
+    // truth that getDailyPlan reads back, and this app ships with no
+    // backend, so the previous "call the API, fall back on NetworkFailure"
+    // shape had two problems: every tick of a checkbox waited out a DNS
+    // failure first, and any error that did not map to NetworkFailure
+    // (which is most of them) returned Left without ever writing the
+    // status — so the task un-ticked itself on the next restart.
+    return _updateTaskStatusLocally(taskId: taskId, status: status);
   }
 
   Future<Either<Failure, PlannerTask>> _updateTaskStatusLocally({

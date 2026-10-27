@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
 
 /// Result of submitting the task form, shared by create and edit flows.
 class TaskFormResult {

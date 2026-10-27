@@ -20,14 +20,14 @@
 // updated to assert the corrected behavior instead — see each group below.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/mock_test/data/datasources/mock_test_local_datasource.dart';
-import 'package:prepgraph/features/mock_test/data/datasources/mock_test_remote_datasource.dart';
-import 'package:prepgraph/features/mock_test/data/repositories/mock_test_repository_impl.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_attempt.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_question.dart';
-import 'package:prepgraph/features/mock_test/domain/repositories/mock_test_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/mock_test/data/datasources/mock_test_local_datasource.dart';
+import 'package:prepnode/features/mock_test/data/datasources/mock_test_remote_datasource.dart';
+import 'package:prepnode/features/mock_test/data/repositories/mock_test_repository_impl.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_attempt.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_question.dart';
+import 'package:prepnode/features/mock_test/domain/repositories/mock_test_repository.dart';
 
 class MockMockTestRemoteDataSource extends Mock implements MockTestRemoteDataSource {}
 

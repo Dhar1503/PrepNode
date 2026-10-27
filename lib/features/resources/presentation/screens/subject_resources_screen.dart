@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
-import 'package:prepgraph/features/resources/presentation/providers/resource_providers.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/pdf_card.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/video_card.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/book_card.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/website_card.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/resource_card.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/features/resources/presentation/providers/resource_providers.dart';
+import 'package:prepnode/features/resources/presentation/widgets/pdf_card.dart';
+import 'package:prepnode/features/resources/presentation/widgets/video_card.dart';
+import 'package:prepnode/features/resources/presentation/widgets/book_card.dart';
+import 'package:prepnode/features/resources/presentation/widgets/website_card.dart';
+import 'package:prepnode/features/resources/presentation/widgets/resource_card.dart';
 
 /// Subject Resources Screen
 /// Displays resources filtered by subject with type filtering

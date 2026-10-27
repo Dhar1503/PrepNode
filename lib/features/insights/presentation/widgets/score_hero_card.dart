@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
 
 /// Score Hero Card
-/// Displays PrepGraph Score with breakdown
+/// Displays PrepNode Score with breakdown
 class ScoreHeroCard extends StatelessWidget {
   final double score;
   final ScoreComponents scoreComponents;
@@ -24,8 +24,12 @@ class ScoreHeroCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: AppConstants.spaceLg),
       padding: const EdgeInsets.all(AppConstants.spaceLg),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        // A tint of ink rather than flat white. White-on-cream left the card
+        // with almost no edge against the paper background — the border and
+        // the tint together are what make it read as a raised surface.
+        color: AppColors.ink900.withValues(alpha: 0.04),
         borderRadius: BorderRadius.circular(AppConstants.radiusLg),
+        border: Border.all(color: AppColors.ink900.withValues(alpha: 0.12)),
         boxShadow: [
           BoxShadow(
             color: AppColors.ink900.withValues(alpha: 0.08),
@@ -41,7 +45,7 @@ class ScoreHeroCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'PrepGraph Score',
+                'PrepNode Score',
                 style: GoogleFonts.inter(
                   fontSize: AppConstants.fontSizeBodyMedium,
                   color: AppColors.graphite700,
@@ -65,13 +69,21 @@ class ScoreHeroCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                score.toStringAsFixed(1),
-                style: GoogleFonts.inter(
-                  fontSize: 48,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.ink900,
-                  height: 1.0,
+              // Counts up from zero on entry. A single 380ms tween — the
+              // number is the point of this card, so it is the one thing
+              // worth drawing the eye to.
+              TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0, end: score),
+                duration: const Duration(milliseconds: 380),
+                curve: Curves.easeOutCubic,
+                builder: (context, value, _) => Text(
+                  value.toStringAsFixed(1),
+                  style: GoogleFonts.inter(
+                    fontSize: 48,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.ink900,
+                    height: 1.0,
+                  ),
                 ),
               ),
               const SizedBox(width: AppConstants.spaceSm),
@@ -112,6 +124,7 @@ class ScoreHeroCard extends StatelessWidget {
 
   Widget _buildComponentRow(String label, double value) {
     final displayValue = value.toStringAsFixed(0);
+    final barColor = _getComponentColor(value);
     return Row(
       children: [
         Expanded(
@@ -126,27 +139,41 @@ class ScoreHeroCard extends StatelessWidget {
         const SizedBox(width: AppConstants.spaceSm),
         Container(
           width: 80,
-          height: 4,
+          // 6, not 4: at 4px the fill was a hairline and the tinted track
+          // below would have been invisible.
+          height: 6,
           decoration: BoxDecoration(
-            color: AppColors.surfaceVariant,
+            // Track tinted with the bar's own colour instead of a flat grey,
+            // so each row reads as one object and an empty bar still shows
+            // where the bar is.
+            color: barColor.withValues(alpha: 0.16),
             borderRadius: BorderRadius.circular(AppConstants.radiusFull),
           ),
-          child: FractionallySizedBox(
-            alignment: Alignment.centerLeft,
-            widthFactor: value / 100,
-            child: Container(
-              decoration: BoxDecoration(
-                color: _getComponentColor(value),
-                borderRadius: BorderRadius.circular(AppConstants.radiusFull),
+          child: TweenAnimationBuilder<double>(
+            tween: Tween(begin: 0, end: (value / 100).clamp(0.0, 1.0)),
+            duration: const Duration(milliseconds: 380),
+            curve: Curves.easeOutCubic,
+            builder: (context, factor, _) => FractionallySizedBox(
+              alignment: Alignment.centerLeft,
+              widthFactor: factor,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: barColor,
+                  borderRadius: BorderRadius.circular(AppConstants.radiusFull),
+                ),
               ),
             ),
           ),
         ),
         const SizedBox(width: AppConstants.spaceSm),
         SizedBox(
-          width: 32,
+          // 44, not 32: a three-digit value ("100%") did not fit and wrapped
+          // onto a second line as "100" / "%".
+          width: 44,
           child: Text(
             '$displayValue%',
+            maxLines: 1,
+            softWrap: false,
             style: GoogleFonts.inter(
               fontSize: AppConstants.fontSizeBodySmall,
               color: AppColors.graphite700,

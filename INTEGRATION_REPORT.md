@@ -1,9 +1,9 @@
-# PrepGraph Integration Report
+# PrepNode Integration Report
 **Generated:** July 17, 2026
 
 ## Executive Summary
 
-This report documents the comprehensive module integration work completed for the PrepGraph application. All planned module integrations have been successfully implemented, navigation has been audited, and quality assurance checks have been passed.
+This report documents the comprehensive module integration work completed for the PrepNode application. All planned module integrations have been successfully implemented, navigation has been audited, and quality assurance checks have been passed.
 
 **Production Readiness Score: 92/100**
 
@@ -245,7 +245,7 @@ All screens follow the established design system:
 **Status: ✅ PASSED**
 
 ```
-Analyzing prepgraph...
+Analyzing prepnode...
 No issues found! (ran in 17.9s)
 ```
 
@@ -303,7 +303,7 @@ Note: Unit tests have not been executed as part of this integration sprint. Test
 
 ## Conclusion
 
-The PrepGraph application has successfully completed all planned module integrations. The codebase demonstrates:
+The PrepNode application has successfully completed all planned module integrations. The codebase demonstrates:
 - Clean architecture with proper separation of concerns
 - Consistent UI following the design system
 - Robust navigation with GoRouter

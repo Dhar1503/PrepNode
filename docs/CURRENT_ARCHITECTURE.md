@@ -1,7 +1,7 @@
-# PrepGraph — Current Architecture (as of Phase 1C)
+# PrepNode — Current Architecture (as of Phase 1C)
 
 This document describes what actually exists in the running app today.
-The older `docs/07_PrepGraph-Database-Schema.md` and
+The older `docs/07_PrepNode-Database-Schema.md` and
 `lib/PROJECT_STRUCTURE.md` describe an earlier, more ambitious plan (a
 real MySQL backend, bcrypt password hashing, different folder names) that
 was never built — this file supersedes them for anything about current
@@ -26,7 +26,7 @@ a description of what runs today.
 
 ## No backend
 
-`api.prepgraph.app` does not resolve — there is no server. Every Dio call
+`api.prepnode.app` does not resolve — there is no server. Every Dio call
 in the app fails with a connection error and falls back to local data.
 This is the actual, intended state of this build, not a bug: it means
 the app is genuinely usable offline, because the offline path is the
@@ -191,7 +191,7 @@ touched — this phase made **zero schema changes**.
 unverified content read as authoritative:
 1. `resource_detail_screen.dart` showed a single green "Official
    Material" checkmark badge driven only by `isOfficial` — a flag that
-   describes a resource's *claimed* origin, not whether PrepGraph
+   describes a resource's *claimed* origin, not whether PrepNode
    verified its link. Several `isOfficial: true` resources (e.g. `res-7`,
    `res-8`, `res-9`, `res-11`) still carry `example.com` placeholder
    links, so this badge could show a verified-looking checkmark next to

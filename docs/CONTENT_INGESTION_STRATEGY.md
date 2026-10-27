@@ -1,4 +1,4 @@
-# PrepGraph — Content Ingestion Strategy
+# PrepNode — Content Ingestion Strategy
 
 Phase 1A, Task 5. Defines *how* real content enters the app's data layer —
 not the content itself. No scraping, no fabricated URLs, no generated

@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/ai_assistant/data/datasources/ai_assistant_remote_datasource.dart';
-import 'package:prepgraph/features/ai_assistant/data/services/ai_response_engine.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/ai_insight.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/ai_recommendation.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/chat_message.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/conversation.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/conversation_history.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/doubt_context.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/suggested_question.dart';
-import 'package:prepgraph/features/ai_assistant/domain/repositories/ai_assistant_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/ai_assistant/data/datasources/ai_assistant_remote_datasource.dart';
+import 'package:prepnode/features/ai_assistant/data/services/ai_response_engine.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/ai_insight.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/ai_recommendation.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/chat_message.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/conversation.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/conversation_history.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/doubt_context.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/suggested_question.dart';
+import 'package:prepnode/features/ai_assistant/domain/repositories/ai_assistant_repository.dart';
 
 /// AI Assistant Repository Implementation
 /// Conversation/message bookkeeping is handled by [remoteDataSource] (an

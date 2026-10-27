@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/category_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/yearly_trend.dart';
+import 'package:prepnode/features/cutoff/domain/entities/category_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/yearly_trend.dart';
 
 /// Represents historical cutoff data for a specific exam
 class ExamCutoff extends Equatable {

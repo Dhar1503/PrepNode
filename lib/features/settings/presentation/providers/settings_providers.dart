@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const _themeModePrefKey = 'prepgraph_theme_mode';
+const _themeModePrefKey = 'prepnode_theme_mode';
 
 /// Persists the user's Light/Dark/System choice via shared_preferences
 /// (already a project dependency, used elsewhere by CacheManager) — no new

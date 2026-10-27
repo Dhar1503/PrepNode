@@ -1,4 +1,4 @@
-/// PrepGraph Environment Configuration
+/// PrepNode Environment Configuration
 /// Manages environment-specific settings
 class AppConfig {
   AppConfig._();

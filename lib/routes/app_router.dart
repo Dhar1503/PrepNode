@@ -2,65 +2,67 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:prepgraph/core/widgets/bottom_navigation_bar.dart';
-import 'package:prepgraph/features/auth/presentation/screens/splash_screen.dart';
-import 'package:prepgraph/features/auth/presentation/screens/onboarding_screen.dart';
-import 'package:prepgraph/features/auth/presentation/screens/login_screen.dart';
-import 'package:prepgraph/features/auth/presentation/screens/register_screen.dart';
-import 'package:prepgraph/features/auth/presentation/screens/forgot_password_screen.dart';
-import 'package:prepgraph/features/auth/presentation/screens/profile_setup_screen.dart';
-import 'package:prepgraph/features/auth/presentation/screens/profile_screen.dart';
-import 'package:prepgraph/features/dashboard/presentation/screens/dashboard_screen.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/screens/knowledge_graph_home_screen.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/screens/topic_list_screen.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/screens/topic_detail_screen.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/screens/graph_view_screen.dart';
-import 'package:prepgraph/features/planner/presentation/screens/planner_screen.dart';
-import 'package:prepgraph/features/strategy/presentation/screens/my_strategy_screen.dart';
-import 'package:prepgraph/features/settings/presentation/screens/settings_screen.dart';
-import 'package:prepgraph/features/notifications/presentation/screens/notifications_screen.dart';
-import 'package:prepgraph/features/pyq/presentation/screens/pyq_home_screen.dart';
-import 'package:prepgraph/features/pyq/presentation/screens/practice_session_screen.dart';
-import 'package:prepgraph/features/pyq/presentation/screens/session_summary_screen.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_session.dart';
-import 'package:prepgraph/features/mock_test/presentation/screens/mock_test_home_screen.dart';
-import 'package:prepgraph/features/mock_test/presentation/screens/test_instructions_screen.dart';
-import 'package:prepgraph/features/mock_test/presentation/screens/test_interface_screen.dart';
-import 'package:prepgraph/features/mock_test/presentation/screens/result_screen.dart';
-import 'package:prepgraph/features/mock_test/presentation/screens/review_screen.dart';
-import 'package:prepgraph/features/mock_test/presentation/screens/detailed_analysis_screen.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_attempt.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_question.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_result.dart';
-import 'package:prepgraph/features/insights/presentation/screens/insights_home_screen.dart';
-import 'package:prepgraph/features/insights/presentation/screens/mastery_overview_screen.dart';
-import 'package:prepgraph/features/insights/presentation/screens/score_detail_screen.dart';
-import 'package:prepgraph/features/cutoff/presentation/screens/cutoff_home_screen.dart';
-import 'package:prepgraph/features/cutoff/presentation/screens/historical_cutoffs_screen.dart';
-import 'package:prepgraph/features/cutoff/presentation/screens/year_trend_screen.dart';
-import 'package:prepgraph/features/cutoff/presentation/screens/category_comparison_screen.dart';
-import 'package:prepgraph/features/cutoff/presentation/screens/readiness_prediction_screen.dart';
-import 'package:prepgraph/features/cutoff/presentation/screens/recommendation_screen.dart';
-import 'package:prepgraph/features/insights/presentation/screens/subject_performance_screen.dart';
-import 'package:prepgraph/features/insights/presentation/screens/study_time_screen.dart';
-import 'package:prepgraph/features/insights/presentation/screens/pyq_performance_screen.dart';
-import 'package:prepgraph/features/insights/presentation/screens/mock_test_trends_screen.dart';
-import 'package:prepgraph/features/insights/presentation/screens/weak_areas_screen.dart';
-import 'package:prepgraph/features/resources/presentation/screens/resource_home_screen.dart';
-import 'package:prepgraph/features/resources/presentation/screens/subject_resources_screen.dart';
-import 'package:prepgraph/features/resources/presentation/screens/resource_detail_screen.dart';
-import 'package:prepgraph/features/resources/presentation/screens/recommended_resources_screen.dart';
-import 'package:prepgraph/features/resources/presentation/screens/bookmarked_resources_screen.dart';
-import 'package:prepgraph/features/resources/presentation/screens/downloads_screen.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/screens/ai_assistant_home_screen.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/screens/chat_screen.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/screens/conversation_history_screen.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/screens/doubt_explanation_screen.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/screens/ai_study_recommendation_screen.dart';
-import 'package:prepgraph/features/ai_assistant/presentation/screens/ai_revision_recommendation_screen.dart';
+import 'package:prepnode/core/widgets/bottom_navigation_bar.dart';
+import 'package:prepnode/features/auth/presentation/screens/splash_screen.dart';
+import 'package:prepnode/features/auth/presentation/screens/onboarding_screen.dart';
+import 'package:prepnode/features/auth/presentation/screens/login_screen.dart';
+import 'package:prepnode/features/auth/presentation/screens/register_screen.dart';
+import 'package:prepnode/features/auth/presentation/screens/forgot_password_screen.dart';
+import 'package:prepnode/features/auth/presentation/screens/profile_setup_screen.dart';
+import 'package:prepnode/features/auth/presentation/screens/profile_screen.dart';
+import 'package:prepnode/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/screens/knowledge_graph_home_screen.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/screens/topic_list_screen.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/screens/topic_detail_screen.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/screens/graph_view_screen.dart';
+import 'package:prepnode/features/planner/presentation/screens/planner_screen.dart';
+import 'package:prepnode/features/strategy/presentation/screens/my_strategy_screen.dart';
+import 'package:prepnode/features/settings/presentation/screens/settings_screen.dart';
+import 'package:prepnode/features/notifications/presentation/screens/notifications_screen.dart';
+import 'package:prepnode/features/pyq/presentation/screens/pyq_home_screen.dart';
+import 'package:prepnode/features/pyq/presentation/screens/practice_session_screen.dart';
+import 'package:prepnode/features/pyq/presentation/screens/session_summary_screen.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_session.dart';
+import 'package:prepnode/features/mock_test/presentation/screens/mock_test_home_screen.dart';
+import 'package:prepnode/features/mock_test/presentation/screens/test_instructions_screen.dart';
+import 'package:prepnode/features/mock_test/presentation/screens/test_interface_screen.dart';
+import 'package:prepnode/features/mock_test/presentation/screens/result_screen.dart';
+import 'package:prepnode/features/mock_test/presentation/screens/review_screen.dart';
+import 'package:prepnode/features/mock_test/presentation/screens/detailed_analysis_screen.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_attempt.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_question.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_result.dart';
+import 'package:prepnode/features/insights/presentation/screens/insights_home_screen.dart';
+import 'package:prepnode/features/insights/presentation/screens/mastery_overview_screen.dart';
+import 'package:prepnode/features/insights/presentation/screens/score_detail_screen.dart';
+import 'package:prepnode/features/cutoff/presentation/screens/cutoff_home_screen.dart';
+import 'package:prepnode/features/cutoff/presentation/screens/historical_cutoffs_screen.dart';
+import 'package:prepnode/features/cutoff/presentation/screens/year_trend_screen.dart';
+import 'package:prepnode/features/cutoff/presentation/screens/category_comparison_screen.dart';
+import 'package:prepnode/features/cutoff/presentation/screens/readiness_prediction_screen.dart';
+import 'package:prepnode/features/cutoff/presentation/screens/recommendation_screen.dart';
+import 'package:prepnode/features/insights/presentation/screens/subject_performance_screen.dart';
+import 'package:prepnode/features/insights/presentation/screens/study_time_screen.dart';
+import 'package:prepnode/features/insights/presentation/screens/pyq_performance_screen.dart';
+import 'package:prepnode/features/insights/presentation/screens/mock_test_trends_screen.dart';
+import 'package:prepnode/features/insights/presentation/screens/weak_areas_screen.dart';
+import 'package:prepnode/features/resources/presentation/screens/resource_home_screen.dart';
+import 'package:prepnode/features/resources/presentation/screens/subject_resources_screen.dart';
+import 'package:prepnode/features/resources/presentation/screens/resource_detail_screen.dart';
+import 'package:prepnode/features/resources/presentation/screens/recommended_resources_screen.dart';
+import 'package:prepnode/features/resources/presentation/screens/bookmarked_resources_screen.dart';
+import 'package:prepnode/features/resources/presentation/screens/downloads_screen.dart';
+import 'package:prepnode/features/ai_assistant/presentation/screens/ai_assistant_home_screen.dart';
+import 'package:prepnode/features/ai_assistant/presentation/screens/chat_screen.dart';
+import 'package:prepnode/features/ai_assistant/presentation/screens/conversation_history_screen.dart';
+import 'package:prepnode/features/ai_assistant/presentation/screens/doubt_explanation_screen.dart';
+import 'package:prepnode/features/ai_assistant/presentation/screens/ai_study_recommendation_screen.dart';
+import 'package:prepnode/features/ai_assistant/presentation/screens/ai_revision_recommendation_screen.dart';
+import 'package:prepnode/features/roadmap/presentation/screens/roadmap_wizard_screen.dart';
+import 'package:prepnode/features/roadmap/presentation/screens/roadmap_timeline_screen.dart';
 
-/// PrepGraph GoRouter Configuration
+/// PrepNode GoRouter Configuration
 /// Initial routing structure with placeholder routes
 class AppRouter {
   AppRouter._();
@@ -192,6 +194,19 @@ class AppRouter {
         path: '/notifications',
         name: 'notifications',
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      // Adaptive roadmap. Both sit outside the bottom-nav shell: the wizard
+      // is a focused flow that should not offer tab-switching midway, and
+      // the timeline is a detail view reached from the dashboard card.
+      GoRoute(
+        path: '/roadmap/setup',
+        name: 'roadmapSetup',
+        builder: (context, state) => const RoadmapWizardScreen(),
+      ),
+      GoRoute(
+        path: '/roadmap',
+        name: 'roadmap',
+        builder: (context, state) => const RoadmapTimelineScreen(),
       ),
       // Knowledge Graph Routes (S3.1-S3.4)
       GoRoute(

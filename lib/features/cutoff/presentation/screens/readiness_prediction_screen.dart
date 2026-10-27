@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/readiness_prediction.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/recommendation.dart';
-import 'package:prepgraph/features/cutoff/presentation/providers/cutoff_providers.dart';
-import 'package:prepgraph/features/cutoff/presentation/widgets/prediction_card.dart';
-import 'package:prepgraph/features/cutoff/presentation/widgets/readiness_meter.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/cutoff/domain/entities/readiness_prediction.dart';
+import 'package:prepnode/features/cutoff/domain/entities/recommendation.dart';
+import 'package:prepnode/features/cutoff/presentation/providers/cutoff_providers.dart';
+import 'package:prepnode/features/cutoff/presentation/widgets/prediction_card.dart';
+import 'package:prepnode/features/cutoff/presentation/widgets/readiness_meter.dart';
 
 /// Readiness Prediction Screen
 /// Displays user's readiness prediction based on current performance,
@@ -400,7 +400,7 @@ class ReadinessPredictionScreen extends ConsumerWidget {
                     fontWeight: FontWeight.w600,
                     color: AppColors.ink900,
                   ),
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

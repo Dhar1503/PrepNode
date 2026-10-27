@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_scale.dart';
-import 'package:prepgraph/features/cutoff/presentation/providers/cutoff_providers.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_result.dart';
-import 'package:prepgraph/features/mock_test/presentation/providers/mock_test_providers.dart';
-import 'package:prepgraph/features/resources/presentation/providers/resource_providers.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/resource_card.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_scale.dart';
+import 'package:prepnode/features/cutoff/presentation/providers/cutoff_providers.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_result.dart';
+import 'package:prepnode/features/mock_test/presentation/providers/mock_test_providers.dart';
+import 'package:prepnode/features/resources/presentation/providers/resource_providers.dart';
+import 'package:prepnode/features/resources/presentation/widgets/resource_card.dart';
 
 /// Result Screen (S6.5)
 /// Displays test results with score and section breakdown
@@ -595,7 +595,7 @@ class ResultScreen extends ConsumerWidget {
                     fontWeight: FontWeight.w600,
                     color: AppColors.ink900,
                   ),
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

@@ -1,15 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/knowledge_graph/data/datasources/knowledge_graph_local_datasource.dart';
-import 'package:prepgraph/features/knowledge_graph/data/datasources/knowledge_graph_remote_datasource.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/exam.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_data.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_edge.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/subject.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/topic.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/topic_detail.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/knowledge_graph/data/datasources/knowledge_graph_local_datasource.dart';
+import 'package:prepnode/features/knowledge_graph/data/datasources/knowledge_graph_remote_datasource.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_data.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/subject.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/topic.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/topic_detail.dart';
+import 'package:prepnode/features/knowledge_graph/domain/repositories/knowledge_graph_repository.dart';
 
 /// Production Knowledge Graph Repository Implementation
 /// Uses remote API and local database with offline-first strategy
@@ -89,6 +87,21 @@ class KnowledgeGraphRepositoryImpl implements KnowledgeGraphRepository {
       }
 
       return Right(topicDetail);
+    } catch (e) {
+      return Left(_mapErrorToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GraphData>> getSyllabusGraph({
+    required String examId,
+    String? userId,
+  }) async {
+    try {
+      return Right(await _localDataSource.getSyllabusGraph(
+        examId: examId,
+        userId: userId,
+      ));
     } catch (e) {
       return Left(_mapErrorToFailure(e));
     }

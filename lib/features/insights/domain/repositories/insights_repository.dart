@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/pyq_performance.dart';
-import 'package:prepgraph/features/insights/domain/entities/mock_test_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/study_habits.dart';
-import 'package:prepgraph/features/insights/domain/entities/weak_area.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/pyq_performance.dart';
+import 'package:prepnode/features/insights/domain/entities/mock_test_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/study_habits.dart';
+import 'package:prepnode/features/insights/domain/entities/weak_area.dart';
 
 /// Insights Repository Interface
 /// Abstract repository for insights and analytics data
 abstract class InsightsRepository {
-  /// Get learner progress including PrepGraph Score
+  /// Get learner progress including PrepNode Score
   Future<Either<Failure, LearnerProgress>> getLearnerProgress(String userId);
 
   /// Get mastery analytics across all topics

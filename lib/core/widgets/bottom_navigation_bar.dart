@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
 
 /// Bottom Navigation Bar
 /// Main navigation for the app with 5 tabs
@@ -89,8 +89,13 @@ class AppBottomNavigationBar extends StatelessWidget {
       onTap: () => onTap(index),
       behavior: HitTestBehavior.opaque,
       child: Padding(
+        // Horizontal padding is 2, not spaceSm: five Expanded slots across a
+        // phone leave ~75px each, and 32px of inset truncated every label to
+        // "Ho…" / "Pra…" / "Insi…" / "Pro…". The slot itself (plus
+        // HitTestBehavior.opaque) already provides the tap target, so the
+        // inset bought nothing.
         padding: const EdgeInsets.symmetric(
-          horizontal: AppConstants.spaceSm,
+          horizontal: 2,
           vertical: AppConstants.spaceXs,
         ),
         child: Column(
@@ -102,15 +107,20 @@ class AppBottomNavigationBar extends StatelessWidget {
               size: 24,
             ),
             const SizedBox(height: 4),
-            Text(
-              label,
-              style: GoogleFonts.inter(
-                fontSize: AppConstants.fontSizeBodySmall,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: isSelected ? AppColors.ink900 : AppColors.graphite700,
+            // scaleDown so a long label shrinks slightly rather than losing
+            // characters to an ellipsis.
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                style: GoogleFonts.inter(
+                  fontSize: AppConstants.fontSizeBodySmall,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                  color: isSelected ? AppColors.ink900 : AppColors.graphite700,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

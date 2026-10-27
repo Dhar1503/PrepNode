@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/progress_summary.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/recent_activity.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/upcoming_schedule.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/dashboard/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/dashboard/domain/entities/progress_summary.dart';
+import 'package:prepnode/features/dashboard/domain/entities/recent_activity.dart';
+import 'package:prepnode/features/dashboard/domain/entities/upcoming_schedule.dart';
 
 /// Dashboard Repository Interface
 /// Abstract contract for dashboard data operations

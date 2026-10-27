@@ -4,7 +4,7 @@ library;
 
 class ApiConstants {
   /// Base URL for the API
-  static const String baseUrl = 'https://api.prepgraph.app/api/v1';
+  static const String baseUrl = 'https://api.prepnode.app/api/v1';
 
   /// Legacy endpoint aliases used by existing data-layer code
   static const String login = '/auth/login';

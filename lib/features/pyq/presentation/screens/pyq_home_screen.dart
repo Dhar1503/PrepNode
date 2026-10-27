@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/skeleton_loader.dart';
-import 'package:prepgraph/core/widgets/error_state.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_question.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_session.dart';
-import 'package:prepgraph/features/pyq/domain/entities/topic_pyq_summary.dart';
-import 'package:prepgraph/features/pyq/domain/repositories/pyq_repository.dart';
-import 'package:prepgraph/features/pyq/presentation/providers/pyq_providers.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/skeleton_loader.dart';
+import 'package:prepnode/core/widgets/error_state.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_question.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_session.dart';
+import 'package:prepnode/features/pyq/domain/entities/topic_pyq_summary.dart';
+import 'package:prepnode/features/pyq/domain/repositories/pyq_repository.dart';
+import 'package:prepnode/features/pyq/presentation/providers/pyq_providers.dart';
 
 /// PYQ Home Screen (S5.1)
 /// Practice home with resume card and subject/topic browser
@@ -154,12 +154,18 @@ class _PyqHomeScreenState extends ConsumerState<PyqHomeScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.paper50,
         elevation: 0,
-        title: Text(
-          'PYQ Practice',
-          style: GoogleFonts.fraunces(
-            fontSize: AppConstants.fontSizeHeadlineSmall,
-            fontWeight: FontWeight.w500,
-            color: AppColors.ink900,
+        // scaleDown: this bar carries several action icons, so the title
+        // must shrink rather than ellipsize at a large font scale.
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'PYQ Practice',
+            style: GoogleFonts.fraunces(
+              fontSize: AppConstants.fontSizeHeadlineSmall,
+              fontWeight: FontWeight.w500,
+              color: AppColors.ink900,
+            ),
           ),
         ),
         actions: [
@@ -326,8 +332,17 @@ class _PyqHomeScreenState extends ConsumerState<PyqHomeScreen> {
                       runSpacing: 4,
                       children: [
                         _buildStatBadge('Total', '${topic.totalQuestions}'),
-                        _buildStatBadge('Solved', '${topic.solvedQuestions}'),
-                        _buildStatBadge('Accuracy', '${(topic.averageAccuracy * 100).toInt()}%'),
+                        // Before the first attempt, "Solved 0" and
+                        // "Accuracy 0%" are not information — they read as a
+                        // bad score rather than an untouched topic. Show them
+                        // only once there is something to report.
+                        if (topic.solvedQuestions > 0) ...[
+                          _buildStatBadge('Solved', '${topic.solvedQuestions}'),
+                          _buildStatBadge(
+                            'Accuracy',
+                            '${(topic.averageAccuracy * 100).toInt()}%',
+                          ),
+                        ],
                       ],
                     ),
                   ],

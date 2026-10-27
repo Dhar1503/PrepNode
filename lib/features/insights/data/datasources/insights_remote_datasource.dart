@@ -2,15 +2,15 @@
 /// Handles all API calls for insights and analytics data
 library;
 
-import 'package:prepgraph/core/network/api_client.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
-import 'package:prepgraph/core/network/models/api_response.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/pyq_performance.dart';
-import 'package:prepgraph/features/insights/domain/entities/mock_test_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/study_habits.dart';
-import 'package:prepgraph/features/insights/domain/entities/weak_area.dart';
+import 'package:prepnode/core/network/api_client.dart';
+import 'package:prepnode/core/network/api_constants.dart';
+import 'package:prepnode/core/network/models/api_response.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/pyq_performance.dart';
+import 'package:prepnode/features/insights/domain/entities/mock_test_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/study_habits.dart';
+import 'package:prepnode/features/insights/domain/entities/weak_area.dart';
 
 class InsightsRemoteDataSource {
   final ApiClient _apiClient;
@@ -19,7 +19,7 @@ class InsightsRemoteDataSource {
     required ApiClient apiClient,
   }) : _apiClient = apiClient;
 
-  /// Get learner progress including PrepGraph Score
+  /// Get learner progress including PrepNode Score
   Future<LearnerProgress> getLearnerProgress(String userId) async {
     final response = await _apiClient.get<ApiResponse<Map<String, dynamic>>>(
       '${ApiConstants.analytics}/progress?userId=$userId',
@@ -39,7 +39,7 @@ class InsightsRemoteDataSource {
 
     return LearnerProgress(
       userId: userId,
-      prepGraphScore: (data['prepGraphScore'] as num).toDouble(),
+      prepNodeScore: (data['prepNodeScore'] as num).toDouble(),
       scoreComponents: scoreComponents,
       lastUpdated: DateTime.parse(data['lastUpdated'] as String),
     );

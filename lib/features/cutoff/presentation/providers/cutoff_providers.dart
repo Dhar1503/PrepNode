@@ -1,18 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/cutoff/data/datasources/cutoff_local_datasource.dart';
-import 'package:prepgraph/features/cutoff/data/repositories/cutoff_repository_impl.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/cutoff_analysis.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/readiness_prediction.dart';
-import 'package:prepgraph/features/cutoff/domain/repositories/cutoff_repository.dart';
-import 'package:prepgraph/features/cutoff/presentation/providers/cutoff_category_provider.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
-import 'package:prepgraph/features/pyq/presentation/providers/pyq_providers.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/cutoff/data/datasources/cutoff_local_datasource.dart';
+import 'package:prepnode/features/cutoff/data/repositories/cutoff_repository_impl.dart';
+import 'package:prepnode/features/cutoff/domain/entities/cutoff_analysis.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/readiness_prediction.dart';
+import 'package:prepnode/features/cutoff/domain/repositories/cutoff_repository.dart';
+import 'package:prepnode/features/cutoff/presentation/providers/cutoff_category_provider.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
+import 'package:prepnode/features/pyq/presentation/providers/pyq_providers.dart';
 
-export 'package:prepgraph/features/cutoff/presentation/providers/cutoff_category_provider.dart';
+export 'package:prepnode/features/cutoff/presentation/providers/cutoff_category_provider.dart';
 
 final cutoffLocalDataSourceProvider = Provider<CutoffLocalDataSource>((ref) {
   final databaseService = ref.watch(databaseServiceProvider);
@@ -20,7 +20,7 @@ final cutoffLocalDataSourceProvider = Provider<CutoffLocalDataSource>((ref) {
 });
 
 // Repository provider — composes Insights (mastery, mock test trend, real
-// PrepGraph Score), PYQ (real per-topic exam-frequency counts) and
+// PrepNode Score), PYQ (real per-topic exam-frequency counts) and
 // Knowledge Graph (the syllabus' subject list), the same way
 // DashboardRepositoryImpl composes existing repositories rather than
 // standing up new analytics of its own. No remote data source: there is no

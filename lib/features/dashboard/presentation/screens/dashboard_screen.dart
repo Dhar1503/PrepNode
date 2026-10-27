@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/progress_summary.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/recent_activity.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/upcoming_schedule.dart';
-import 'package:prepgraph/features/dashboard/presentation/providers/dashboard_providers.dart';
-import 'package:prepgraph/features/dashboard/presentation/widgets/dashboard_app_bar.dart';
-import 'package:prepgraph/features/dashboard/presentation/widgets/todays_focus_card.dart';
-import 'package:prepgraph/features/dashboard/presentation/widgets/daily_progress_section.dart';
-import 'package:prepgraph/features/dashboard/presentation/widgets/quick_actions_grid.dart';
-import 'package:prepgraph/features/dashboard/presentation/widgets/recent_activity_card.dart';
-import 'package:prepgraph/features/dashboard/presentation/widgets/upcoming_schedule_card.dart';
-import 'package:prepgraph/features/resources/presentation/providers/resource_providers.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/resource_card.dart';
-import 'package:prepgraph/features/strategy/presentation/widgets/strategy_hero_card.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/dashboard/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/dashboard/domain/entities/progress_summary.dart';
+import 'package:prepnode/features/dashboard/domain/entities/recent_activity.dart';
+import 'package:prepnode/features/dashboard/domain/entities/upcoming_schedule.dart';
+import 'package:prepnode/features/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:prepnode/features/dashboard/presentation/widgets/dashboard_app_bar.dart';
+import 'package:prepnode/features/dashboard/presentation/widgets/todays_focus_card.dart';
+import 'package:prepnode/features/dashboard/presentation/widgets/daily_progress_section.dart';
+import 'package:prepnode/features/dashboard/presentation/widgets/quick_actions_grid.dart';
+import 'package:prepnode/features/dashboard/presentation/widgets/recent_activity_card.dart';
+import 'package:prepnode/features/dashboard/presentation/widgets/upcoming_schedule_card.dart';
+import 'package:prepnode/features/resources/presentation/providers/resource_providers.dart';
+import 'package:prepnode/features/resources/presentation/widgets/resource_card.dart';
+import 'package:prepnode/features/strategy/presentation/widgets/strategy_hero_card.dart';
+import 'package:prepnode/features/progression/presentation/widgets/streak_card.dart';
+import 'package:prepnode/features/progression/presentation/widgets/xp_ring_card.dart';
+import 'package:prepnode/features/progression/presentation/widgets/motivation_card.dart';
+import 'package:prepnode/features/roadmap/presentation/widgets/todays_roadmap_card.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/widgets/graph_preview_card.dart';
+import 'package:prepnode/core/widgets/entrance_fade.dart';
 
 /// Dashboard Screen (S2.1)
 /// Main home screen with daily focus, progress, and quick actions
@@ -75,15 +81,21 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      'Continue Reading',
-                      style: TextStyle(
-                        fontSize: AppConstants.fontSizeHeadlineSmall,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.ink900,
+                    // scaleDown so this header can never lose characters to an
+                    // ellipsis at a large system font scale.
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Continue Reading',
+                        style: TextStyle(
+                          fontSize: AppConstants.fontSizeTitleMedium,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.ink900,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   TextButton(
@@ -131,15 +143,21 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      'Recommended for You',
-                      style: TextStyle(
-                        fontSize: AppConstants.fontSizeHeadlineSmall,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.ink900,
+                    // scaleDown so this header can never lose characters to an
+                    // ellipsis at a large system font scale.
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Recommended for You',
+                        style: TextStyle(
+                          fontSize: AppConstants.fontSizeTitleMedium,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.ink900,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   TextButton(
@@ -196,7 +214,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         dailyPlan != null && dailyPlan.totalTasks - dailyPlan.completedTasks > 0,
                   ),
                   const SizedBox(height: AppConstants.spaceLg),
-                  const StrategyHeroCard(),
+                  // Dashboard order follows the adaptive-platform brief:
+                  // greeting (app bar above), streak, XP, today's roadmap,
+                  // then the existing progress/graph/planner sections.
+                  const EntranceFade(index: 0, child: StreakCard()),
+                  const SizedBox(height: AppConstants.spaceLg),
+                  const EntranceFade(index: 1, child: XpRingCard()),
+                  const SizedBox(height: AppConstants.spaceLg),
+                  const EntranceFade(index: 2, child: TodaysRoadmapCard()),
+                  const SizedBox(height: AppConstants.spaceLg),
+                  const EntranceFade(index: 3, child: StrategyHeroCard()),
                   const SizedBox(height: AppConstants.spaceLg),
                   if (dailyPlan != null)
                     TodaysFocusCard(
@@ -211,7 +238,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       isLoading: dashboardState.isLoadingProgress,
                     ),
                   const SizedBox(height: AppConstants.spaceLg),
-                  const QuickActionsGrid(),
+                  // Knowledge Graph preview — tapping opens the full
+                  // interactive graph on the Learn tab.
+                  const EntranceFade(index: 4, child: GraphPreviewCard()),
+                  const SizedBox(height: AppConstants.spaceLg),
+                  const EntranceFade(index: 5, child: QuickActionsGrid()),
                   const SizedBox(height: AppConstants.spaceLg),
                   // Continue Reading Section - M9 Integration
                   _buildContinueReadingSection(),
@@ -230,6 +261,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       schedule: upcomingSchedule,
                       isLoading: dashboardState.isLoadingSchedule,
                     ),
+                  const SizedBox(height: AppConstants.spaceLg),
+                  // Daily motivation closes the scroll — a challenge and a
+                  // tip are a better last impression than an empty card.
+                  const EntranceFade(index: 6, child: MotivationCard()),
                   const SizedBox(height: AppConstants.spaceXl),
                 ],
               ),

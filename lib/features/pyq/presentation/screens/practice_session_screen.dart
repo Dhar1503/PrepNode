@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/app_button.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_question.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_session.dart';
-import 'package:prepgraph/features/pyq/presentation/providers/pyq_providers.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/strategy/presentation/providers/strategy_providers.dart';
-import 'package:prepgraph/features/pyq/presentation/widgets/ai_hint_widget.dart';
-import 'package:prepgraph/features/pyq/presentation/widgets/confidence_rating_widget.dart';
-import 'package:prepgraph/features/pyq/presentation/widgets/explanation_panel.dart';
-import 'package:prepgraph/features/pyq/presentation/widgets/practice_progress_bar.dart';
-import 'package:prepgraph/features/pyq/presentation/widgets/question_card.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/app_button.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_question.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_session.dart';
+import 'package:prepnode/features/pyq/presentation/providers/pyq_providers.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/strategy/presentation/providers/strategy_providers.dart';
+import 'package:prepnode/features/pyq/presentation/widgets/ai_hint_widget.dart';
+import 'package:prepnode/features/pyq/presentation/widgets/confidence_rating_widget.dart';
+import 'package:prepnode/features/pyq/presentation/widgets/explanation_panel.dart';
+import 'package:prepnode/features/pyq/presentation/widgets/practice_progress_bar.dart';
+import 'package:prepnode/features/pyq/presentation/widgets/question_card.dart';
 
 /// Practice Session Screen (S5.5)
 /// Full-screen practice session with timer, questions, and explanations

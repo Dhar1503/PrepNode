@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/strategy/domain/entities/roadmap.dart';
-import 'package:prepgraph/features/strategy/domain/entities/strategy_recommendation.dart';
-import 'package:prepgraph/features/strategy/domain/entities/strategy_summary.dart';
-import 'package:prepgraph/features/strategy/domain/entities/study_capacity.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/strategy/domain/entities/roadmap.dart';
+import 'package:prepnode/features/strategy/domain/entities/strategy_recommendation.dart';
+import 'package:prepnode/features/strategy/domain/entities/strategy_summary.dart';
+import 'package:prepnode/features/strategy/domain/entities/study_capacity.dart';
 
 /// Strategy Repository Interface
 ///
-/// The PrepGraph Strategy Engine's contract. Every implementation composes
+/// The PrepNode Strategy Engine's contract. Every implementation composes
 /// existing repositories (Insights, PYQ, Planner, Cutoff, Knowledge Graph,
 /// Profile) — there is no dedicated strategy datasource or backend; this is
 /// a synthesis layer over data those modules already maintain.

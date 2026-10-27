@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/network/providers/network_providers.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/insights/data/datasources/insights_local_datasource.dart';
-import 'package:prepgraph/features/insights/data/datasources/insights_remote_datasource.dart';
-import 'package:prepgraph/features/insights/data/repositories/insights_repository_impl.dart';
-import 'package:prepgraph/features/insights/domain/entities/learner_progress.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/pyq_performance.dart';
-import 'package:prepgraph/features/insights/domain/entities/mock_test_analytics.dart';
-import 'package:prepgraph/features/insights/domain/entities/study_habits.dart';
-import 'package:prepgraph/features/insights/domain/entities/weak_area.dart';
-import 'package:prepgraph/features/insights/domain/repositories/insights_repository.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/network/providers/network_providers.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/insights/data/datasources/insights_local_datasource.dart';
+import 'package:prepnode/features/insights/data/datasources/insights_remote_datasource.dart';
+import 'package:prepnode/features/insights/data/repositories/insights_repository_impl.dart';
+import 'package:prepnode/features/insights/domain/entities/learner_progress.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/pyq_performance.dart';
+import 'package:prepnode/features/insights/domain/entities/mock_test_analytics.dart';
+import 'package:prepnode/features/insights/domain/entities/study_habits.dart';
+import 'package:prepnode/features/insights/domain/entities/weak_area.dart';
+import 'package:prepnode/features/insights/domain/repositories/insights_repository.dart';
 
 // Remote Data Source Provider
 final insightsRemoteDataSourceProvider = Provider<InsightsRemoteDataSource>((ref) {

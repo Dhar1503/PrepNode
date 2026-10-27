@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
 
 /// Filter Sheet Widget
 /// Bottom sheet for filtering resources
@@ -97,7 +97,7 @@ class _ResourceFilterSheetState extends State<ResourceFilterSheet> {
                       fontWeight: FontWeight.w600,
                       color: AppColors.ink900,
                     ),
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

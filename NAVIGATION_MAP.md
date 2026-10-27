@@ -1,7 +1,7 @@
-# PrepGraph Navigation Map
+# PrepNode Navigation Map
 
 ## Overview
-This document maps the complete navigation flow of the PrepGraph application, including all inter-module connections and routing paths.
+This document maps the complete navigation flow of the PrepNode application, including all inter-module connections and routing paths.
 
 ## Authentication Flow
 

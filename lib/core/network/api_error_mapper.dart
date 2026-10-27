@@ -3,7 +3,7 @@
 library;
 
 import 'package:dio/dio.dart';
-import 'package:prepgraph/core/data/failures.dart';
+import 'package:prepnode/core/data/failures.dart';
 
 class ApiErrorMapper {
   static Failure mapDioError(DioException error) {

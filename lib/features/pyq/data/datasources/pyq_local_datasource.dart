@@ -3,10 +3,10 @@
 library;
 
 import 'package:drift/drift.dart';
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/core/data/database/database.dart';
-import 'package:prepgraph/features/pyq/domain/entities/pyq_question.dart';
-import 'package:prepgraph/features/pyq/domain/entities/topic_pyq_summary.dart';
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/core/data/database/database.dart';
+import 'package:prepnode/features/pyq/domain/entities/pyq_question.dart';
+import 'package:prepnode/features/pyq/domain/entities/topic_pyq_summary.dart';
 
 class PyqLocalDataSource {
   final DatabaseService _databaseService;

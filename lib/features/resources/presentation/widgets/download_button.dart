@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/resources/domain/entities/download_status.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/resources/domain/entities/download_status.dart';
 
 /// Download Button Widget
 /// Shows download status and allows download action

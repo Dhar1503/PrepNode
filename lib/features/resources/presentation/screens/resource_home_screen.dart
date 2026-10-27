@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/resources/presentation/providers/resource_providers.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/recommendation_banner.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/resource_category_chip.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/resource_card.dart';
-import 'package:prepgraph/features/resources/presentation/widgets/search_bar.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/resources/presentation/providers/resource_providers.dart';
+import 'package:prepnode/features/resources/presentation/widgets/recommendation_banner.dart';
+import 'package:prepnode/features/resources/presentation/widgets/resource_category_chip.dart';
+import 'package:prepnode/features/resources/presentation/widgets/resource_card.dart';
+import 'package:prepnode/features/resources/presentation/widgets/search_bar.dart';
 
 /// Resource Home Screen (S9.1)
 /// Entry point for Resources module with search, categories, and recommendations
@@ -162,15 +162,21 @@ class _ResourceHomeScreenState extends ConsumerState<ResourceHomeScreen> {
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  'Top Recommendations',
-                  style: GoogleFonts.inter(
-                    fontSize: AppConstants.fontSizeHeadlineSmall,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.ink900,
+                // scaleDown so this header can never lose characters to an
+                // ellipsis at a large system font scale.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Top Recommendations',
+                    style: GoogleFonts.inter(
+                      fontSize: AppConstants.fontSizeTitleMedium,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.ink900,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               TextButton(

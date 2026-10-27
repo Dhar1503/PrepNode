@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/auth/presentation/widgets/logo_mark.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/auth/presentation/widgets/logo_mark.dart';
 
 /// Splash Screen (S0.1)
 /// Brand introduction + silent session check before routing
@@ -176,7 +176,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     return FadeTransition(
       opacity: _wordmarkFadeAnimation,
       child: Text(
-        'PrepGraph',
+        'PrepNode',
         style: GoogleFonts.fraunces(
           fontSize: 24.0,
           fontWeight: FontWeight.w500,

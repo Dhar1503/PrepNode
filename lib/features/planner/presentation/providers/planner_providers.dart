@@ -1,12 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prepgraph/core/data/providers/data_providers.dart';
-import 'package:prepgraph/core/network/providers/network_providers.dart';
-import 'package:prepgraph/features/planner/data/repositories/planner_repository_impl.dart';
-import 'package:prepgraph/features/planner/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
-import 'package:prepgraph/features/planner/domain/entities/study_session.dart';
-import 'package:prepgraph/features/planner/domain/entities/weekly_plan.dart';
-import 'package:prepgraph/features/planner/domain/repositories/planner_repository.dart';
+import 'package:prepnode/core/data/providers/data_providers.dart';
+import 'package:prepnode/core/network/providers/network_providers.dart';
+import 'package:prepnode/features/planner/data/repositories/planner_repository_impl.dart';
+import 'package:prepnode/features/planner/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/features/planner/domain/entities/study_session.dart';
+import 'package:prepnode/features/planner/domain/entities/weekly_plan.dart';
+import 'package:prepnode/features/planner/domain/repositories/planner_repository.dart';
+import 'package:prepnode/features/progression/domain/entities/progression.dart';
+import 'package:prepnode/features/progression/presentation/providers/progression_providers.dart';
 
 /// Planner Repository Provider
 final plannerRepositoryProvider = Provider<PlannerRepository>((ref) {
@@ -47,7 +49,12 @@ class DailyPlanState {
 class DailyPlanNotifier extends StateNotifier<DailyPlanState> {
   final PlannerRepository _repository;
 
-  DailyPlanNotifier(this._repository) : super(const DailyPlanState());
+  /// Optional so existing tests can build this notifier without a database
+  /// behind it; when present, completing a task feeds the streak and XP.
+  final ProgressionRecorder? _progression;
+
+  DailyPlanNotifier(this._repository, [this._progression])
+      : super(const DailyPlanState());
 
   Future<void> loadDailyPlan({required String userId, required DateTime date}) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
@@ -149,6 +156,15 @@ class DailyPlanNotifier extends StateNotifier<DailyPlanState> {
       endTime: now,
       actualDurationMinutes: task.durationMinutes,
       quality: SessionQuality.good,
+    );
+
+    // Feeds the streak and XP. Deduped by task id so re-completing the same
+    // task cannot inflate either — the streak must measure days studied, not
+    // taps.
+    await _progression?.record(
+      StudyActivity.plannerTask,
+      note: task.title,
+      dedupeKey: 'planner-task-${task.id}',
     );
   }
 
@@ -276,7 +292,7 @@ class DailyPlanNotifier extends StateNotifier<DailyPlanState> {
 /// Daily Plan Provider
 final dailyPlanProvider = StateNotifierProvider<DailyPlanNotifier, DailyPlanState>((ref) {
   final repository = ref.watch(plannerRepositoryProvider);
-  return DailyPlanNotifier(repository);
+  return DailyPlanNotifier(repository, ref.watch(progressionRecorderProvider));
 });
 
 /// Weekly Plan State Provider

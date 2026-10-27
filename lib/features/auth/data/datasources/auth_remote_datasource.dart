@@ -2,14 +2,14 @@
 /// Handles all API calls for authentication
 library;
 
-import 'package:prepgraph/core/network/api_client.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
-import 'package:prepgraph/core/network/models/requests/auth_requests.dart';
-import 'package:prepgraph/core/network/models/api_response.dart';
-import 'package:prepgraph/core/network/mappers/dto_mapper.dart';
-import 'package:prepgraph/core/network/secure_storage_service.dart';
-import 'package:prepgraph/features/auth/domain/entities/auth_response.dart';
-import 'package:prepgraph/features/auth/domain/entities/user.dart';
+import 'package:prepnode/core/network/api_client.dart';
+import 'package:prepnode/core/network/api_constants.dart';
+import 'package:prepnode/core/network/models/requests/auth_requests.dart';
+import 'package:prepnode/core/network/models/api_response.dart';
+import 'package:prepnode/core/network/mappers/dto_mapper.dart';
+import 'package:prepnode/core/network/secure_storage_service.dart';
+import 'package:prepnode/features/auth/domain/entities/auth_response.dart';
+import 'package:prepnode/features/auth/domain/entities/user.dart';
 
 class AuthRemoteDataSource {
   final ApiClient _apiClient;

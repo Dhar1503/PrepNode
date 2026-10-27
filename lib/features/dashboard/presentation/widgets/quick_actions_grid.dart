@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/skeleton_loader.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
 
 /// Quick Actions Grid
 /// Grid of quick access buttons to main modules
@@ -16,30 +15,35 @@ class QuickActionsGrid extends StatelessWidget {
       _QuickAction(
         icon: Icons.psychology,
         label: 'AI Planner',
+        subtitle: 'Your daily plan',
         route: '/planner',
         color: AppColors.marigold500,
       ),
       _QuickAction(
         icon: Icons.account_tree,
         label: 'Knowledge Graph',
+        subtitle: 'How topics connect',
         route: '/learn',
         color: AppColors.sage500,
       ),
       _QuickAction(
         icon: Icons.quiz,
         label: 'PYQs',
+        subtitle: 'Practice past papers',
         route: '/practice',
         color: AppColors.ink900,
       ),
       _QuickAction(
         icon: Icons.assignment,
         label: 'Mock Tests',
+        subtitle: 'Timed practice',
         route: '/mock-tests',
         color: AppColors.marigold500,
       ),
       _QuickAction(
         icon: Icons.menu_book,
         label: 'Resources',
+        subtitle: 'Videos and references',
         route: '/resources',
         color: AppColors.sage500,
       ),
@@ -51,12 +55,14 @@ class QuickActionsGrid extends StatelessWidget {
       _QuickAction(
         icon: Icons.analytics,
         label: 'Insights',
+        subtitle: 'Your progress',
         route: '/insights',
         color: AppColors.azure500,
       ),
       _QuickAction(
         icon: Icons.smart_toy,
         label: 'AI Assistant',
+        subtitle: 'Ask about a topic',
         route: '/ai-assistant',
         color: AppColors.amethyst500,
       ),
@@ -78,9 +84,14 @@ class QuickActionsGrid extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: crossAxisCount,
-              childAspectRatio: 1.2,
+              // 1.1, not the old 1.2: the tile now carries a two-line
+              // subtitle, and at this device's 1.3x font scale a shorter
+              // tile clipped "How topics connect" to "How topics". A label
+              // that loses words is worse than a row that is 12dp taller,
+              // so the height follows the text rather than the reverse.
+              childAspectRatio: 1.1,
               crossAxisSpacing: AppConstants.spaceMd,
-              mainAxisSpacing: AppConstants.spaceMd,
+              mainAxisSpacing: AppConstants.spaceSm,
             ),
             itemCount: actions.length,
             itemBuilder: (context, index) {
@@ -96,12 +107,14 @@ class QuickActionsGrid extends StatelessWidget {
 class _QuickAction {
   final IconData icon;
   final String label;
+  final String subtitle;
   final String route;
   final Color color;
 
   const _QuickAction({
     required this.icon,
     required this.label,
+    required this.subtitle,
     required this.route,
     required this.color,
   });
@@ -153,35 +166,61 @@ class _QuickActionCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppConstants.radiusSm),
             splashColor: action.color.withValues(alpha: 0.1),
             highlightColor: action.color.withValues(alpha: 0.05),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: action.color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(AppConstants.radiusSm),
+            // Left-aligned rather than centred: a centred two-line label
+            // ("Knowledge Graph" wrapping while its neighbours sat on one
+            // line) made the grid look ragged. Left alignment lets every
+            // tile share the same baseline whatever the label length.
+            child: Padding(
+              padding: const EdgeInsets.all(AppConstants.spaceXs),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: action.color.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(AppConstants.radiusSm),
+                    ),
+                    child: Icon(
+                      action.icon,
+                      color: action.color,
+                      size: 20,
+                    ),
                   ),
-                  child: Icon(
-                    action.icon,
-                    color: action.color,
-                    size: 24,
+                  const SizedBox(height: AppConstants.spaceXs),
+                  // scaleDown, not ellipsis: "Knowledge Graph" is the longest
+                  // label and must stay whole. Shrinking a couple of points
+                  // on the widest tile beats losing characters.
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      action.label,
+                      style: GoogleFonts.inter(
+                        fontSize: AppConstants.fontSizeBodyMedium,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.ink900,
+                      ),
+                      maxLines: 1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppConstants.spaceSm),
-                Text(
-                  action.label,
-                  style: GoogleFonts.inter(
-                    fontSize: AppConstants.fontSizeBodyMedium,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.ink900,
+                  const SizedBox(height: 2),
+                  Flexible(
+                    child: Text(
+                      action.subtitle,
+                      style: GoogleFonts.inter(
+                        fontSize: AppConstants.fontSizeBodySmall,
+                        color: AppColors.graphite700,
+                        height: 1.25,
+                      ),
+                      maxLines: 2,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/cutoff_analysis.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/exam_cutoff.dart';
-import 'package:prepgraph/features/cutoff/domain/entities/readiness_prediction.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/cutoff/domain/entities/cutoff_analysis.dart';
+import 'package:prepnode/features/cutoff/domain/entities/exam_cutoff.dart';
+import 'package:prepnode/features/cutoff/domain/entities/readiness_prediction.dart';
 
 /// Repository interface for cutoff intelligence operations
 /// Abstracts data source to enable easy backend integration later

@@ -3,7 +3,7 @@
 library;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
+import 'package:prepnode/core/network/api_constants.dart';
 
 class SecureStorageService {
   final FlutterSecureStorage _storage;

@@ -3,10 +3,10 @@
 library;
 
 import 'package:drift/drift.dart';
-import 'package:prepgraph/core/data/database/database.dart' hide MockTest, MockTestQuestion;
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test.dart';
-import 'package:prepgraph/features/mock_test/domain/entities/mock_test_question.dart';
+import 'package:prepnode/core/data/database/database.dart' hide MockTest, MockTestQuestion;
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test.dart';
+import 'package:prepnode/features/mock_test/domain/entities/mock_test_question.dart';
 
 class MockTestLocalDataSource {
   final DatabaseService _databaseService;

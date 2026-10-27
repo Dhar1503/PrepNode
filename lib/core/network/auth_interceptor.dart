@@ -3,8 +3,8 @@
 library;
 
 import 'package:dio/dio.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
-import 'package:prepgraph/core/network/secure_storage_service.dart';
+import 'package:prepnode/core/network/api_constants.dart';
+import 'package:prepnode/core/network/secure_storage_service.dart';
 
 class AuthInterceptor extends Interceptor {
   final SecureStorageService _secureStorage;

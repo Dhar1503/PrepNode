@@ -1,6 +1,6 @@
-import 'package:prepgraph/features/ai_assistant/domain/entities/chat_message.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/conversation.dart';
-import 'package:prepgraph/features/ai_assistant/domain/entities/conversation_history.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/chat_message.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/conversation.dart';
+import 'package:prepnode/features/ai_assistant/domain/entities/conversation_history.dart';
 
 /// In-memory conversation/message store for the AI Assistant.
 ///

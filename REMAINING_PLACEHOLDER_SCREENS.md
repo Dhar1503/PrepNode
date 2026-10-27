@@ -1,7 +1,7 @@
 # Remaining Placeholder Screens and Features
 
 ## Overview
-This document lists all placeholder screens and features that are currently not fully implemented in the PrepGraph application.
+This document lists all placeholder screens and features that are currently not fully implemented in the PrepNode application.
 
 ## Placeholder Screens
 

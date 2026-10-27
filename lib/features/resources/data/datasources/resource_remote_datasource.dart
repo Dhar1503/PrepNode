@@ -14,14 +14,14 @@
 /// exercised today.
 library;
 
-import 'package:prepgraph/core/network/api_client.dart';
-import 'package:prepgraph/core/network/api_constants.dart';
-import 'package:prepgraph/core/network/models/api_response.dart';
-import 'package:prepgraph/features/resources/domain/entities/bookmark.dart';
-import 'package:prepgraph/features/resources/domain/entities/recommended_resource.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_category.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_collection.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/core/network/api_client.dart';
+import 'package:prepnode/core/network/api_constants.dart';
+import 'package:prepnode/core/network/models/api_response.dart';
+import 'package:prepnode/features/resources/domain/entities/bookmark.dart';
+import 'package:prepnode/features/resources/domain/entities/recommended_resource.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_category.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_collection.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
 
 class ResourceRemoteDataSource {
   final ApiClient _apiClient;

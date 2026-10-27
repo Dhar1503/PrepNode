@@ -1,7 +1,7 @@
 # Remaining Features to Implement
 
 ## Overview
-This document provides a comprehensive list of all features that are not yet implemented in the PrepGraph application, categorized by module and priority.
+This document provides a comprehensive list of all features that are not yet implemented in the PrepNode application, categorized by module and priority.
 
 ## Authentication Module (M0)
 

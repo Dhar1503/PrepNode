@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_data.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_edge.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_data.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_edge.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
 
 /// Interactive Graph View Widget
 /// Custom-painted interactive graph with zoom and pan

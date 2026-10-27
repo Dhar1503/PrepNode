@@ -1,15 +1,33 @@
 /// Authentication Local Data Source
-/// Handles local storage and caching for authentication
+/// Owns the on-device account store. PrepNode has no backend, so this is the
+/// only place accounts are ever created, verified or persisted.
 library;
-
-import 'dart:convert';
 
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/core/data/database/database.dart' hide User;
-import 'package:prepgraph/core/network/secure_storage_service.dart';
-import 'package:prepgraph/features/auth/domain/entities/user.dart';
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/core/data/database/database.dart' hide User;
+import 'package:prepnode/core/data/database/database.dart' as dbm show User;
+import 'package:prepnode/core/network/secure_storage_service.dart';
+import 'package:prepnode/core/utils/password_hasher.dart';
+import 'package:prepnode/features/auth/domain/entities/user.dart';
+
+/// Why a local credential check failed, so the UI can say something useful
+/// instead of one blanket "invalid credentials".
+///
+/// Distinguishing these normally leaks which emails are registered. That
+/// threat does not apply here: the account store is a SQLite file inside
+/// this app's private data directory, so anyone who can probe it can
+/// already read the row list directly. The usability win is real, the
+/// enumeration risk is not.
+enum LocalCredentialOutcome { success, unknownEmail, wrongPassword }
+
+class LocalCredentialResult {
+  final LocalCredentialOutcome outcome;
+  final User? user;
+
+  const LocalCredentialResult(this.outcome, [this.user]);
+}
 
 class AuthLocalDataSource {
   final DatabaseService _databaseService;
@@ -21,15 +39,19 @@ class AuthLocalDataSource {
   })  : _databaseService = databaseService,
         _secureStorage = secureStorage;
 
-  /// Save user to local database. When [plainPassword] is supplied (a real
-  /// backend just authenticated it), it's hashed and cached locally too, so
-  /// this same account can use the offline login fallback later if the
-  /// backend becomes unreachable. Without it, an existing local password
-  /// hash is left untouched on update, and defaults to empty on first
-  /// insert (matches accounts that have only ever been seen via a remote
-  /// login/register — the backend, not this device, owns their password).
+  /// Emails are stored and compared in one canonical form. Without this,
+  /// registering as "Aspirant@Gmail.com" and later logging in as
+  /// "aspirant@gmail.com" looked to the app like two different accounts —
+  /// the account existed, the password was right, and login still failed.
+  static String normalizeEmail(String email) => email.trim().toLowerCase();
+
+  /// Save user to local database. When [plainPassword] is supplied it is
+  /// hashed and stored; otherwise an existing hash is left untouched on
+  /// update and defaults to empty on first insert (an account with no
+  /// password can never be logged into locally, by design).
   Future<void> saveUser(User user, {String? plainPassword}) async {
     final db = _databaseService.database;
+    final email = normalizeEmail(user.email);
     final existingUser = await (db.select(db.users)
           ..where((tbl) => tbl.userId.equals(user.id)))
         .getSingleOrNull();
@@ -38,7 +60,7 @@ class AuthLocalDataSource {
       await (db.update(db.users)..where((tbl) => tbl.userId.equals(user.id)))
           .write(UsersCompanion(
         name: Value(user.name),
-        email: Value(user.email),
+        email: Value(email),
         avatarUrl: Value(user.avatarUrl),
         examId: Value(user.examId),
         targetDate: Value(user.targetDate),
@@ -46,15 +68,17 @@ class AuthLocalDataSource {
         preparationLevel: Value(user.preparationLevel),
         profileComplete: Value(user.profileComplete),
         lastLogin: Value(DateTime.now()),
-        passwordHash:
-            plainPassword != null ? Value(_hashSecret(plainPassword)) : const Value.absent(),
+        passwordHash: plainPassword != null
+            ? Value(PasswordHasher.hash(plainPassword))
+            : const Value.absent(),
       ));
     } else {
       await db.into(db.users).insert(UsersCompanion.insert(
         userId: user.id,
         name: user.name,
-        email: user.email,
-        passwordHash: plainPassword != null ? _hashSecret(plainPassword) : '',
+        email: email,
+        passwordHash:
+            plainPassword != null ? PasswordHasher.hash(plainPassword) : '',
         avatarUrl: Value(user.avatarUrl),
         examId: Value(user.examId),
         targetDate: Value(user.targetDate),
@@ -72,77 +96,53 @@ class AuthLocalDataSource {
           ..where((tbl) => tbl.userId.equals(userId)))
         .getSingleOrNull();
 
-    if (user == null) return null;
-
-    return User(
-      id: user.userId,
-      name: user.name,
-      email: user.email,
-      avatarUrl: user.avatarUrl,
-      examId: user.examId,
-      targetDate: user.targetDate,
-      dailyStudyHours: user.dailyStudyHours,
-      preparationLevel: user.preparationLevel,
-      profileComplete: user.profileComplete,
-    );
+    return user == null ? null : _toUser(user);
   }
 
-  /// Look up a locally-known user by email (used by the offline register
-  /// fallback's duplicate-account check, and the offline login fallback).
+  /// Look up a locally-known user by email.
   Future<User?> getUserByEmail(String email) async {
-    final db = _databaseService.database;
-    final row = await (db.select(db.users)
-          ..where((tbl) => tbl.email.equals(email.trim())))
-        .getSingleOrNull();
-    if (row == null) return null;
-
-    return User(
-      id: row.userId,
-      name: row.name,
-      email: row.email,
-      avatarUrl: row.avatarUrl,
-      examId: row.examId,
-      targetDate: row.targetDate,
-      dailyStudyHours: row.dailyStudyHours,
-      preparationLevel: row.preparationLevel,
-      profileComplete: row.profileComplete,
-    );
+    final row = await _findRowByEmail(email);
+    return row == null ? null : _toUser(row);
   }
 
-  /// Verify a plaintext password against the locally-cached hash for an
-  /// email, for the offline login fallback. Returns the matching user, or
-  /// null if the email is unknown locally or the password doesn't match —
-  /// callers must not distinguish between these two cases in the resulting
-  /// error message (avoids leaking which emails are registered).
-  Future<User?> verifyLocalCredentials({
+  /// Whether an account already exists for [email] (duplicate-registration
+  /// check). Uses the same normalization as registration itself, so
+  /// "A@b.com" and "a@b.com" cannot both be registered.
+  Future<bool> emailExists(String email) async {
+    return await _findRowByEmail(email) != null;
+  }
+
+  /// Verify a plaintext password against the stored hash for an email.
+  ///
+  /// On success, an account still holding a legacy (unsalted djb2) hash is
+  /// transparently re-hashed with the current scheme — this is the only
+  /// moment the plaintext is available, so it is the only place the upgrade
+  /// can happen without forcing a password reset.
+  Future<LocalCredentialResult> verifyLocalCredentials({
     required String email,
     required String password,
   }) async {
     final db = _databaseService.database;
-    final row = await (db.select(db.users)
-          ..where((tbl) => tbl.email.equals(email.trim())))
-        .getSingleOrNull();
-    if (row == null) return null;
-    if (row.passwordHash.isEmpty || row.passwordHash != _hashSecret(password)) {
-      return null;
+    final row = await _findRowByEmail(email);
+    if (row == null) {
+      return const LocalCredentialResult(LocalCredentialOutcome.unknownEmail);
+    }
+    if (!PasswordHasher.verify(password, row.passwordHash)) {
+      return const LocalCredentialResult(LocalCredentialOutcome.wrongPassword);
     }
 
-    return User(
-      id: row.userId,
-      name: row.name,
-      email: row.email,
-      avatarUrl: row.avatarUrl,
-      examId: row.examId,
-      targetDate: row.targetDate,
-      dailyStudyHours: row.dailyStudyHours,
-      preparationLevel: row.preparationLevel,
-      profileComplete: row.profileComplete,
-    );
+    if (PasswordHasher.needsUpgrade(row.passwordHash)) {
+      await (db.update(db.users)..where((tbl) => tbl.userId.equals(row.userId)))
+          .write(UsersCompanion(
+        passwordHash: Value(PasswordHasher.hash(password)),
+      ));
+    }
+
+    return LocalCredentialResult(LocalCredentialOutcome.success, _toUser(row));
   }
 
-  /// Create a brand-new local-only account for the offline register
-  /// fallback. Callers must first check [getUserByEmail] themselves to
-  /// enforce duplicate-account validation — this method does not re-check.
+  /// Create a brand-new local-only account. Callers must first check
+  /// [emailExists] — this method does not re-check.
   Future<User> createLocalUser({
     required String name,
     required String email,
@@ -150,27 +150,26 @@ class AuthLocalDataSource {
   }) async {
     final db = _databaseService.database;
     final userId = const Uuid().v4();
-    final trimmedEmail = email.trim();
+    final normalizedEmail = normalizeEmail(email);
+    final trimmedName = name.trim();
 
     await db.into(db.users).insert(UsersCompanion.insert(
       userId: userId,
-      name: name,
-      email: trimmedEmail,
-      passwordHash: _hashSecret(password),
+      name: trimmedName,
+      email: normalizedEmail,
+      passwordHash: PasswordHasher.hash(password),
       profileComplete: const Value(false),
     ));
 
     return User(
       id: userId,
-      name: name,
-      email: trimmedEmail,
+      name: trimmedName,
+      email: normalizedEmail,
       profileComplete: false,
     );
   }
 
-  /// Persist a session's tokens to secure storage. Used for the offline
-  /// fallback session created locally when no backend is reachable (a real
-  /// backend session's tokens are already saved by AuthRemoteDataSource).
+  /// Persist a session's tokens to secure storage.
   Future<void> saveSessionTokens({
     required String userId,
     required String accessToken,
@@ -182,9 +181,7 @@ class AuthLocalDataSource {
   }
 
   /// Record a session's refresh token locally so its expiration can be
-  /// checked at app restart without a network round trip — used for both
-  /// a real backend session (recording its own refresh token) and the
-  /// offline fallback session (which mints its own local token).
+  /// checked at app restart without a network round trip.
   Future<void> recordSession({
     required String userId,
     required String refreshToken,
@@ -195,7 +192,7 @@ class AuthLocalDataSource {
           RefreshTokensCompanion.insert(
             tokenId: const Uuid().v4(),
             userId: userId,
-            tokenHash: _hashSecret(refreshToken),
+            tokenHash: PasswordHasher.hashToken(refreshToken),
             expiresAt: expiresAt,
             deviceLabel: const Value('this-device'),
           ),
@@ -203,35 +200,31 @@ class AuthLocalDataSource {
   }
 
   /// Whether a given refresh token's locally-tracked session has expired or
-  /// been revoked. A token with no matching local row (e.g. a backend
-  /// session established before this tracking existed) is treated as
-  /// valid — the network layer's AuthInterceptor already handles expiration
-  /// for real backend sessions via 401 + refresh.
+  /// been revoked. A token with no matching local row is treated as valid.
   Future<bool> isSessionExpired(String refreshToken) async {
-    final db = _databaseService.database;
-    final row = await (db.select(db.refreshTokens)
-          ..where((tbl) => tbl.tokenHash.equals(_hashSecret(refreshToken))))
-        .getSingleOrNull();
+    final row = await _findSessionRow(refreshToken);
     if (row == null) return false;
     if (row.revokedAt != null) return true;
     return row.expiresAt.isBefore(DateTime.now());
   }
 
   /// Convenience wrapper for [isSessionExpired] against whatever refresh
-  /// token is currently persisted in secure storage — used by SplashScreen
-  /// during session restoration.
+  /// token is currently persisted in secure storage.
   Future<bool> isCurrentSessionExpired() async {
     final refreshToken = await getRefreshToken();
     if (refreshToken == null || refreshToken.isEmpty) return false;
     return isSessionExpired(refreshToken);
   }
 
-  /// Revoke the locally-tracked session for a refresh token (logout
-  /// cleanup). A no-op if the token has no local row.
+  /// Revoke the locally-tracked session for a refresh token (logout).
+  /// Only the session row is touched — the account itself is untouched, so
+  /// the same credentials work on the next login.
   Future<void> revokeSession(String refreshToken) async {
     final db = _databaseService.database;
+    final row = await _findSessionRow(refreshToken);
+    if (row == null) return;
     await (db.update(db.refreshTokens)
-          ..where((tbl) => tbl.tokenHash.equals(_hashSecret(refreshToken))))
+          ..where((tbl) => tbl.tokenId.equals(row.tokenId)))
         .write(RefreshTokensCompanion(revokedAt: Value(DateTime.now())));
   }
 
@@ -255,7 +248,8 @@ class AuthLocalDataSource {
     return await _secureStorage.isAuthenticated();
   }
 
-  /// Clear all authentication data
+  /// Clear the session only. Deliberately does NOT delete the account row,
+  /// so logging out never destroys the credentials needed to log back in.
   Future<void> clearAuthData() async {
     await _secureStorage.clearAuthData();
   }
@@ -273,18 +267,48 @@ class AuthLocalDataSource {
         .write(UsersCompanion(lastLogin: Value(DateTime.now())));
   }
 
-  /// Deterministic local-only credential hash for the offline fallback
-  /// login/register path and local session-token tracking. This is NOT
-  /// used when a real backend is reachable — the backend owns real
-  /// password hashing there. No crypto package exists in this project (by
-  /// design, to avoid adding unnecessary dependencies), so this djb2-style
-  /// mix is a local-device gate only, not a cryptographically secure hash.
-  String _hashSecret(String value) {
-    final bytes = utf8.encode('prepgraph-local-salt::$value');
-    int hash = 5381;
-    for (final byte in bytes) {
-      hash = ((hash << 5) + hash + byte) & 0x7FFFFFFF;
-    }
-    return hash.toRadixString(16);
+  /// Email lookup used by every credential path.
+  ///
+  /// Reads with `get()` rather than `getSingleOrNull()` on purpose: the
+  /// users table had no unique constraint on email until schema v6, so a
+  /// database written by an older build can legitimately hold duplicate
+  /// rows. `getSingleOrNull()` throws on those, which surfaced as an
+  /// "unknown error" on login and locked the account out entirely. Taking
+  /// the earliest-created row keeps such a device usable.
+  Future<dbm.User?> _findRowByEmail(String email) async {
+    final db = _databaseService.database;
+    final normalized = normalizeEmail(email);
+    final rows = await (db.select(db.users)
+          ..where((tbl) => tbl.email.lower().equals(normalized))
+          ..orderBy([(t) => OrderingTerm.asc(t.createdAt)]))
+        .get();
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  /// Session lookup that accepts both the current SHA-256 token hash and
+  /// the legacy djb2 one, so sessions created by an older build are still
+  /// recognised (and can still be revoked) after the upgrade.
+  Future<RefreshToken?> _findSessionRow(String refreshToken) async {
+    final db = _databaseService.database;
+    final current = PasswordHasher.hashToken(refreshToken);
+    final legacy = PasswordHasher.legacyHash(refreshToken);
+    final rows = await (db.select(db.refreshTokens)
+          ..where((tbl) => tbl.tokenHash.isIn([current, legacy])))
+        .get();
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  User _toUser(dbm.User row) {
+    return User(
+      id: row.userId,
+      name: row.name,
+      email: row.email,
+      avatarUrl: row.avatarUrl,
+      examId: row.examId,
+      targetDate: row.targetDate,
+      dailyStudyHours: row.dailyStudyHours,
+      preparationLevel: row.preparationLevel,
+      profileComplete: row.profileComplete,
+    );
   }
 }

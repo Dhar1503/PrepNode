@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// PrepGraph Material 3 Theme Configuration
+/// PrepNode Material 3 Theme Configuration
 /// Based on Design System v1.0
 class AppTheme {
   AppTheme._();

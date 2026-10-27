@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// PrepGraph Design System Colors
+/// PrepNode Design System Colors
 /// Based on Design System v1.0 - "Prepare with Purpose"
 /// Core palette: Ink, Marigold, Sage, Paper
 class AppColors {

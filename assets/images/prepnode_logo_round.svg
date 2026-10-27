@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="PrepNode app icon (round)">
+  <title>PrepNode app icon (round)</title>
+  <!--
+    Launcher variant: the triangle sits inside a paper disc on an ink
+    ground, so the mark survives Android's adaptive-icon mask (which can
+    crop ~25% at the edges) and still reads at 48dp.
+
+    The disc is r=200 of a 512 canvas, and the triangle is inset within it
+    so no node touches the disc edge.
+  -->
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B2A4A"/>
+      <stop offset="1" stop-color="#2A3D63"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#ground)"/>
+  <circle cx="256" cy="256" r="200" fill="#FBFAF6"/>
+  <g transform="translate(256 262) scale(0.78) translate(-256 -240)">
+    <g stroke="#A9B6CE" stroke-width="20" stroke-linecap="round" fill="none">
+      <line x1="256" y1="150" x2="155" y2="318"/>
+      <line x1="256" y1="150" x2="357" y2="318"/>
+      <line x1="155" y1="318" x2="357" y2="318"/>
+    </g>
+    <circle cx="256" cy="150" r="52" fill="#1B2A4A"/>
+    <circle cx="155" cy="318" r="46" fill="#5C8A72"/>
+    <circle cx="357" cy="318" r="46" fill="#E5A73B"/>
+  </g>
+</svg>

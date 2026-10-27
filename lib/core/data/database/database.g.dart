@@ -7482,12 +7482,12 @@ class $UserAnalyticsTable extends UserAnalytics
       'REFERENCES users (user_id)',
     ),
   );
-  static const VerificationMeta _prepGraphScoreMeta = const VerificationMeta(
-    'prepGraphScore',
+  static const VerificationMeta _prepNodeScoreMeta = const VerificationMeta(
+    'prepNodeScore',
   );
   @override
-  late final GeneratedColumn<double> prepGraphScore = GeneratedColumn<double>(
-    'prep_graph_score',
+  late final GeneratedColumn<double> prepNodeScore = GeneratedColumn<double>(
+    'prep_node_score',
     aliasedName,
     false,
     type: DriftSqlType.double,
@@ -7569,7 +7569,7 @@ class $UserAnalyticsTable extends UserAnalytics
   @override
   List<GeneratedColumn> get $columns => [
     userId,
-    prepGraphScore,
+    prepNodeScore,
     topicCompletion,
     pyqPerformance,
     mockAccuracy,
@@ -7597,12 +7597,12 @@ class $UserAnalyticsTable extends UserAnalytics
     } else if (isInserting) {
       context.missing(_userIdMeta);
     }
-    if (data.containsKey('prep_graph_score')) {
+    if (data.containsKey('prep_node_score')) {
       context.handle(
-        _prepGraphScoreMeta,
-        prepGraphScore.isAcceptableOrUnknown(
-          data['prep_graph_score']!,
-          _prepGraphScoreMeta,
+        _prepNodeScoreMeta,
+        prepNodeScore.isAcceptableOrUnknown(
+          data['prep_node_score']!,
+          _prepNodeScoreMeta,
         ),
       );
     }
@@ -7673,9 +7673,9 @@ class $UserAnalyticsTable extends UserAnalytics
         DriftSqlType.string,
         data['${effectivePrefix}user_id'],
       )!,
-      prepGraphScore: attachedDatabase.typeMapping.read(
+      prepNodeScore: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
-        data['${effectivePrefix}prep_graph_score'],
+        data['${effectivePrefix}prep_node_score'],
       )!,
       topicCompletion: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
@@ -7713,7 +7713,7 @@ class $UserAnalyticsTable extends UserAnalytics
 class UserAnalyticsData extends DataClass
     implements Insertable<UserAnalyticsData> {
   final String userId;
-  final double prepGraphScore;
+  final double prepNodeScore;
   final double topicCompletion;
   final double pyqPerformance;
   final double mockAccuracy;
@@ -7722,7 +7722,7 @@ class UserAnalyticsData extends DataClass
   final DateTime lastUpdated;
   const UserAnalyticsData({
     required this.userId,
-    required this.prepGraphScore,
+    required this.prepNodeScore,
     required this.topicCompletion,
     required this.pyqPerformance,
     required this.mockAccuracy,
@@ -7734,7 +7734,7 @@ class UserAnalyticsData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['user_id'] = Variable<String>(userId);
-    map['prep_graph_score'] = Variable<double>(prepGraphScore);
+    map['prep_node_score'] = Variable<double>(prepNodeScore);
     map['topic_completion'] = Variable<double>(topicCompletion);
     map['pyq_performance'] = Variable<double>(pyqPerformance);
     map['mock_accuracy'] = Variable<double>(mockAccuracy);
@@ -7747,7 +7747,7 @@ class UserAnalyticsData extends DataClass
   UserAnalyticsCompanion toCompanion(bool nullToAbsent) {
     return UserAnalyticsCompanion(
       userId: Value(userId),
-      prepGraphScore: Value(prepGraphScore),
+      prepNodeScore: Value(prepNodeScore),
       topicCompletion: Value(topicCompletion),
       pyqPerformance: Value(pyqPerformance),
       mockAccuracy: Value(mockAccuracy),
@@ -7764,7 +7764,7 @@ class UserAnalyticsData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return UserAnalyticsData(
       userId: serializer.fromJson<String>(json['userId']),
-      prepGraphScore: serializer.fromJson<double>(json['prepGraphScore']),
+      prepNodeScore: serializer.fromJson<double>(json['prepNodeScore']),
       topicCompletion: serializer.fromJson<double>(json['topicCompletion']),
       pyqPerformance: serializer.fromJson<double>(json['pyqPerformance']),
       mockAccuracy: serializer.fromJson<double>(json['mockAccuracy']),
@@ -7780,7 +7780,7 @@ class UserAnalyticsData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'userId': serializer.toJson<String>(userId),
-      'prepGraphScore': serializer.toJson<double>(prepGraphScore),
+      'prepNodeScore': serializer.toJson<double>(prepNodeScore),
       'topicCompletion': serializer.toJson<double>(topicCompletion),
       'pyqPerformance': serializer.toJson<double>(pyqPerformance),
       'mockAccuracy': serializer.toJson<double>(mockAccuracy),
@@ -7792,7 +7792,7 @@ class UserAnalyticsData extends DataClass
 
   UserAnalyticsData copyWith({
     String? userId,
-    double? prepGraphScore,
+    double? prepNodeScore,
     double? topicCompletion,
     double? pyqPerformance,
     double? mockAccuracy,
@@ -7801,7 +7801,7 @@ class UserAnalyticsData extends DataClass
     DateTime? lastUpdated,
   }) => UserAnalyticsData(
     userId: userId ?? this.userId,
-    prepGraphScore: prepGraphScore ?? this.prepGraphScore,
+    prepNodeScore: prepNodeScore ?? this.prepNodeScore,
     topicCompletion: topicCompletion ?? this.topicCompletion,
     pyqPerformance: pyqPerformance ?? this.pyqPerformance,
     mockAccuracy: mockAccuracy ?? this.mockAccuracy,
@@ -7812,9 +7812,9 @@ class UserAnalyticsData extends DataClass
   UserAnalyticsData copyWithCompanion(UserAnalyticsCompanion data) {
     return UserAnalyticsData(
       userId: data.userId.present ? data.userId.value : this.userId,
-      prepGraphScore: data.prepGraphScore.present
-          ? data.prepGraphScore.value
-          : this.prepGraphScore,
+      prepNodeScore: data.prepNodeScore.present
+          ? data.prepNodeScore.value
+          : this.prepNodeScore,
       topicCompletion: data.topicCompletion.present
           ? data.topicCompletion.value
           : this.topicCompletion,
@@ -7840,7 +7840,7 @@ class UserAnalyticsData extends DataClass
   String toString() {
     return (StringBuffer('UserAnalyticsData(')
           ..write('userId: $userId, ')
-          ..write('prepGraphScore: $prepGraphScore, ')
+          ..write('prepNodeScore: $prepNodeScore, ')
           ..write('topicCompletion: $topicCompletion, ')
           ..write('pyqPerformance: $pyqPerformance, ')
           ..write('mockAccuracy: $mockAccuracy, ')
@@ -7854,7 +7854,7 @@ class UserAnalyticsData extends DataClass
   @override
   int get hashCode => Object.hash(
     userId,
-    prepGraphScore,
+    prepNodeScore,
     topicCompletion,
     pyqPerformance,
     mockAccuracy,
@@ -7867,7 +7867,7 @@ class UserAnalyticsData extends DataClass
       identical(this, other) ||
       (other is UserAnalyticsData &&
           other.userId == this.userId &&
-          other.prepGraphScore == this.prepGraphScore &&
+          other.prepNodeScore == this.prepNodeScore &&
           other.topicCompletion == this.topicCompletion &&
           other.pyqPerformance == this.pyqPerformance &&
           other.mockAccuracy == this.mockAccuracy &&
@@ -7878,7 +7878,7 @@ class UserAnalyticsData extends DataClass
 
 class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
   final Value<String> userId;
-  final Value<double> prepGraphScore;
+  final Value<double> prepNodeScore;
   final Value<double> topicCompletion;
   final Value<double> pyqPerformance;
   final Value<double> mockAccuracy;
@@ -7888,7 +7888,7 @@ class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
   final Value<int> rowid;
   const UserAnalyticsCompanion({
     this.userId = const Value.absent(),
-    this.prepGraphScore = const Value.absent(),
+    this.prepNodeScore = const Value.absent(),
     this.topicCompletion = const Value.absent(),
     this.pyqPerformance = const Value.absent(),
     this.mockAccuracy = const Value.absent(),
@@ -7899,7 +7899,7 @@ class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
   });
   UserAnalyticsCompanion.insert({
     required String userId,
-    this.prepGraphScore = const Value.absent(),
+    this.prepNodeScore = const Value.absent(),
     this.topicCompletion = const Value.absent(),
     this.pyqPerformance = const Value.absent(),
     this.mockAccuracy = const Value.absent(),
@@ -7910,7 +7910,7 @@ class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
   }) : userId = Value(userId);
   static Insertable<UserAnalyticsData> custom({
     Expression<String>? userId,
-    Expression<double>? prepGraphScore,
+    Expression<double>? prepNodeScore,
     Expression<double>? topicCompletion,
     Expression<double>? pyqPerformance,
     Expression<double>? mockAccuracy,
@@ -7921,7 +7921,7 @@ class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
   }) {
     return RawValuesInsertable({
       if (userId != null) 'user_id': userId,
-      if (prepGraphScore != null) 'prep_graph_score': prepGraphScore,
+      if (prepNodeScore != null) 'prep_node_score': prepNodeScore,
       if (topicCompletion != null) 'topic_completion': topicCompletion,
       if (pyqPerformance != null) 'pyq_performance': pyqPerformance,
       if (mockAccuracy != null) 'mock_accuracy': mockAccuracy,
@@ -7934,7 +7934,7 @@ class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
 
   UserAnalyticsCompanion copyWith({
     Value<String>? userId,
-    Value<double>? prepGraphScore,
+    Value<double>? prepNodeScore,
     Value<double>? topicCompletion,
     Value<double>? pyqPerformance,
     Value<double>? mockAccuracy,
@@ -7945,7 +7945,7 @@ class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
   }) {
     return UserAnalyticsCompanion(
       userId: userId ?? this.userId,
-      prepGraphScore: prepGraphScore ?? this.prepGraphScore,
+      prepNodeScore: prepNodeScore ?? this.prepNodeScore,
       topicCompletion: topicCompletion ?? this.topicCompletion,
       pyqPerformance: pyqPerformance ?? this.pyqPerformance,
       mockAccuracy: mockAccuracy ?? this.mockAccuracy,
@@ -7962,8 +7962,8 @@ class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
     if (userId.present) {
       map['user_id'] = Variable<String>(userId.value);
     }
-    if (prepGraphScore.present) {
-      map['prep_graph_score'] = Variable<double>(prepGraphScore.value);
+    if (prepNodeScore.present) {
+      map['prep_node_score'] = Variable<double>(prepNodeScore.value);
     }
     if (topicCompletion.present) {
       map['topic_completion'] = Variable<double>(topicCompletion.value);
@@ -7993,7 +7993,7 @@ class UserAnalyticsCompanion extends UpdateCompanion<UserAnalyticsData> {
   String toString() {
     return (StringBuffer('UserAnalyticsCompanion(')
           ..write('userId: $userId, ')
-          ..write('prepGraphScore: $prepGraphScore, ')
+          ..write('prepNodeScore: $prepNodeScore, ')
           ..write('topicCompletion: $topicCompletion, ')
           ..write('pyqPerformance: $pyqPerformance, ')
           ..write('mockAccuracy: $mockAccuracy, ')
@@ -12716,9 +12716,4129 @@ class ContentSyncMetadataCompanion extends UpdateCompanion<ContentSyncRecord> {
   }
 }
 
-abstract class _$PrepGraphDatabase extends GeneratedDatabase {
-  _$PrepGraphDatabase(QueryExecutor e) : super(e);
-  $PrepGraphDatabaseManager get managers => $PrepGraphDatabaseManager(this);
+class $RoadmapPreferencesTable extends RoadmapPreferences
+    with TableInfo<$RoadmapPreferencesTable, RoadmapPreference> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RoadmapPreferencesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (user_id)',
+    ),
+  );
+  static const VerificationMeta _examIdMeta = const VerificationMeta('examId');
+  @override
+  late final GeneratedColumn<String> examId = GeneratedColumn<String>(
+    'exam_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _levelMeta = const VerificationMeta('level');
+  @override
+  late final GeneratedColumn<String> level = GeneratedColumn<String>(
+    'level',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _hoursPerDayMeta = const VerificationMeta(
+    'hoursPerDay',
+  );
+  @override
+  late final GeneratedColumn<int> hoursPerDay = GeneratedColumn<int>(
+    'hours_per_day',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _preferredTimeMeta = const VerificationMeta(
+    'preferredTime',
+  );
+  @override
+  late final GeneratedColumn<String> preferredTime = GeneratedColumn<String>(
+    'preferred_time',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetMonthMeta = const VerificationMeta(
+    'targetMonth',
+  );
+  @override
+  late final GeneratedColumn<int> targetMonth = GeneratedColumn<int>(
+    'target_month',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetYearMeta = const VerificationMeta(
+    'targetYear',
+  );
+  @override
+  late final GeneratedColumn<int> targetYear = GeneratedColumn<int>(
+    'target_year',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _studentTypeMeta = const VerificationMeta(
+    'studentType',
+  );
+  @override
+  late final GeneratedColumn<String> studentType = GeneratedColumn<String>(
+    'student_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    userId,
+    examId,
+    level,
+    hoursPerDay,
+    preferredTime,
+    targetMonth,
+    targetYear,
+    studentType,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'roadmap_preferences';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RoadmapPreference> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('exam_id')) {
+      context.handle(
+        _examIdMeta,
+        examId.isAcceptableOrUnknown(data['exam_id']!, _examIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_examIdMeta);
+    }
+    if (data.containsKey('level')) {
+      context.handle(
+        _levelMeta,
+        level.isAcceptableOrUnknown(data['level']!, _levelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_levelMeta);
+    }
+    if (data.containsKey('hours_per_day')) {
+      context.handle(
+        _hoursPerDayMeta,
+        hoursPerDay.isAcceptableOrUnknown(
+          data['hours_per_day']!,
+          _hoursPerDayMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_hoursPerDayMeta);
+    }
+    if (data.containsKey('preferred_time')) {
+      context.handle(
+        _preferredTimeMeta,
+        preferredTime.isAcceptableOrUnknown(
+          data['preferred_time']!,
+          _preferredTimeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_preferredTimeMeta);
+    }
+    if (data.containsKey('target_month')) {
+      context.handle(
+        _targetMonthMeta,
+        targetMonth.isAcceptableOrUnknown(
+          data['target_month']!,
+          _targetMonthMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_targetMonthMeta);
+    }
+    if (data.containsKey('target_year')) {
+      context.handle(
+        _targetYearMeta,
+        targetYear.isAcceptableOrUnknown(data['target_year']!, _targetYearMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_targetYearMeta);
+    }
+    if (data.containsKey('student_type')) {
+      context.handle(
+        _studentTypeMeta,
+        studentType.isAcceptableOrUnknown(
+          data['student_type']!,
+          _studentTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_studentTypeMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {userId};
+  @override
+  RoadmapPreference map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RoadmapPreference(
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      examId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exam_id'],
+      )!,
+      level: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}level'],
+      )!,
+      hoursPerDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}hours_per_day'],
+      )!,
+      preferredTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}preferred_time'],
+      )!,
+      targetMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_month'],
+      )!,
+      targetYear: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_year'],
+      )!,
+      studentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}student_type'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $RoadmapPreferencesTable createAlias(String alias) {
+    return $RoadmapPreferencesTable(attachedDatabase, alias);
+  }
+}
+
+class RoadmapPreference extends DataClass
+    implements Insertable<RoadmapPreference> {
+  final String userId;
+  final String examId;
+
+  /// beginner | intermediate | advanced
+  final String level;
+  final int hoursPerDay;
+
+  /// morning | afternoon | night
+  final String preferredTime;
+  final int targetMonth;
+  final int targetYear;
+
+  /// working | fulltime
+  final String studentType;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const RoadmapPreference({
+    required this.userId,
+    required this.examId,
+    required this.level,
+    required this.hoursPerDay,
+    required this.preferredTime,
+    required this.targetMonth,
+    required this.targetYear,
+    required this.studentType,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['user_id'] = Variable<String>(userId);
+    map['exam_id'] = Variable<String>(examId);
+    map['level'] = Variable<String>(level);
+    map['hours_per_day'] = Variable<int>(hoursPerDay);
+    map['preferred_time'] = Variable<String>(preferredTime);
+    map['target_month'] = Variable<int>(targetMonth);
+    map['target_year'] = Variable<int>(targetYear);
+    map['student_type'] = Variable<String>(studentType);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  RoadmapPreferencesCompanion toCompanion(bool nullToAbsent) {
+    return RoadmapPreferencesCompanion(
+      userId: Value(userId),
+      examId: Value(examId),
+      level: Value(level),
+      hoursPerDay: Value(hoursPerDay),
+      preferredTime: Value(preferredTime),
+      targetMonth: Value(targetMonth),
+      targetYear: Value(targetYear),
+      studentType: Value(studentType),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory RoadmapPreference.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RoadmapPreference(
+      userId: serializer.fromJson<String>(json['userId']),
+      examId: serializer.fromJson<String>(json['examId']),
+      level: serializer.fromJson<String>(json['level']),
+      hoursPerDay: serializer.fromJson<int>(json['hoursPerDay']),
+      preferredTime: serializer.fromJson<String>(json['preferredTime']),
+      targetMonth: serializer.fromJson<int>(json['targetMonth']),
+      targetYear: serializer.fromJson<int>(json['targetYear']),
+      studentType: serializer.fromJson<String>(json['studentType']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'userId': serializer.toJson<String>(userId),
+      'examId': serializer.toJson<String>(examId),
+      'level': serializer.toJson<String>(level),
+      'hoursPerDay': serializer.toJson<int>(hoursPerDay),
+      'preferredTime': serializer.toJson<String>(preferredTime),
+      'targetMonth': serializer.toJson<int>(targetMonth),
+      'targetYear': serializer.toJson<int>(targetYear),
+      'studentType': serializer.toJson<String>(studentType),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  RoadmapPreference copyWith({
+    String? userId,
+    String? examId,
+    String? level,
+    int? hoursPerDay,
+    String? preferredTime,
+    int? targetMonth,
+    int? targetYear,
+    String? studentType,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => RoadmapPreference(
+    userId: userId ?? this.userId,
+    examId: examId ?? this.examId,
+    level: level ?? this.level,
+    hoursPerDay: hoursPerDay ?? this.hoursPerDay,
+    preferredTime: preferredTime ?? this.preferredTime,
+    targetMonth: targetMonth ?? this.targetMonth,
+    targetYear: targetYear ?? this.targetYear,
+    studentType: studentType ?? this.studentType,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  RoadmapPreference copyWithCompanion(RoadmapPreferencesCompanion data) {
+    return RoadmapPreference(
+      userId: data.userId.present ? data.userId.value : this.userId,
+      examId: data.examId.present ? data.examId.value : this.examId,
+      level: data.level.present ? data.level.value : this.level,
+      hoursPerDay: data.hoursPerDay.present
+          ? data.hoursPerDay.value
+          : this.hoursPerDay,
+      preferredTime: data.preferredTime.present
+          ? data.preferredTime.value
+          : this.preferredTime,
+      targetMonth: data.targetMonth.present
+          ? data.targetMonth.value
+          : this.targetMonth,
+      targetYear: data.targetYear.present
+          ? data.targetYear.value
+          : this.targetYear,
+      studentType: data.studentType.present
+          ? data.studentType.value
+          : this.studentType,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoadmapPreference(')
+          ..write('userId: $userId, ')
+          ..write('examId: $examId, ')
+          ..write('level: $level, ')
+          ..write('hoursPerDay: $hoursPerDay, ')
+          ..write('preferredTime: $preferredTime, ')
+          ..write('targetMonth: $targetMonth, ')
+          ..write('targetYear: $targetYear, ')
+          ..write('studentType: $studentType, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    userId,
+    examId,
+    level,
+    hoursPerDay,
+    preferredTime,
+    targetMonth,
+    targetYear,
+    studentType,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RoadmapPreference &&
+          other.userId == this.userId &&
+          other.examId == this.examId &&
+          other.level == this.level &&
+          other.hoursPerDay == this.hoursPerDay &&
+          other.preferredTime == this.preferredTime &&
+          other.targetMonth == this.targetMonth &&
+          other.targetYear == this.targetYear &&
+          other.studentType == this.studentType &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class RoadmapPreferencesCompanion extends UpdateCompanion<RoadmapPreference> {
+  final Value<String> userId;
+  final Value<String> examId;
+  final Value<String> level;
+  final Value<int> hoursPerDay;
+  final Value<String> preferredTime;
+  final Value<int> targetMonth;
+  final Value<int> targetYear;
+  final Value<String> studentType;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const RoadmapPreferencesCompanion({
+    this.userId = const Value.absent(),
+    this.examId = const Value.absent(),
+    this.level = const Value.absent(),
+    this.hoursPerDay = const Value.absent(),
+    this.preferredTime = const Value.absent(),
+    this.targetMonth = const Value.absent(),
+    this.targetYear = const Value.absent(),
+    this.studentType = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RoadmapPreferencesCompanion.insert({
+    required String userId,
+    required String examId,
+    required String level,
+    required int hoursPerDay,
+    required String preferredTime,
+    required int targetMonth,
+    required int targetYear,
+    required String studentType,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : userId = Value(userId),
+       examId = Value(examId),
+       level = Value(level),
+       hoursPerDay = Value(hoursPerDay),
+       preferredTime = Value(preferredTime),
+       targetMonth = Value(targetMonth),
+       targetYear = Value(targetYear),
+       studentType = Value(studentType);
+  static Insertable<RoadmapPreference> custom({
+    Expression<String>? userId,
+    Expression<String>? examId,
+    Expression<String>? level,
+    Expression<int>? hoursPerDay,
+    Expression<String>? preferredTime,
+    Expression<int>? targetMonth,
+    Expression<int>? targetYear,
+    Expression<String>? studentType,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (userId != null) 'user_id': userId,
+      if (examId != null) 'exam_id': examId,
+      if (level != null) 'level': level,
+      if (hoursPerDay != null) 'hours_per_day': hoursPerDay,
+      if (preferredTime != null) 'preferred_time': preferredTime,
+      if (targetMonth != null) 'target_month': targetMonth,
+      if (targetYear != null) 'target_year': targetYear,
+      if (studentType != null) 'student_type': studentType,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RoadmapPreferencesCompanion copyWith({
+    Value<String>? userId,
+    Value<String>? examId,
+    Value<String>? level,
+    Value<int>? hoursPerDay,
+    Value<String>? preferredTime,
+    Value<int>? targetMonth,
+    Value<int>? targetYear,
+    Value<String>? studentType,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return RoadmapPreferencesCompanion(
+      userId: userId ?? this.userId,
+      examId: examId ?? this.examId,
+      level: level ?? this.level,
+      hoursPerDay: hoursPerDay ?? this.hoursPerDay,
+      preferredTime: preferredTime ?? this.preferredTime,
+      targetMonth: targetMonth ?? this.targetMonth,
+      targetYear: targetYear ?? this.targetYear,
+      studentType: studentType ?? this.studentType,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (examId.present) {
+      map['exam_id'] = Variable<String>(examId.value);
+    }
+    if (level.present) {
+      map['level'] = Variable<String>(level.value);
+    }
+    if (hoursPerDay.present) {
+      map['hours_per_day'] = Variable<int>(hoursPerDay.value);
+    }
+    if (preferredTime.present) {
+      map['preferred_time'] = Variable<String>(preferredTime.value);
+    }
+    if (targetMonth.present) {
+      map['target_month'] = Variable<int>(targetMonth.value);
+    }
+    if (targetYear.present) {
+      map['target_year'] = Variable<int>(targetYear.value);
+    }
+    if (studentType.present) {
+      map['student_type'] = Variable<String>(studentType.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoadmapPreferencesCompanion(')
+          ..write('userId: $userId, ')
+          ..write('examId: $examId, ')
+          ..write('level: $level, ')
+          ..write('hoursPerDay: $hoursPerDay, ')
+          ..write('preferredTime: $preferredTime, ')
+          ..write('targetMonth: $targetMonth, ')
+          ..write('targetYear: $targetYear, ')
+          ..write('studentType: $studentType, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RoadmapDaysTable extends RoadmapDays
+    with TableInfo<$RoadmapDaysTable, RoadmapDay> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RoadmapDaysTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dayIdMeta = const VerificationMeta('dayId');
+  @override
+  late final GeneratedColumn<String> dayId = GeneratedColumn<String>(
+    'day_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (user_id)',
+    ),
+  );
+  static const VerificationMeta _dayNumberMeta = const VerificationMeta(
+    'dayNumber',
+  );
+  @override
+  late final GeneratedColumn<int> dayNumber = GeneratedColumn<int>(
+    'day_number',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _weekNumberMeta = const VerificationMeta(
+    'weekNumber',
+  );
+  @override
+  late final GeneratedColumn<int> weekNumber = GeneratedColumn<int>(
+    'week_number',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _focusLabelMeta = const VerificationMeta(
+    'focusLabel',
+  );
+  @override
+  late final GeneratedColumn<String> focusLabel = GeneratedColumn<String>(
+    'focus_label',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('locked'),
+  );
+  static const VerificationMeta _generatedAtMeta = const VerificationMeta(
+    'generatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> generatedAt = GeneratedColumn<DateTime>(
+    'generated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+    'completed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    dayId,
+    userId,
+    dayNumber,
+    weekNumber,
+    date,
+    focusLabel,
+    status,
+    generatedAt,
+    completedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'roadmap_days';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RoadmapDay> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('day_id')) {
+      context.handle(
+        _dayIdMeta,
+        dayId.isAcceptableOrUnknown(data['day_id']!, _dayIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('day_number')) {
+      context.handle(
+        _dayNumberMeta,
+        dayNumber.isAcceptableOrUnknown(data['day_number']!, _dayNumberMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayNumberMeta);
+    }
+    if (data.containsKey('week_number')) {
+      context.handle(
+        _weekNumberMeta,
+        weekNumber.isAcceptableOrUnknown(data['week_number']!, _weekNumberMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_weekNumberMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('focus_label')) {
+      context.handle(
+        _focusLabelMeta,
+        focusLabel.isAcceptableOrUnknown(data['focus_label']!, _focusLabelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_focusLabelMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
+    if (data.containsKey('generated_at')) {
+      context.handle(
+        _generatedAtMeta,
+        generatedAt.isAcceptableOrUnknown(
+          data['generated_at']!,
+          _generatedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
+          _completedAtMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {dayId};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {userId, dayNumber},
+  ];
+  @override
+  RoadmapDay map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RoadmapDay(
+      dayId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}day_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      dayNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}day_number'],
+      )!,
+      weekNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}week_number'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      focusLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}focus_label'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      generatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}generated_at'],
+      )!,
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      ),
+    );
+  }
+
+  @override
+  $RoadmapDaysTable createAlias(String alias) {
+    return $RoadmapDaysTable(attachedDatabase, alias);
+  }
+}
+
+class RoadmapDay extends DataClass implements Insertable<RoadmapDay> {
+  final String dayId;
+  final String userId;
+  final int dayNumber;
+  final int weekNumber;
+  final DateTime date;
+
+  /// The week's theme, e.g. "Foundations" — shown on the timeline card.
+  final String focusLabel;
+
+  /// locked | current | completed | weak | missed
+  final String status;
+  final DateTime generatedAt;
+  final DateTime? completedAt;
+  const RoadmapDay({
+    required this.dayId,
+    required this.userId,
+    required this.dayNumber,
+    required this.weekNumber,
+    required this.date,
+    required this.focusLabel,
+    required this.status,
+    required this.generatedAt,
+    this.completedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['day_id'] = Variable<String>(dayId);
+    map['user_id'] = Variable<String>(userId);
+    map['day_number'] = Variable<int>(dayNumber);
+    map['week_number'] = Variable<int>(weekNumber);
+    map['date'] = Variable<DateTime>(date);
+    map['focus_label'] = Variable<String>(focusLabel);
+    map['status'] = Variable<String>(status);
+    map['generated_at'] = Variable<DateTime>(generatedAt);
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<DateTime>(completedAt);
+    }
+    return map;
+  }
+
+  RoadmapDaysCompanion toCompanion(bool nullToAbsent) {
+    return RoadmapDaysCompanion(
+      dayId: Value(dayId),
+      userId: Value(userId),
+      dayNumber: Value(dayNumber),
+      weekNumber: Value(weekNumber),
+      date: Value(date),
+      focusLabel: Value(focusLabel),
+      status: Value(status),
+      generatedAt: Value(generatedAt),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
+    );
+  }
+
+  factory RoadmapDay.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RoadmapDay(
+      dayId: serializer.fromJson<String>(json['dayId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      dayNumber: serializer.fromJson<int>(json['dayNumber']),
+      weekNumber: serializer.fromJson<int>(json['weekNumber']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      focusLabel: serializer.fromJson<String>(json['focusLabel']),
+      status: serializer.fromJson<String>(json['status']),
+      generatedAt: serializer.fromJson<DateTime>(json['generatedAt']),
+      completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'dayId': serializer.toJson<String>(dayId),
+      'userId': serializer.toJson<String>(userId),
+      'dayNumber': serializer.toJson<int>(dayNumber),
+      'weekNumber': serializer.toJson<int>(weekNumber),
+      'date': serializer.toJson<DateTime>(date),
+      'focusLabel': serializer.toJson<String>(focusLabel),
+      'status': serializer.toJson<String>(status),
+      'generatedAt': serializer.toJson<DateTime>(generatedAt),
+      'completedAt': serializer.toJson<DateTime?>(completedAt),
+    };
+  }
+
+  RoadmapDay copyWith({
+    String? dayId,
+    String? userId,
+    int? dayNumber,
+    int? weekNumber,
+    DateTime? date,
+    String? focusLabel,
+    String? status,
+    DateTime? generatedAt,
+    Value<DateTime?> completedAt = const Value.absent(),
+  }) => RoadmapDay(
+    dayId: dayId ?? this.dayId,
+    userId: userId ?? this.userId,
+    dayNumber: dayNumber ?? this.dayNumber,
+    weekNumber: weekNumber ?? this.weekNumber,
+    date: date ?? this.date,
+    focusLabel: focusLabel ?? this.focusLabel,
+    status: status ?? this.status,
+    generatedAt: generatedAt ?? this.generatedAt,
+    completedAt: completedAt.present ? completedAt.value : this.completedAt,
+  );
+  RoadmapDay copyWithCompanion(RoadmapDaysCompanion data) {
+    return RoadmapDay(
+      dayId: data.dayId.present ? data.dayId.value : this.dayId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      dayNumber: data.dayNumber.present ? data.dayNumber.value : this.dayNumber,
+      weekNumber: data.weekNumber.present
+          ? data.weekNumber.value
+          : this.weekNumber,
+      date: data.date.present ? data.date.value : this.date,
+      focusLabel: data.focusLabel.present
+          ? data.focusLabel.value
+          : this.focusLabel,
+      status: data.status.present ? data.status.value : this.status,
+      generatedAt: data.generatedAt.present
+          ? data.generatedAt.value
+          : this.generatedAt,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoadmapDay(')
+          ..write('dayId: $dayId, ')
+          ..write('userId: $userId, ')
+          ..write('dayNumber: $dayNumber, ')
+          ..write('weekNumber: $weekNumber, ')
+          ..write('date: $date, ')
+          ..write('focusLabel: $focusLabel, ')
+          ..write('status: $status, ')
+          ..write('generatedAt: $generatedAt, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    dayId,
+    userId,
+    dayNumber,
+    weekNumber,
+    date,
+    focusLabel,
+    status,
+    generatedAt,
+    completedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RoadmapDay &&
+          other.dayId == this.dayId &&
+          other.userId == this.userId &&
+          other.dayNumber == this.dayNumber &&
+          other.weekNumber == this.weekNumber &&
+          other.date == this.date &&
+          other.focusLabel == this.focusLabel &&
+          other.status == this.status &&
+          other.generatedAt == this.generatedAt &&
+          other.completedAt == this.completedAt);
+}
+
+class RoadmapDaysCompanion extends UpdateCompanion<RoadmapDay> {
+  final Value<String> dayId;
+  final Value<String> userId;
+  final Value<int> dayNumber;
+  final Value<int> weekNumber;
+  final Value<DateTime> date;
+  final Value<String> focusLabel;
+  final Value<String> status;
+  final Value<DateTime> generatedAt;
+  final Value<DateTime?> completedAt;
+  final Value<int> rowid;
+  const RoadmapDaysCompanion({
+    this.dayId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.dayNumber = const Value.absent(),
+    this.weekNumber = const Value.absent(),
+    this.date = const Value.absent(),
+    this.focusLabel = const Value.absent(),
+    this.status = const Value.absent(),
+    this.generatedAt = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RoadmapDaysCompanion.insert({
+    required String dayId,
+    required String userId,
+    required int dayNumber,
+    required int weekNumber,
+    required DateTime date,
+    required String focusLabel,
+    this.status = const Value.absent(),
+    this.generatedAt = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : dayId = Value(dayId),
+       userId = Value(userId),
+       dayNumber = Value(dayNumber),
+       weekNumber = Value(weekNumber),
+       date = Value(date),
+       focusLabel = Value(focusLabel);
+  static Insertable<RoadmapDay> custom({
+    Expression<String>? dayId,
+    Expression<String>? userId,
+    Expression<int>? dayNumber,
+    Expression<int>? weekNumber,
+    Expression<DateTime>? date,
+    Expression<String>? focusLabel,
+    Expression<String>? status,
+    Expression<DateTime>? generatedAt,
+    Expression<DateTime>? completedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (dayId != null) 'day_id': dayId,
+      if (userId != null) 'user_id': userId,
+      if (dayNumber != null) 'day_number': dayNumber,
+      if (weekNumber != null) 'week_number': weekNumber,
+      if (date != null) 'date': date,
+      if (focusLabel != null) 'focus_label': focusLabel,
+      if (status != null) 'status': status,
+      if (generatedAt != null) 'generated_at': generatedAt,
+      if (completedAt != null) 'completed_at': completedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RoadmapDaysCompanion copyWith({
+    Value<String>? dayId,
+    Value<String>? userId,
+    Value<int>? dayNumber,
+    Value<int>? weekNumber,
+    Value<DateTime>? date,
+    Value<String>? focusLabel,
+    Value<String>? status,
+    Value<DateTime>? generatedAt,
+    Value<DateTime?>? completedAt,
+    Value<int>? rowid,
+  }) {
+    return RoadmapDaysCompanion(
+      dayId: dayId ?? this.dayId,
+      userId: userId ?? this.userId,
+      dayNumber: dayNumber ?? this.dayNumber,
+      weekNumber: weekNumber ?? this.weekNumber,
+      date: date ?? this.date,
+      focusLabel: focusLabel ?? this.focusLabel,
+      status: status ?? this.status,
+      generatedAt: generatedAt ?? this.generatedAt,
+      completedAt: completedAt ?? this.completedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (dayId.present) {
+      map['day_id'] = Variable<String>(dayId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (dayNumber.present) {
+      map['day_number'] = Variable<int>(dayNumber.value);
+    }
+    if (weekNumber.present) {
+      map['week_number'] = Variable<int>(weekNumber.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (focusLabel.present) {
+      map['focus_label'] = Variable<String>(focusLabel.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (generatedAt.present) {
+      map['generated_at'] = Variable<DateTime>(generatedAt.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoadmapDaysCompanion(')
+          ..write('dayId: $dayId, ')
+          ..write('userId: $userId, ')
+          ..write('dayNumber: $dayNumber, ')
+          ..write('weekNumber: $weekNumber, ')
+          ..write('date: $date, ')
+          ..write('focusLabel: $focusLabel, ')
+          ..write('status: $status, ')
+          ..write('generatedAt: $generatedAt, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RoadmapTasksTable extends RoadmapTasks
+    with TableInfo<$RoadmapTasksTable, RoadmapTask> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RoadmapTasksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _taskIdMeta = const VerificationMeta('taskId');
+  @override
+  late final GeneratedColumn<String> taskId = GeneratedColumn<String>(
+    'task_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dayIdMeta = const VerificationMeta('dayId');
+  @override
+  late final GeneratedColumn<String> dayId = GeneratedColumn<String>(
+    'day_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES roadmap_days (day_id)',
+    ),
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (user_id)',
+    ),
+  );
+  static const VerificationMeta _topicIdMeta = const VerificationMeta(
+    'topicId',
+  );
+  @override
+  late final GeneratedColumn<String> topicId = GeneratedColumn<String>(
+    'topic_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES topics (topic_id)',
+    ),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _estimatedMinutesMeta = const VerificationMeta(
+    'estimatedMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> estimatedMinutes = GeneratedColumn<int>(
+    'estimated_minutes',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('pending'),
+  );
+  static const VerificationMeta _orderIndexMeta = const VerificationMeta(
+    'orderIndex',
+  );
+  @override
+  late final GeneratedColumn<int> orderIndex = GeneratedColumn<int>(
+    'order_index',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+    'completed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    taskId,
+    dayId,
+    userId,
+    topicId,
+    title,
+    kind,
+    estimatedMinutes,
+    status,
+    orderIndex,
+    completedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'roadmap_tasks';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RoadmapTask> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('task_id')) {
+      context.handle(
+        _taskIdMeta,
+        taskId.isAcceptableOrUnknown(data['task_id']!, _taskIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_taskIdMeta);
+    }
+    if (data.containsKey('day_id')) {
+      context.handle(
+        _dayIdMeta,
+        dayId.isAcceptableOrUnknown(data['day_id']!, _dayIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('topic_id')) {
+      context.handle(
+        _topicIdMeta,
+        topicId.isAcceptableOrUnknown(data['topic_id']!, _topicIdMeta),
+      );
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('estimated_minutes')) {
+      context.handle(
+        _estimatedMinutesMeta,
+        estimatedMinutes.isAcceptableOrUnknown(
+          data['estimated_minutes']!,
+          _estimatedMinutesMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_estimatedMinutesMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
+    if (data.containsKey('order_index')) {
+      context.handle(
+        _orderIndexMeta,
+        orderIndex.isAcceptableOrUnknown(data['order_index']!, _orderIndexMeta),
+      );
+    }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
+          _completedAtMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {taskId};
+  @override
+  RoadmapTask map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RoadmapTask(
+      taskId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}task_id'],
+      )!,
+      dayId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}day_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      topicId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}topic_id'],
+      ),
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      estimatedMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}estimated_minutes'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      orderIndex: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}order_index'],
+      )!,
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      ),
+    );
+  }
+
+  @override
+  $RoadmapTasksTable createAlias(String alias) {
+    return $RoadmapTasksTable(attachedDatabase, alias);
+  }
+}
+
+class RoadmapTask extends DataClass implements Insertable<RoadmapTask> {
+  final String taskId;
+  final String dayId;
+  final String userId;
+  final String? topicId;
+  final String title;
+
+  /// study | pyq | mock | revision | resource | assessment
+  final String kind;
+  final int estimatedMinutes;
+
+  /// pending | completed | skipped
+  final String status;
+  final int orderIndex;
+  final DateTime? completedAt;
+  const RoadmapTask({
+    required this.taskId,
+    required this.dayId,
+    required this.userId,
+    this.topicId,
+    required this.title,
+    required this.kind,
+    required this.estimatedMinutes,
+    required this.status,
+    required this.orderIndex,
+    this.completedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['task_id'] = Variable<String>(taskId);
+    map['day_id'] = Variable<String>(dayId);
+    map['user_id'] = Variable<String>(userId);
+    if (!nullToAbsent || topicId != null) {
+      map['topic_id'] = Variable<String>(topicId);
+    }
+    map['title'] = Variable<String>(title);
+    map['kind'] = Variable<String>(kind);
+    map['estimated_minutes'] = Variable<int>(estimatedMinutes);
+    map['status'] = Variable<String>(status);
+    map['order_index'] = Variable<int>(orderIndex);
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<DateTime>(completedAt);
+    }
+    return map;
+  }
+
+  RoadmapTasksCompanion toCompanion(bool nullToAbsent) {
+    return RoadmapTasksCompanion(
+      taskId: Value(taskId),
+      dayId: Value(dayId),
+      userId: Value(userId),
+      topicId: topicId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(topicId),
+      title: Value(title),
+      kind: Value(kind),
+      estimatedMinutes: Value(estimatedMinutes),
+      status: Value(status),
+      orderIndex: Value(orderIndex),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
+    );
+  }
+
+  factory RoadmapTask.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RoadmapTask(
+      taskId: serializer.fromJson<String>(json['taskId']),
+      dayId: serializer.fromJson<String>(json['dayId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      topicId: serializer.fromJson<String?>(json['topicId']),
+      title: serializer.fromJson<String>(json['title']),
+      kind: serializer.fromJson<String>(json['kind']),
+      estimatedMinutes: serializer.fromJson<int>(json['estimatedMinutes']),
+      status: serializer.fromJson<String>(json['status']),
+      orderIndex: serializer.fromJson<int>(json['orderIndex']),
+      completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'taskId': serializer.toJson<String>(taskId),
+      'dayId': serializer.toJson<String>(dayId),
+      'userId': serializer.toJson<String>(userId),
+      'topicId': serializer.toJson<String?>(topicId),
+      'title': serializer.toJson<String>(title),
+      'kind': serializer.toJson<String>(kind),
+      'estimatedMinutes': serializer.toJson<int>(estimatedMinutes),
+      'status': serializer.toJson<String>(status),
+      'orderIndex': serializer.toJson<int>(orderIndex),
+      'completedAt': serializer.toJson<DateTime?>(completedAt),
+    };
+  }
+
+  RoadmapTask copyWith({
+    String? taskId,
+    String? dayId,
+    String? userId,
+    Value<String?> topicId = const Value.absent(),
+    String? title,
+    String? kind,
+    int? estimatedMinutes,
+    String? status,
+    int? orderIndex,
+    Value<DateTime?> completedAt = const Value.absent(),
+  }) => RoadmapTask(
+    taskId: taskId ?? this.taskId,
+    dayId: dayId ?? this.dayId,
+    userId: userId ?? this.userId,
+    topicId: topicId.present ? topicId.value : this.topicId,
+    title: title ?? this.title,
+    kind: kind ?? this.kind,
+    estimatedMinutes: estimatedMinutes ?? this.estimatedMinutes,
+    status: status ?? this.status,
+    orderIndex: orderIndex ?? this.orderIndex,
+    completedAt: completedAt.present ? completedAt.value : this.completedAt,
+  );
+  RoadmapTask copyWithCompanion(RoadmapTasksCompanion data) {
+    return RoadmapTask(
+      taskId: data.taskId.present ? data.taskId.value : this.taskId,
+      dayId: data.dayId.present ? data.dayId.value : this.dayId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      topicId: data.topicId.present ? data.topicId.value : this.topicId,
+      title: data.title.present ? data.title.value : this.title,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      estimatedMinutes: data.estimatedMinutes.present
+          ? data.estimatedMinutes.value
+          : this.estimatedMinutes,
+      status: data.status.present ? data.status.value : this.status,
+      orderIndex: data.orderIndex.present
+          ? data.orderIndex.value
+          : this.orderIndex,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoadmapTask(')
+          ..write('taskId: $taskId, ')
+          ..write('dayId: $dayId, ')
+          ..write('userId: $userId, ')
+          ..write('topicId: $topicId, ')
+          ..write('title: $title, ')
+          ..write('kind: $kind, ')
+          ..write('estimatedMinutes: $estimatedMinutes, ')
+          ..write('status: $status, ')
+          ..write('orderIndex: $orderIndex, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    taskId,
+    dayId,
+    userId,
+    topicId,
+    title,
+    kind,
+    estimatedMinutes,
+    status,
+    orderIndex,
+    completedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RoadmapTask &&
+          other.taskId == this.taskId &&
+          other.dayId == this.dayId &&
+          other.userId == this.userId &&
+          other.topicId == this.topicId &&
+          other.title == this.title &&
+          other.kind == this.kind &&
+          other.estimatedMinutes == this.estimatedMinutes &&
+          other.status == this.status &&
+          other.orderIndex == this.orderIndex &&
+          other.completedAt == this.completedAt);
+}
+
+class RoadmapTasksCompanion extends UpdateCompanion<RoadmapTask> {
+  final Value<String> taskId;
+  final Value<String> dayId;
+  final Value<String> userId;
+  final Value<String?> topicId;
+  final Value<String> title;
+  final Value<String> kind;
+  final Value<int> estimatedMinutes;
+  final Value<String> status;
+  final Value<int> orderIndex;
+  final Value<DateTime?> completedAt;
+  final Value<int> rowid;
+  const RoadmapTasksCompanion({
+    this.taskId = const Value.absent(),
+    this.dayId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.topicId = const Value.absent(),
+    this.title = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.estimatedMinutes = const Value.absent(),
+    this.status = const Value.absent(),
+    this.orderIndex = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RoadmapTasksCompanion.insert({
+    required String taskId,
+    required String dayId,
+    required String userId,
+    this.topicId = const Value.absent(),
+    required String title,
+    required String kind,
+    required int estimatedMinutes,
+    this.status = const Value.absent(),
+    this.orderIndex = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : taskId = Value(taskId),
+       dayId = Value(dayId),
+       userId = Value(userId),
+       title = Value(title),
+       kind = Value(kind),
+       estimatedMinutes = Value(estimatedMinutes);
+  static Insertable<RoadmapTask> custom({
+    Expression<String>? taskId,
+    Expression<String>? dayId,
+    Expression<String>? userId,
+    Expression<String>? topicId,
+    Expression<String>? title,
+    Expression<String>? kind,
+    Expression<int>? estimatedMinutes,
+    Expression<String>? status,
+    Expression<int>? orderIndex,
+    Expression<DateTime>? completedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (taskId != null) 'task_id': taskId,
+      if (dayId != null) 'day_id': dayId,
+      if (userId != null) 'user_id': userId,
+      if (topicId != null) 'topic_id': topicId,
+      if (title != null) 'title': title,
+      if (kind != null) 'kind': kind,
+      if (estimatedMinutes != null) 'estimated_minutes': estimatedMinutes,
+      if (status != null) 'status': status,
+      if (orderIndex != null) 'order_index': orderIndex,
+      if (completedAt != null) 'completed_at': completedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RoadmapTasksCompanion copyWith({
+    Value<String>? taskId,
+    Value<String>? dayId,
+    Value<String>? userId,
+    Value<String?>? topicId,
+    Value<String>? title,
+    Value<String>? kind,
+    Value<int>? estimatedMinutes,
+    Value<String>? status,
+    Value<int>? orderIndex,
+    Value<DateTime?>? completedAt,
+    Value<int>? rowid,
+  }) {
+    return RoadmapTasksCompanion(
+      taskId: taskId ?? this.taskId,
+      dayId: dayId ?? this.dayId,
+      userId: userId ?? this.userId,
+      topicId: topicId ?? this.topicId,
+      title: title ?? this.title,
+      kind: kind ?? this.kind,
+      estimatedMinutes: estimatedMinutes ?? this.estimatedMinutes,
+      status: status ?? this.status,
+      orderIndex: orderIndex ?? this.orderIndex,
+      completedAt: completedAt ?? this.completedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (taskId.present) {
+      map['task_id'] = Variable<String>(taskId.value);
+    }
+    if (dayId.present) {
+      map['day_id'] = Variable<String>(dayId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (topicId.present) {
+      map['topic_id'] = Variable<String>(topicId.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (estimatedMinutes.present) {
+      map['estimated_minutes'] = Variable<int>(estimatedMinutes.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (orderIndex.present) {
+      map['order_index'] = Variable<int>(orderIndex.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoadmapTasksCompanion(')
+          ..write('taskId: $taskId, ')
+          ..write('dayId: $dayId, ')
+          ..write('userId: $userId, ')
+          ..write('topicId: $topicId, ')
+          ..write('title: $title, ')
+          ..write('kind: $kind, ')
+          ..write('estimatedMinutes: $estimatedMinutes, ')
+          ..write('status: $status, ')
+          ..write('orderIndex: $orderIndex, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StreaksTable extends Streaks with TableInfo<$StreaksTable, Streak> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StreaksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (user_id)',
+    ),
+  );
+  static const VerificationMeta _currentStreakMeta = const VerificationMeta(
+    'currentStreak',
+  );
+  @override
+  late final GeneratedColumn<int> currentStreak = GeneratedColumn<int>(
+    'current_streak',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _longestStreakMeta = const VerificationMeta(
+    'longestStreak',
+  );
+  @override
+  late final GeneratedColumn<int> longestStreak = GeneratedColumn<int>(
+    'longest_streak',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastStudyDateMeta = const VerificationMeta(
+    'lastStudyDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastStudyDate =
+      GeneratedColumn<DateTime>(
+        'last_study_date',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _freezeCountMeta = const VerificationMeta(
+    'freezeCount',
+  );
+  @override
+  late final GeneratedColumn<int> freezeCount = GeneratedColumn<int>(
+    'freeze_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    userId,
+    currentStreak,
+    longestStreak,
+    lastStudyDate,
+    freezeCount,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'streaks';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Streak> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('current_streak')) {
+      context.handle(
+        _currentStreakMeta,
+        currentStreak.isAcceptableOrUnknown(
+          data['current_streak']!,
+          _currentStreakMeta,
+        ),
+      );
+    }
+    if (data.containsKey('longest_streak')) {
+      context.handle(
+        _longestStreakMeta,
+        longestStreak.isAcceptableOrUnknown(
+          data['longest_streak']!,
+          _longestStreakMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_study_date')) {
+      context.handle(
+        _lastStudyDateMeta,
+        lastStudyDate.isAcceptableOrUnknown(
+          data['last_study_date']!,
+          _lastStudyDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('freeze_count')) {
+      context.handle(
+        _freezeCountMeta,
+        freezeCount.isAcceptableOrUnknown(
+          data['freeze_count']!,
+          _freezeCountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {userId};
+  @override
+  Streak map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Streak(
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      currentStreak: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}current_streak'],
+      )!,
+      longestStreak: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}longest_streak'],
+      )!,
+      lastStudyDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_study_date'],
+      ),
+      freezeCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}freeze_count'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $StreaksTable createAlias(String alias) {
+    return $StreaksTable(attachedDatabase, alias);
+  }
+}
+
+class Streak extends DataClass implements Insertable<Streak> {
+  final String userId;
+  final int currentStreak;
+  final int longestStreak;
+  final DateTime? lastStudyDate;
+  final int freezeCount;
+  final DateTime updatedAt;
+  const Streak({
+    required this.userId,
+    required this.currentStreak,
+    required this.longestStreak,
+    this.lastStudyDate,
+    required this.freezeCount,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['user_id'] = Variable<String>(userId);
+    map['current_streak'] = Variable<int>(currentStreak);
+    map['longest_streak'] = Variable<int>(longestStreak);
+    if (!nullToAbsent || lastStudyDate != null) {
+      map['last_study_date'] = Variable<DateTime>(lastStudyDate);
+    }
+    map['freeze_count'] = Variable<int>(freezeCount);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  StreaksCompanion toCompanion(bool nullToAbsent) {
+    return StreaksCompanion(
+      userId: Value(userId),
+      currentStreak: Value(currentStreak),
+      longestStreak: Value(longestStreak),
+      lastStudyDate: lastStudyDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastStudyDate),
+      freezeCount: Value(freezeCount),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory Streak.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Streak(
+      userId: serializer.fromJson<String>(json['userId']),
+      currentStreak: serializer.fromJson<int>(json['currentStreak']),
+      longestStreak: serializer.fromJson<int>(json['longestStreak']),
+      lastStudyDate: serializer.fromJson<DateTime?>(json['lastStudyDate']),
+      freezeCount: serializer.fromJson<int>(json['freezeCount']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'userId': serializer.toJson<String>(userId),
+      'currentStreak': serializer.toJson<int>(currentStreak),
+      'longestStreak': serializer.toJson<int>(longestStreak),
+      'lastStudyDate': serializer.toJson<DateTime?>(lastStudyDate),
+      'freezeCount': serializer.toJson<int>(freezeCount),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  Streak copyWith({
+    String? userId,
+    int? currentStreak,
+    int? longestStreak,
+    Value<DateTime?> lastStudyDate = const Value.absent(),
+    int? freezeCount,
+    DateTime? updatedAt,
+  }) => Streak(
+    userId: userId ?? this.userId,
+    currentStreak: currentStreak ?? this.currentStreak,
+    longestStreak: longestStreak ?? this.longestStreak,
+    lastStudyDate: lastStudyDate.present
+        ? lastStudyDate.value
+        : this.lastStudyDate,
+    freezeCount: freezeCount ?? this.freezeCount,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  Streak copyWithCompanion(StreaksCompanion data) {
+    return Streak(
+      userId: data.userId.present ? data.userId.value : this.userId,
+      currentStreak: data.currentStreak.present
+          ? data.currentStreak.value
+          : this.currentStreak,
+      longestStreak: data.longestStreak.present
+          ? data.longestStreak.value
+          : this.longestStreak,
+      lastStudyDate: data.lastStudyDate.present
+          ? data.lastStudyDate.value
+          : this.lastStudyDate,
+      freezeCount: data.freezeCount.present
+          ? data.freezeCount.value
+          : this.freezeCount,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Streak(')
+          ..write('userId: $userId, ')
+          ..write('currentStreak: $currentStreak, ')
+          ..write('longestStreak: $longestStreak, ')
+          ..write('lastStudyDate: $lastStudyDate, ')
+          ..write('freezeCount: $freezeCount, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    userId,
+    currentStreak,
+    longestStreak,
+    lastStudyDate,
+    freezeCount,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Streak &&
+          other.userId == this.userId &&
+          other.currentStreak == this.currentStreak &&
+          other.longestStreak == this.longestStreak &&
+          other.lastStudyDate == this.lastStudyDate &&
+          other.freezeCount == this.freezeCount &&
+          other.updatedAt == this.updatedAt);
+}
+
+class StreaksCompanion extends UpdateCompanion<Streak> {
+  final Value<String> userId;
+  final Value<int> currentStreak;
+  final Value<int> longestStreak;
+  final Value<DateTime?> lastStudyDate;
+  final Value<int> freezeCount;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const StreaksCompanion({
+    this.userId = const Value.absent(),
+    this.currentStreak = const Value.absent(),
+    this.longestStreak = const Value.absent(),
+    this.lastStudyDate = const Value.absent(),
+    this.freezeCount = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  StreaksCompanion.insert({
+    required String userId,
+    this.currentStreak = const Value.absent(),
+    this.longestStreak = const Value.absent(),
+    this.lastStudyDate = const Value.absent(),
+    this.freezeCount = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : userId = Value(userId);
+  static Insertable<Streak> custom({
+    Expression<String>? userId,
+    Expression<int>? currentStreak,
+    Expression<int>? longestStreak,
+    Expression<DateTime>? lastStudyDate,
+    Expression<int>? freezeCount,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (userId != null) 'user_id': userId,
+      if (currentStreak != null) 'current_streak': currentStreak,
+      if (longestStreak != null) 'longest_streak': longestStreak,
+      if (lastStudyDate != null) 'last_study_date': lastStudyDate,
+      if (freezeCount != null) 'freeze_count': freezeCount,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  StreaksCompanion copyWith({
+    Value<String>? userId,
+    Value<int>? currentStreak,
+    Value<int>? longestStreak,
+    Value<DateTime?>? lastStudyDate,
+    Value<int>? freezeCount,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return StreaksCompanion(
+      userId: userId ?? this.userId,
+      currentStreak: currentStreak ?? this.currentStreak,
+      longestStreak: longestStreak ?? this.longestStreak,
+      lastStudyDate: lastStudyDate ?? this.lastStudyDate,
+      freezeCount: freezeCount ?? this.freezeCount,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (currentStreak.present) {
+      map['current_streak'] = Variable<int>(currentStreak.value);
+    }
+    if (longestStreak.present) {
+      map['longest_streak'] = Variable<int>(longestStreak.value);
+    }
+    if (lastStudyDate.present) {
+      map['last_study_date'] = Variable<DateTime>(lastStudyDate.value);
+    }
+    if (freezeCount.present) {
+      map['freeze_count'] = Variable<int>(freezeCount.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StreaksCompanion(')
+          ..write('userId: $userId, ')
+          ..write('currentStreak: $currentStreak, ')
+          ..write('longestStreak: $longestStreak, ')
+          ..write('lastStudyDate: $lastStudyDate, ')
+          ..write('freezeCount: $freezeCount, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $XpHistoryTable extends XpHistory
+    with TableInfo<$XpHistoryTable, XpEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $XpHistoryTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _entryIdMeta = const VerificationMeta(
+    'entryId',
+  );
+  @override
+  late final GeneratedColumn<String> entryId = GeneratedColumn<String>(
+    'entry_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (user_id)',
+    ),
+  );
+  static const VerificationMeta _sourceMeta = const VerificationMeta('source');
+  @override
+  late final GeneratedColumn<String> source = GeneratedColumn<String>(
+    'source',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<int> amount = GeneratedColumn<int>(
+    'amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dedupeKeyMeta = const VerificationMeta(
+    'dedupeKey',
+  );
+  @override
+  late final GeneratedColumn<String> dedupeKey = GeneratedColumn<String>(
+    'dedupe_key',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _earnedAtMeta = const VerificationMeta(
+    'earnedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> earnedAt = GeneratedColumn<DateTime>(
+    'earned_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    entryId,
+    userId,
+    source,
+    amount,
+    note,
+    dedupeKey,
+    earnedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'xp_history';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<XpEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('entry_id')) {
+      context.handle(
+        _entryIdMeta,
+        entryId.isAcceptableOrUnknown(data['entry_id']!, _entryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entryIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('source')) {
+      context.handle(
+        _sourceMeta,
+        source.isAcceptableOrUnknown(data['source']!, _sourceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sourceMeta);
+    }
+    if (data.containsKey('amount')) {
+      context.handle(
+        _amountMeta,
+        amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('dedupe_key')) {
+      context.handle(
+        _dedupeKeyMeta,
+        dedupeKey.isAcceptableOrUnknown(data['dedupe_key']!, _dedupeKeyMeta),
+      );
+    }
+    if (data.containsKey('earned_at')) {
+      context.handle(
+        _earnedAtMeta,
+        earnedAt.isAcceptableOrUnknown(data['earned_at']!, _earnedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {entryId};
+  @override
+  XpEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return XpEntry(
+      entryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entry_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      )!,
+      amount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      dedupeKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dedupe_key'],
+      ),
+      earnedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}earned_at'],
+      )!,
+    );
+  }
+
+  @override
+  $XpHistoryTable createAlias(String alias) {
+    return $XpHistoryTable(attachedDatabase, alias);
+  }
+}
+
+class XpEntry extends DataClass implements Insertable<XpEntry> {
+  final String entryId;
+  final String userId;
+
+  /// planner | pyq | mock | streak | revision | resource
+  final String source;
+  final int amount;
+  final String? note;
+
+  /// Set for awards that must only ever happen once (e.g. one streak bonus
+  /// per calendar day). Unique per user, so a repeated award is rejected by
+  /// the database rather than relying on the caller to remember.
+  final String? dedupeKey;
+  final DateTime earnedAt;
+  const XpEntry({
+    required this.entryId,
+    required this.userId,
+    required this.source,
+    required this.amount,
+    this.note,
+    this.dedupeKey,
+    required this.earnedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['entry_id'] = Variable<String>(entryId);
+    map['user_id'] = Variable<String>(userId);
+    map['source'] = Variable<String>(source);
+    map['amount'] = Variable<int>(amount);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    if (!nullToAbsent || dedupeKey != null) {
+      map['dedupe_key'] = Variable<String>(dedupeKey);
+    }
+    map['earned_at'] = Variable<DateTime>(earnedAt);
+    return map;
+  }
+
+  XpHistoryCompanion toCompanion(bool nullToAbsent) {
+    return XpHistoryCompanion(
+      entryId: Value(entryId),
+      userId: Value(userId),
+      source: Value(source),
+      amount: Value(amount),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      dedupeKey: dedupeKey == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dedupeKey),
+      earnedAt: Value(earnedAt),
+    );
+  }
+
+  factory XpEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return XpEntry(
+      entryId: serializer.fromJson<String>(json['entryId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      source: serializer.fromJson<String>(json['source']),
+      amount: serializer.fromJson<int>(json['amount']),
+      note: serializer.fromJson<String?>(json['note']),
+      dedupeKey: serializer.fromJson<String?>(json['dedupeKey']),
+      earnedAt: serializer.fromJson<DateTime>(json['earnedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'entryId': serializer.toJson<String>(entryId),
+      'userId': serializer.toJson<String>(userId),
+      'source': serializer.toJson<String>(source),
+      'amount': serializer.toJson<int>(amount),
+      'note': serializer.toJson<String?>(note),
+      'dedupeKey': serializer.toJson<String?>(dedupeKey),
+      'earnedAt': serializer.toJson<DateTime>(earnedAt),
+    };
+  }
+
+  XpEntry copyWith({
+    String? entryId,
+    String? userId,
+    String? source,
+    int? amount,
+    Value<String?> note = const Value.absent(),
+    Value<String?> dedupeKey = const Value.absent(),
+    DateTime? earnedAt,
+  }) => XpEntry(
+    entryId: entryId ?? this.entryId,
+    userId: userId ?? this.userId,
+    source: source ?? this.source,
+    amount: amount ?? this.amount,
+    note: note.present ? note.value : this.note,
+    dedupeKey: dedupeKey.present ? dedupeKey.value : this.dedupeKey,
+    earnedAt: earnedAt ?? this.earnedAt,
+  );
+  XpEntry copyWithCompanion(XpHistoryCompanion data) {
+    return XpEntry(
+      entryId: data.entryId.present ? data.entryId.value : this.entryId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      source: data.source.present ? data.source.value : this.source,
+      amount: data.amount.present ? data.amount.value : this.amount,
+      note: data.note.present ? data.note.value : this.note,
+      dedupeKey: data.dedupeKey.present ? data.dedupeKey.value : this.dedupeKey,
+      earnedAt: data.earnedAt.present ? data.earnedAt.value : this.earnedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('XpEntry(')
+          ..write('entryId: $entryId, ')
+          ..write('userId: $userId, ')
+          ..write('source: $source, ')
+          ..write('amount: $amount, ')
+          ..write('note: $note, ')
+          ..write('dedupeKey: $dedupeKey, ')
+          ..write('earnedAt: $earnedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(entryId, userId, source, amount, note, dedupeKey, earnedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is XpEntry &&
+          other.entryId == this.entryId &&
+          other.userId == this.userId &&
+          other.source == this.source &&
+          other.amount == this.amount &&
+          other.note == this.note &&
+          other.dedupeKey == this.dedupeKey &&
+          other.earnedAt == this.earnedAt);
+}
+
+class XpHistoryCompanion extends UpdateCompanion<XpEntry> {
+  final Value<String> entryId;
+  final Value<String> userId;
+  final Value<String> source;
+  final Value<int> amount;
+  final Value<String?> note;
+  final Value<String?> dedupeKey;
+  final Value<DateTime> earnedAt;
+  final Value<int> rowid;
+  const XpHistoryCompanion({
+    this.entryId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.source = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.note = const Value.absent(),
+    this.dedupeKey = const Value.absent(),
+    this.earnedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  XpHistoryCompanion.insert({
+    required String entryId,
+    required String userId,
+    required String source,
+    required int amount,
+    this.note = const Value.absent(),
+    this.dedupeKey = const Value.absent(),
+    this.earnedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : entryId = Value(entryId),
+       userId = Value(userId),
+       source = Value(source),
+       amount = Value(amount);
+  static Insertable<XpEntry> custom({
+    Expression<String>? entryId,
+    Expression<String>? userId,
+    Expression<String>? source,
+    Expression<int>? amount,
+    Expression<String>? note,
+    Expression<String>? dedupeKey,
+    Expression<DateTime>? earnedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (entryId != null) 'entry_id': entryId,
+      if (userId != null) 'user_id': userId,
+      if (source != null) 'source': source,
+      if (amount != null) 'amount': amount,
+      if (note != null) 'note': note,
+      if (dedupeKey != null) 'dedupe_key': dedupeKey,
+      if (earnedAt != null) 'earned_at': earnedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  XpHistoryCompanion copyWith({
+    Value<String>? entryId,
+    Value<String>? userId,
+    Value<String>? source,
+    Value<int>? amount,
+    Value<String?>? note,
+    Value<String?>? dedupeKey,
+    Value<DateTime>? earnedAt,
+    Value<int>? rowid,
+  }) {
+    return XpHistoryCompanion(
+      entryId: entryId ?? this.entryId,
+      userId: userId ?? this.userId,
+      source: source ?? this.source,
+      amount: amount ?? this.amount,
+      note: note ?? this.note,
+      dedupeKey: dedupeKey ?? this.dedupeKey,
+      earnedAt: earnedAt ?? this.earnedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (entryId.present) {
+      map['entry_id'] = Variable<String>(entryId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<int>(amount.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (dedupeKey.present) {
+      map['dedupe_key'] = Variable<String>(dedupeKey.value);
+    }
+    if (earnedAt.present) {
+      map['earned_at'] = Variable<DateTime>(earnedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('XpHistoryCompanion(')
+          ..write('entryId: $entryId, ')
+          ..write('userId: $userId, ')
+          ..write('source: $source, ')
+          ..write('amount: $amount, ')
+          ..write('note: $note, ')
+          ..write('dedupeKey: $dedupeKey, ')
+          ..write('earnedAt: $earnedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BadgesTable extends Badges with TableInfo<$BadgesTable, Badge> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BadgesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _badgeIdMeta = const VerificationMeta(
+    'badgeId',
+  );
+  @override
+  late final GeneratedColumn<String> badgeId = GeneratedColumn<String>(
+    'badge_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (user_id)',
+    ),
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _earnedAtMeta = const VerificationMeta(
+    'earnedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> earnedAt = GeneratedColumn<DateTime>(
+    'earned_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [badgeId, userId, code, earnedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'badges';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Badge> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('badge_id')) {
+      context.handle(
+        _badgeIdMeta,
+        badgeId.isAcceptableOrUnknown(data['badge_id']!, _badgeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_badgeIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('earned_at')) {
+      context.handle(
+        _earnedAtMeta,
+        earnedAt.isAcceptableOrUnknown(data['earned_at']!, _earnedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {badgeId};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {userId, code},
+  ];
+  @override
+  Badge map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Badge(
+      badgeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}badge_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      earnedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}earned_at'],
+      )!,
+    );
+  }
+
+  @override
+  $BadgesTable createAlias(String alias) {
+    return $BadgesTable(attachedDatabase, alias);
+  }
+}
+
+class Badge extends DataClass implements Insertable<Badge> {
+  final String badgeId;
+  final String userId;
+
+  /// e.g. streak_7, level_strategist
+  final String code;
+  final DateTime earnedAt;
+  const Badge({
+    required this.badgeId,
+    required this.userId,
+    required this.code,
+    required this.earnedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['badge_id'] = Variable<String>(badgeId);
+    map['user_id'] = Variable<String>(userId);
+    map['code'] = Variable<String>(code);
+    map['earned_at'] = Variable<DateTime>(earnedAt);
+    return map;
+  }
+
+  BadgesCompanion toCompanion(bool nullToAbsent) {
+    return BadgesCompanion(
+      badgeId: Value(badgeId),
+      userId: Value(userId),
+      code: Value(code),
+      earnedAt: Value(earnedAt),
+    );
+  }
+
+  factory Badge.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Badge(
+      badgeId: serializer.fromJson<String>(json['badgeId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      code: serializer.fromJson<String>(json['code']),
+      earnedAt: serializer.fromJson<DateTime>(json['earnedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'badgeId': serializer.toJson<String>(badgeId),
+      'userId': serializer.toJson<String>(userId),
+      'code': serializer.toJson<String>(code),
+      'earnedAt': serializer.toJson<DateTime>(earnedAt),
+    };
+  }
+
+  Badge copyWith({
+    String? badgeId,
+    String? userId,
+    String? code,
+    DateTime? earnedAt,
+  }) => Badge(
+    badgeId: badgeId ?? this.badgeId,
+    userId: userId ?? this.userId,
+    code: code ?? this.code,
+    earnedAt: earnedAt ?? this.earnedAt,
+  );
+  Badge copyWithCompanion(BadgesCompanion data) {
+    return Badge(
+      badgeId: data.badgeId.present ? data.badgeId.value : this.badgeId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      code: data.code.present ? data.code.value : this.code,
+      earnedAt: data.earnedAt.present ? data.earnedAt.value : this.earnedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Badge(')
+          ..write('badgeId: $badgeId, ')
+          ..write('userId: $userId, ')
+          ..write('code: $code, ')
+          ..write('earnedAt: $earnedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(badgeId, userId, code, earnedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Badge &&
+          other.badgeId == this.badgeId &&
+          other.userId == this.userId &&
+          other.code == this.code &&
+          other.earnedAt == this.earnedAt);
+}
+
+class BadgesCompanion extends UpdateCompanion<Badge> {
+  final Value<String> badgeId;
+  final Value<String> userId;
+  final Value<String> code;
+  final Value<DateTime> earnedAt;
+  final Value<int> rowid;
+  const BadgesCompanion({
+    this.badgeId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.code = const Value.absent(),
+    this.earnedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BadgesCompanion.insert({
+    required String badgeId,
+    required String userId,
+    required String code,
+    this.earnedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : badgeId = Value(badgeId),
+       userId = Value(userId),
+       code = Value(code);
+  static Insertable<Badge> custom({
+    Expression<String>? badgeId,
+    Expression<String>? userId,
+    Expression<String>? code,
+    Expression<DateTime>? earnedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (badgeId != null) 'badge_id': badgeId,
+      if (userId != null) 'user_id': userId,
+      if (code != null) 'code': code,
+      if (earnedAt != null) 'earned_at': earnedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BadgesCompanion copyWith({
+    Value<String>? badgeId,
+    Value<String>? userId,
+    Value<String>? code,
+    Value<DateTime>? earnedAt,
+    Value<int>? rowid,
+  }) {
+    return BadgesCompanion(
+      badgeId: badgeId ?? this.badgeId,
+      userId: userId ?? this.userId,
+      code: code ?? this.code,
+      earnedAt: earnedAt ?? this.earnedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (badgeId.present) {
+      map['badge_id'] = Variable<String>(badgeId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (earnedAt.present) {
+      map['earned_at'] = Variable<DateTime>(earnedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BadgesCompanion(')
+          ..write('badgeId: $badgeId, ')
+          ..write('userId: $userId, ')
+          ..write('code: $code, ')
+          ..write('earnedAt: $earnedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DailyChallengesTable extends DailyChallenges
+    with TableInfo<$DailyChallengesTable, DailyChallenge> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DailyChallengesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _challengeIdMeta = const VerificationMeta(
+    'challengeId',
+  );
+  @override
+  late final GeneratedColumn<String> challengeId = GeneratedColumn<String>(
+    'challenge_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (user_id)',
+    ),
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetCountMeta = const VerificationMeta(
+    'targetCount',
+  );
+  @override
+  late final GeneratedColumn<int> targetCount = GeneratedColumn<int>(
+    'target_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _progressCountMeta = const VerificationMeta(
+    'progressCount',
+  );
+  @override
+  late final GeneratedColumn<int> progressCount = GeneratedColumn<int>(
+    'progress_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+    'completed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    challengeId,
+    userId,
+    date,
+    code,
+    title,
+    targetCount,
+    progressCount,
+    completedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'daily_challenges';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DailyChallenge> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('challenge_id')) {
+      context.handle(
+        _challengeIdMeta,
+        challengeId.isAcceptableOrUnknown(
+          data['challenge_id']!,
+          _challengeIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_challengeIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('target_count')) {
+      context.handle(
+        _targetCountMeta,
+        targetCount.isAcceptableOrUnknown(
+          data['target_count']!,
+          _targetCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_targetCountMeta);
+    }
+    if (data.containsKey('progress_count')) {
+      context.handle(
+        _progressCountMeta,
+        progressCount.isAcceptableOrUnknown(
+          data['progress_count']!,
+          _progressCountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
+          _completedAtMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {challengeId};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {userId, date},
+  ];
+  @override
+  DailyChallenge map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DailyChallenge(
+      challengeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}challenge_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      targetCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_count'],
+      )!,
+      progressCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}progress_count'],
+      )!,
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      ),
+    );
+  }
+
+  @override
+  $DailyChallengesTable createAlias(String alias) {
+    return $DailyChallengesTable(attachedDatabase, alias);
+  }
+}
+
+class DailyChallenge extends DataClass implements Insertable<DailyChallenge> {
+  final String challengeId;
+  final String userId;
+  final DateTime date;
+  final String code;
+  final String title;
+  final int targetCount;
+  final int progressCount;
+  final DateTime? completedAt;
+  const DailyChallenge({
+    required this.challengeId,
+    required this.userId,
+    required this.date,
+    required this.code,
+    required this.title,
+    required this.targetCount,
+    required this.progressCount,
+    this.completedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['challenge_id'] = Variable<String>(challengeId);
+    map['user_id'] = Variable<String>(userId);
+    map['date'] = Variable<DateTime>(date);
+    map['code'] = Variable<String>(code);
+    map['title'] = Variable<String>(title);
+    map['target_count'] = Variable<int>(targetCount);
+    map['progress_count'] = Variable<int>(progressCount);
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<DateTime>(completedAt);
+    }
+    return map;
+  }
+
+  DailyChallengesCompanion toCompanion(bool nullToAbsent) {
+    return DailyChallengesCompanion(
+      challengeId: Value(challengeId),
+      userId: Value(userId),
+      date: Value(date),
+      code: Value(code),
+      title: Value(title),
+      targetCount: Value(targetCount),
+      progressCount: Value(progressCount),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
+    );
+  }
+
+  factory DailyChallenge.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DailyChallenge(
+      challengeId: serializer.fromJson<String>(json['challengeId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      code: serializer.fromJson<String>(json['code']),
+      title: serializer.fromJson<String>(json['title']),
+      targetCount: serializer.fromJson<int>(json['targetCount']),
+      progressCount: serializer.fromJson<int>(json['progressCount']),
+      completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'challengeId': serializer.toJson<String>(challengeId),
+      'userId': serializer.toJson<String>(userId),
+      'date': serializer.toJson<DateTime>(date),
+      'code': serializer.toJson<String>(code),
+      'title': serializer.toJson<String>(title),
+      'targetCount': serializer.toJson<int>(targetCount),
+      'progressCount': serializer.toJson<int>(progressCount),
+      'completedAt': serializer.toJson<DateTime?>(completedAt),
+    };
+  }
+
+  DailyChallenge copyWith({
+    String? challengeId,
+    String? userId,
+    DateTime? date,
+    String? code,
+    String? title,
+    int? targetCount,
+    int? progressCount,
+    Value<DateTime?> completedAt = const Value.absent(),
+  }) => DailyChallenge(
+    challengeId: challengeId ?? this.challengeId,
+    userId: userId ?? this.userId,
+    date: date ?? this.date,
+    code: code ?? this.code,
+    title: title ?? this.title,
+    targetCount: targetCount ?? this.targetCount,
+    progressCount: progressCount ?? this.progressCount,
+    completedAt: completedAt.present ? completedAt.value : this.completedAt,
+  );
+  DailyChallenge copyWithCompanion(DailyChallengesCompanion data) {
+    return DailyChallenge(
+      challengeId: data.challengeId.present
+          ? data.challengeId.value
+          : this.challengeId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      date: data.date.present ? data.date.value : this.date,
+      code: data.code.present ? data.code.value : this.code,
+      title: data.title.present ? data.title.value : this.title,
+      targetCount: data.targetCount.present
+          ? data.targetCount.value
+          : this.targetCount,
+      progressCount: data.progressCount.present
+          ? data.progressCount.value
+          : this.progressCount,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DailyChallenge(')
+          ..write('challengeId: $challengeId, ')
+          ..write('userId: $userId, ')
+          ..write('date: $date, ')
+          ..write('code: $code, ')
+          ..write('title: $title, ')
+          ..write('targetCount: $targetCount, ')
+          ..write('progressCount: $progressCount, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    challengeId,
+    userId,
+    date,
+    code,
+    title,
+    targetCount,
+    progressCount,
+    completedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DailyChallenge &&
+          other.challengeId == this.challengeId &&
+          other.userId == this.userId &&
+          other.date == this.date &&
+          other.code == this.code &&
+          other.title == this.title &&
+          other.targetCount == this.targetCount &&
+          other.progressCount == this.progressCount &&
+          other.completedAt == this.completedAt);
+}
+
+class DailyChallengesCompanion extends UpdateCompanion<DailyChallenge> {
+  final Value<String> challengeId;
+  final Value<String> userId;
+  final Value<DateTime> date;
+  final Value<String> code;
+  final Value<String> title;
+  final Value<int> targetCount;
+  final Value<int> progressCount;
+  final Value<DateTime?> completedAt;
+  final Value<int> rowid;
+  const DailyChallengesCompanion({
+    this.challengeId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.date = const Value.absent(),
+    this.code = const Value.absent(),
+    this.title = const Value.absent(),
+    this.targetCount = const Value.absent(),
+    this.progressCount = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DailyChallengesCompanion.insert({
+    required String challengeId,
+    required String userId,
+    required DateTime date,
+    required String code,
+    required String title,
+    required int targetCount,
+    this.progressCount = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : challengeId = Value(challengeId),
+       userId = Value(userId),
+       date = Value(date),
+       code = Value(code),
+       title = Value(title),
+       targetCount = Value(targetCount);
+  static Insertable<DailyChallenge> custom({
+    Expression<String>? challengeId,
+    Expression<String>? userId,
+    Expression<DateTime>? date,
+    Expression<String>? code,
+    Expression<String>? title,
+    Expression<int>? targetCount,
+    Expression<int>? progressCount,
+    Expression<DateTime>? completedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (challengeId != null) 'challenge_id': challengeId,
+      if (userId != null) 'user_id': userId,
+      if (date != null) 'date': date,
+      if (code != null) 'code': code,
+      if (title != null) 'title': title,
+      if (targetCount != null) 'target_count': targetCount,
+      if (progressCount != null) 'progress_count': progressCount,
+      if (completedAt != null) 'completed_at': completedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DailyChallengesCompanion copyWith({
+    Value<String>? challengeId,
+    Value<String>? userId,
+    Value<DateTime>? date,
+    Value<String>? code,
+    Value<String>? title,
+    Value<int>? targetCount,
+    Value<int>? progressCount,
+    Value<DateTime?>? completedAt,
+    Value<int>? rowid,
+  }) {
+    return DailyChallengesCompanion(
+      challengeId: challengeId ?? this.challengeId,
+      userId: userId ?? this.userId,
+      date: date ?? this.date,
+      code: code ?? this.code,
+      title: title ?? this.title,
+      targetCount: targetCount ?? this.targetCount,
+      progressCount: progressCount ?? this.progressCount,
+      completedAt: completedAt ?? this.completedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (challengeId.present) {
+      map['challenge_id'] = Variable<String>(challengeId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (targetCount.present) {
+      map['target_count'] = Variable<int>(targetCount.value);
+    }
+    if (progressCount.present) {
+      map['progress_count'] = Variable<int>(progressCount.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DailyChallengesCompanion(')
+          ..write('challengeId: $challengeId, ')
+          ..write('userId: $userId, ')
+          ..write('date: $date, ')
+          ..write('code: $code, ')
+          ..write('title: $title, ')
+          ..write('targetCount: $targetCount, ')
+          ..write('progressCount: $progressCount, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $WeeklyMissionsTable extends WeeklyMissions
+    with TableInfo<$WeeklyMissionsTable, WeeklyMission> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WeeklyMissionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _missionIdMeta = const VerificationMeta(
+    'missionId',
+  );
+  @override
+  late final GeneratedColumn<String> missionId = GeneratedColumn<String>(
+    'mission_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (user_id)',
+    ),
+  );
+  static const VerificationMeta _weekStartMeta = const VerificationMeta(
+    'weekStart',
+  );
+  @override
+  late final GeneratedColumn<DateTime> weekStart = GeneratedColumn<DateTime>(
+    'week_start',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetCountMeta = const VerificationMeta(
+    'targetCount',
+  );
+  @override
+  late final GeneratedColumn<int> targetCount = GeneratedColumn<int>(
+    'target_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _progressCountMeta = const VerificationMeta(
+    'progressCount',
+  );
+  @override
+  late final GeneratedColumn<int> progressCount = GeneratedColumn<int>(
+    'progress_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+    'completed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    missionId,
+    userId,
+    weekStart,
+    code,
+    title,
+    targetCount,
+    progressCount,
+    completedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'weekly_missions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<WeeklyMission> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('mission_id')) {
+      context.handle(
+        _missionIdMeta,
+        missionId.isAcceptableOrUnknown(data['mission_id']!, _missionIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_missionIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('week_start')) {
+      context.handle(
+        _weekStartMeta,
+        weekStart.isAcceptableOrUnknown(data['week_start']!, _weekStartMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_weekStartMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('target_count')) {
+      context.handle(
+        _targetCountMeta,
+        targetCount.isAcceptableOrUnknown(
+          data['target_count']!,
+          _targetCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_targetCountMeta);
+    }
+    if (data.containsKey('progress_count')) {
+      context.handle(
+        _progressCountMeta,
+        progressCount.isAcceptableOrUnknown(
+          data['progress_count']!,
+          _progressCountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
+          _completedAtMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {missionId};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {userId, weekStart},
+  ];
+  @override
+  WeeklyMission map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WeeklyMission(
+      missionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mission_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      weekStart: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}week_start'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      targetCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_count'],
+      )!,
+      progressCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}progress_count'],
+      )!,
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      ),
+    );
+  }
+
+  @override
+  $WeeklyMissionsTable createAlias(String alias) {
+    return $WeeklyMissionsTable(attachedDatabase, alias);
+  }
+}
+
+class WeeklyMission extends DataClass implements Insertable<WeeklyMission> {
+  final String missionId;
+  final String userId;
+  final DateTime weekStart;
+  final String code;
+  final String title;
+  final int targetCount;
+  final int progressCount;
+  final DateTime? completedAt;
+  const WeeklyMission({
+    required this.missionId,
+    required this.userId,
+    required this.weekStart,
+    required this.code,
+    required this.title,
+    required this.targetCount,
+    required this.progressCount,
+    this.completedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['mission_id'] = Variable<String>(missionId);
+    map['user_id'] = Variable<String>(userId);
+    map['week_start'] = Variable<DateTime>(weekStart);
+    map['code'] = Variable<String>(code);
+    map['title'] = Variable<String>(title);
+    map['target_count'] = Variable<int>(targetCount);
+    map['progress_count'] = Variable<int>(progressCount);
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<DateTime>(completedAt);
+    }
+    return map;
+  }
+
+  WeeklyMissionsCompanion toCompanion(bool nullToAbsent) {
+    return WeeklyMissionsCompanion(
+      missionId: Value(missionId),
+      userId: Value(userId),
+      weekStart: Value(weekStart),
+      code: Value(code),
+      title: Value(title),
+      targetCount: Value(targetCount),
+      progressCount: Value(progressCount),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
+    );
+  }
+
+  factory WeeklyMission.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WeeklyMission(
+      missionId: serializer.fromJson<String>(json['missionId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      weekStart: serializer.fromJson<DateTime>(json['weekStart']),
+      code: serializer.fromJson<String>(json['code']),
+      title: serializer.fromJson<String>(json['title']),
+      targetCount: serializer.fromJson<int>(json['targetCount']),
+      progressCount: serializer.fromJson<int>(json['progressCount']),
+      completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'missionId': serializer.toJson<String>(missionId),
+      'userId': serializer.toJson<String>(userId),
+      'weekStart': serializer.toJson<DateTime>(weekStart),
+      'code': serializer.toJson<String>(code),
+      'title': serializer.toJson<String>(title),
+      'targetCount': serializer.toJson<int>(targetCount),
+      'progressCount': serializer.toJson<int>(progressCount),
+      'completedAt': serializer.toJson<DateTime?>(completedAt),
+    };
+  }
+
+  WeeklyMission copyWith({
+    String? missionId,
+    String? userId,
+    DateTime? weekStart,
+    String? code,
+    String? title,
+    int? targetCount,
+    int? progressCount,
+    Value<DateTime?> completedAt = const Value.absent(),
+  }) => WeeklyMission(
+    missionId: missionId ?? this.missionId,
+    userId: userId ?? this.userId,
+    weekStart: weekStart ?? this.weekStart,
+    code: code ?? this.code,
+    title: title ?? this.title,
+    targetCount: targetCount ?? this.targetCount,
+    progressCount: progressCount ?? this.progressCount,
+    completedAt: completedAt.present ? completedAt.value : this.completedAt,
+  );
+  WeeklyMission copyWithCompanion(WeeklyMissionsCompanion data) {
+    return WeeklyMission(
+      missionId: data.missionId.present ? data.missionId.value : this.missionId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      weekStart: data.weekStart.present ? data.weekStart.value : this.weekStart,
+      code: data.code.present ? data.code.value : this.code,
+      title: data.title.present ? data.title.value : this.title,
+      targetCount: data.targetCount.present
+          ? data.targetCount.value
+          : this.targetCount,
+      progressCount: data.progressCount.present
+          ? data.progressCount.value
+          : this.progressCount,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WeeklyMission(')
+          ..write('missionId: $missionId, ')
+          ..write('userId: $userId, ')
+          ..write('weekStart: $weekStart, ')
+          ..write('code: $code, ')
+          ..write('title: $title, ')
+          ..write('targetCount: $targetCount, ')
+          ..write('progressCount: $progressCount, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    missionId,
+    userId,
+    weekStart,
+    code,
+    title,
+    targetCount,
+    progressCount,
+    completedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WeeklyMission &&
+          other.missionId == this.missionId &&
+          other.userId == this.userId &&
+          other.weekStart == this.weekStart &&
+          other.code == this.code &&
+          other.title == this.title &&
+          other.targetCount == this.targetCount &&
+          other.progressCount == this.progressCount &&
+          other.completedAt == this.completedAt);
+}
+
+class WeeklyMissionsCompanion extends UpdateCompanion<WeeklyMission> {
+  final Value<String> missionId;
+  final Value<String> userId;
+  final Value<DateTime> weekStart;
+  final Value<String> code;
+  final Value<String> title;
+  final Value<int> targetCount;
+  final Value<int> progressCount;
+  final Value<DateTime?> completedAt;
+  final Value<int> rowid;
+  const WeeklyMissionsCompanion({
+    this.missionId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.weekStart = const Value.absent(),
+    this.code = const Value.absent(),
+    this.title = const Value.absent(),
+    this.targetCount = const Value.absent(),
+    this.progressCount = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WeeklyMissionsCompanion.insert({
+    required String missionId,
+    required String userId,
+    required DateTime weekStart,
+    required String code,
+    required String title,
+    required int targetCount,
+    this.progressCount = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : missionId = Value(missionId),
+       userId = Value(userId),
+       weekStart = Value(weekStart),
+       code = Value(code),
+       title = Value(title),
+       targetCount = Value(targetCount);
+  static Insertable<WeeklyMission> custom({
+    Expression<String>? missionId,
+    Expression<String>? userId,
+    Expression<DateTime>? weekStart,
+    Expression<String>? code,
+    Expression<String>? title,
+    Expression<int>? targetCount,
+    Expression<int>? progressCount,
+    Expression<DateTime>? completedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (missionId != null) 'mission_id': missionId,
+      if (userId != null) 'user_id': userId,
+      if (weekStart != null) 'week_start': weekStart,
+      if (code != null) 'code': code,
+      if (title != null) 'title': title,
+      if (targetCount != null) 'target_count': targetCount,
+      if (progressCount != null) 'progress_count': progressCount,
+      if (completedAt != null) 'completed_at': completedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WeeklyMissionsCompanion copyWith({
+    Value<String>? missionId,
+    Value<String>? userId,
+    Value<DateTime>? weekStart,
+    Value<String>? code,
+    Value<String>? title,
+    Value<int>? targetCount,
+    Value<int>? progressCount,
+    Value<DateTime?>? completedAt,
+    Value<int>? rowid,
+  }) {
+    return WeeklyMissionsCompanion(
+      missionId: missionId ?? this.missionId,
+      userId: userId ?? this.userId,
+      weekStart: weekStart ?? this.weekStart,
+      code: code ?? this.code,
+      title: title ?? this.title,
+      targetCount: targetCount ?? this.targetCount,
+      progressCount: progressCount ?? this.progressCount,
+      completedAt: completedAt ?? this.completedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (missionId.present) {
+      map['mission_id'] = Variable<String>(missionId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (weekStart.present) {
+      map['week_start'] = Variable<DateTime>(weekStart.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (targetCount.present) {
+      map['target_count'] = Variable<int>(targetCount.value);
+    }
+    if (progressCount.present) {
+      map['progress_count'] = Variable<int>(progressCount.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WeeklyMissionsCompanion(')
+          ..write('missionId: $missionId, ')
+          ..write('userId: $userId, ')
+          ..write('weekStart: $weekStart, ')
+          ..write('code: $code, ')
+          ..write('title: $title, ')
+          ..write('targetCount: $targetCount, ')
+          ..write('progressCount: $progressCount, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+abstract class _$PrepNodeDatabase extends GeneratedDatabase {
+  _$PrepNodeDatabase(QueryExecutor e) : super(e);
+  $PrepNodeDatabaseManager get managers => $PrepNodeDatabaseManager(this);
   late final $ExamsTable exams = $ExamsTable(this);
   late final $UsersTable users = $UsersTable(this);
   late final $UserPreferencesTable userPreferences = $UserPreferencesTable(
@@ -12754,6 +16874,17 @@ abstract class _$PrepGraphDatabase extends GeneratedDatabase {
   late final $BookmarksTable bookmarks = $BookmarksTable(this);
   late final $ContentSyncMetadataTable contentSyncMetadata =
       $ContentSyncMetadataTable(this);
+  late final $RoadmapPreferencesTable roadmapPreferences =
+      $RoadmapPreferencesTable(this);
+  late final $RoadmapDaysTable roadmapDays = $RoadmapDaysTable(this);
+  late final $RoadmapTasksTable roadmapTasks = $RoadmapTasksTable(this);
+  late final $StreaksTable streaks = $StreaksTable(this);
+  late final $XpHistoryTable xpHistory = $XpHistoryTable(this);
+  late final $BadgesTable badges = $BadgesTable(this);
+  late final $DailyChallengesTable dailyChallenges = $DailyChallengesTable(
+    this,
+  );
+  late final $WeeklyMissionsTable weeklyMissions = $WeeklyMissionsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -12782,6 +16913,14 @@ abstract class _$PrepGraphDatabase extends GeneratedDatabase {
     achievements,
     bookmarks,
     contentSyncMetadata,
+    roadmapPreferences,
+    roadmapDays,
+    roadmapTasks,
+    streaks,
+    xpHistory,
+    badges,
+    dailyChallenges,
+    weeklyMissions,
   ];
 }
 
@@ -12807,11 +16946,11 @@ typedef $$ExamsTableUpdateCompanionBuilder =
     });
 
 final class $$ExamsTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $ExamsTable, Exam> {
+    extends BaseReferences<_$PrepNodeDatabase, $ExamsTable, Exam> {
   $$ExamsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$UsersTable, List<User>> _usersRefsTable(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.users,
     aliasName: 'exams__exam_id__users__exam_id',
@@ -12829,7 +16968,7 @@ final class $$ExamsTableReferences
   }
 
   static MultiTypedResultKey<$SubjectsTable, List<Subject>> _subjectsRefsTable(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.subjects,
     aliasName: 'exams__exam_id__subjects__exam_id',
@@ -12847,7 +16986,7 @@ final class $$ExamsTableReferences
   }
 
   static MultiTypedResultKey<$QuestionsTable, List<Question>>
-  _questionsRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _questionsRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.questions,
     aliasName: 'exams__exam_id__questions__exam_id',
   );
@@ -12864,7 +17003,7 @@ final class $$ExamsTableReferences
   }
 
   static MultiTypedResultKey<$CutoffDataTable, List<CutoffDatum>>
-  _cutoffDataRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _cutoffDataRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.cutoffData,
     aliasName: 'exams__exam_id__cutoff_data__exam_id',
   );
@@ -12881,7 +17020,7 @@ final class $$ExamsTableReferences
   }
 
   static MultiTypedResultKey<$MockTestsTable, List<MockTest>>
-  _mockTestsRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _mockTestsRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.mockTests,
     aliasName: 'exams__exam_id__mock_tests__exam_id',
   );
@@ -12899,7 +17038,7 @@ final class $$ExamsTableReferences
 }
 
 class $$ExamsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $ExamsTable> {
+    extends Composer<_$PrepNodeDatabase, $ExamsTable> {
   $$ExamsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -13064,7 +17203,7 @@ class $$ExamsTableFilterComposer
 }
 
 class $$ExamsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $ExamsTable> {
+    extends Composer<_$PrepNodeDatabase, $ExamsTable> {
   $$ExamsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -13104,7 +17243,7 @@ class $$ExamsTableOrderingComposer
 }
 
 class $$ExamsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $ExamsTable> {
+    extends Composer<_$PrepNodeDatabase, $ExamsTable> {
   $$ExamsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -13265,7 +17404,7 @@ class $$ExamsTableAnnotationComposer
 class $$ExamsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ExamsTable,
           Exam,
           $$ExamsTableFilterComposer,
@@ -13283,7 +17422,7 @@ class $$ExamsTableTableManager
             bool mockTestsRefs,
           })
         > {
-  $$ExamsTableTableManager(_$PrepGraphDatabase db, $ExamsTable table)
+  $$ExamsTableTableManager(_$PrepNodeDatabase db, $ExamsTable table)
     : super(
         TableManagerState(
           db: db,
@@ -13451,7 +17590,7 @@ class $$ExamsTableTableManager
 
 typedef $$ExamsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $ExamsTable,
       Exam,
       $$ExamsTableFilterComposer,
@@ -13507,10 +17646,10 @@ typedef $$UsersTableUpdateCompanionBuilder =
     });
 
 final class $$UsersTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $UsersTable, User> {
+    extends BaseReferences<_$PrepNodeDatabase, $UsersTable, User> {
   $$UsersTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $ExamsTable _examIdTable(_$PrepGraphDatabase db) =>
+  static $ExamsTable _examIdTable(_$PrepNodeDatabase db) =>
       db.exams.createAlias('users__exam_id__exams__exam_id');
 
   $$ExamsTableProcessedTableManager? get examId {
@@ -13528,7 +17667,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$UserPreferencesTable, List<UserPreference>>
-  _userPreferencesRefsTable(_$PrepGraphDatabase db) =>
+  _userPreferencesRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.userPreferences,
         aliasName: 'users__user_id__user_preferences__user_id',
@@ -13549,7 +17688,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$RefreshTokensTable, List<RefreshToken>>
-  _refreshTokensRefsTable(_$PrepGraphDatabase db) =>
+  _refreshTokensRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.refreshTokens,
         aliasName: 'users__user_id__refresh_tokens__user_id',
@@ -13568,7 +17707,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$ResourceRatingsTable, List<ResourceRating>>
-  _resourceRatingsRefsTable(_$PrepGraphDatabase db) =>
+  _resourceRatingsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.resourceRatings,
         aliasName: 'users__user_id__resource_ratings__user_id',
@@ -13592,7 +17731,7 @@ final class $$UsersTableReferences
     $UserQuestionAttemptsTable,
     List<UserQuestionAttempt>
   >
-  _userQuestionAttemptsRefsTable(_$PrepGraphDatabase db) =>
+  _userQuestionAttemptsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.userQuestionAttempts,
         aliasName: 'users__user_id__user_question_attempts__user_id',
@@ -13617,7 +17756,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$UserAnalyticsTable, List<UserAnalyticsData>>
-  _userAnalyticsRefsTable(_$PrepGraphDatabase db) =>
+  _userAnalyticsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.userAnalytics,
         aliasName: 'users__user_id__user_analytics__user_id',
@@ -13636,7 +17775,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$StudySessionsTable, List<StudySessionData>>
-  _studySessionsRefsTable(_$PrepGraphDatabase db) =>
+  _studySessionsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.studySessions,
         aliasName: 'users__user_id__study_sessions__user_id',
@@ -13655,7 +17794,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$MockTestsTable, List<MockTest>>
-  _mockTestsRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _mockTestsRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.mockTests,
     aliasName: 'users__user_id__mock_tests__user_id',
   );
@@ -13672,7 +17811,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$StudyPlansTable, List<StudyPlan>>
-  _studyPlansRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _studyPlansRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.studyPlans,
     aliasName: 'users__user_id__study_plans__user_id',
   );
@@ -13692,7 +17831,7 @@ final class $$UsersTableReferences
     $UserTopicProgressTable,
     List<UserTopicProgressData>
   >
-  _userTopicProgressRefsTable(_$PrepGraphDatabase db) =>
+  _userTopicProgressRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.userTopicProgress,
         aliasName: 'users__user_id__user_topic_progress__user_id',
@@ -13716,7 +17855,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$ConfidenceCheckinsTable, List<ConfidenceCheckin>>
-  _confidenceCheckinsRefsTable(_$PrepGraphDatabase db) =>
+  _confidenceCheckinsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.confidenceCheckins,
         aliasName: 'users__user_id__confidence_checkins__user_id',
@@ -13740,7 +17879,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$AchievementsTable, List<Achievement>>
-  _achievementsRefsTable(_$PrepGraphDatabase db) =>
+  _achievementsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.achievements,
         aliasName: 'users__user_id__achievements__user_id',
@@ -13759,7 +17898,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<$BookmarksTable, List<Bookmark>>
-  _bookmarksRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _bookmarksRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.bookmarks,
     aliasName: 'users__user_id__bookmarks__user_id',
   );
@@ -13774,10 +17913,164 @@ final class $$UsersTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$RoadmapPreferencesTable, List<RoadmapPreference>>
+  _roadmapPreferencesRefsTable(_$PrepNodeDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.roadmapPreferences,
+        aliasName: 'users__user_id__roadmap_preferences__user_id',
+      );
+
+  $$RoadmapPreferencesTableProcessedTableManager get roadmapPreferencesRefs {
+    final manager =
+        $$RoadmapPreferencesTableTableManager(
+          $_db,
+          $_db.roadmapPreferences,
+        ).filter(
+          (f) => f.userId.userId.sqlEquals($_itemColumn<String>('user_id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _roadmapPreferencesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$RoadmapDaysTable, List<RoadmapDay>>
+  _roadmapDaysRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
+    db.roadmapDays,
+    aliasName: 'users__user_id__roadmap_days__user_id',
+  );
+
+  $$RoadmapDaysTableProcessedTableManager get roadmapDaysRefs {
+    final manager = $$RoadmapDaysTableTableManager($_db, $_db.roadmapDays)
+        .filter(
+          (f) => f.userId.userId.sqlEquals($_itemColumn<String>('user_id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_roadmapDaysRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$RoadmapTasksTable, List<RoadmapTask>>
+  _roadmapTasksRefsTable(_$PrepNodeDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.roadmapTasks,
+        aliasName: 'users__user_id__roadmap_tasks__user_id',
+      );
+
+  $$RoadmapTasksTableProcessedTableManager get roadmapTasksRefs {
+    final manager = $$RoadmapTasksTableTableManager($_db, $_db.roadmapTasks)
+        .filter(
+          (f) => f.userId.userId.sqlEquals($_itemColumn<String>('user_id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_roadmapTasksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$StreaksTable, List<Streak>> _streaksRefsTable(
+    _$PrepNodeDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.streaks,
+    aliasName: 'users__user_id__streaks__user_id',
+  );
+
+  $$StreaksTableProcessedTableManager get streaksRefs {
+    final manager = $$StreaksTableTableManager($_db, $_db.streaks).filter(
+      (f) => f.userId.userId.sqlEquals($_itemColumn<String>('user_id')!),
+    );
+
+    final cache = $_typedResult.readTableOrNull(_streaksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$XpHistoryTable, List<XpEntry>>
+  _xpHistoryRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
+    db.xpHistory,
+    aliasName: 'users__user_id__xp_history__user_id',
+  );
+
+  $$XpHistoryTableProcessedTableManager get xpHistoryRefs {
+    final manager = $$XpHistoryTableTableManager($_db, $_db.xpHistory).filter(
+      (f) => f.userId.userId.sqlEquals($_itemColumn<String>('user_id')!),
+    );
+
+    final cache = $_typedResult.readTableOrNull(_xpHistoryRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$BadgesTable, List<Badge>> _badgesRefsTable(
+    _$PrepNodeDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.badges,
+    aliasName: 'users__user_id__badges__user_id',
+  );
+
+  $$BadgesTableProcessedTableManager get badgesRefs {
+    final manager = $$BadgesTableTableManager($_db, $_db.badges).filter(
+      (f) => f.userId.userId.sqlEquals($_itemColumn<String>('user_id')!),
+    );
+
+    final cache = $_typedResult.readTableOrNull(_badgesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$DailyChallengesTable, List<DailyChallenge>>
+  _dailyChallengesRefsTable(_$PrepNodeDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.dailyChallenges,
+        aliasName: 'users__user_id__daily_challenges__user_id',
+      );
+
+  $$DailyChallengesTableProcessedTableManager get dailyChallengesRefs {
+    final manager =
+        $$DailyChallengesTableTableManager($_db, $_db.dailyChallenges).filter(
+          (f) => f.userId.userId.sqlEquals($_itemColumn<String>('user_id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _dailyChallengesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$WeeklyMissionsTable, List<WeeklyMission>>
+  _weeklyMissionsRefsTable(_$PrepNodeDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.weeklyMissions,
+        aliasName: 'users__user_id__weekly_missions__user_id',
+      );
+
+  $$WeeklyMissionsTableProcessedTableManager get weeklyMissionsRefs {
+    final manager = $$WeeklyMissionsTableTableManager($_db, $_db.weeklyMissions)
+        .filter(
+          (f) => f.userId.userId.sqlEquals($_itemColumn<String>('user_id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_weeklyMissionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$UsersTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $UsersTable> {
+    extends Composer<_$PrepNodeDatabase, $UsersTable> {
   $$UsersTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -14172,10 +18465,210 @@ class $$UsersTableFilterComposer
     );
     return f(composer);
   }
+
+  Expression<bool> roadmapPreferencesRefs(
+    Expression<bool> Function($$RoadmapPreferencesTableFilterComposer f) f,
+  ) {
+    final $$RoadmapPreferencesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.roadmapPreferences,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapPreferencesTableFilterComposer(
+            $db: $db,
+            $table: $db.roadmapPreferences,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> roadmapDaysRefs(
+    Expression<bool> Function($$RoadmapDaysTableFilterComposer f) f,
+  ) {
+    final $$RoadmapDaysTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.roadmapDays,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapDaysTableFilterComposer(
+            $db: $db,
+            $table: $db.roadmapDays,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> roadmapTasksRefs(
+    Expression<bool> Function($$RoadmapTasksTableFilterComposer f) f,
+  ) {
+    final $$RoadmapTasksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.roadmapTasks,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapTasksTableFilterComposer(
+            $db: $db,
+            $table: $db.roadmapTasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> streaksRefs(
+    Expression<bool> Function($$StreaksTableFilterComposer f) f,
+  ) {
+    final $$StreaksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.streaks,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$StreaksTableFilterComposer(
+            $db: $db,
+            $table: $db.streaks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> xpHistoryRefs(
+    Expression<bool> Function($$XpHistoryTableFilterComposer f) f,
+  ) {
+    final $$XpHistoryTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.xpHistory,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$XpHistoryTableFilterComposer(
+            $db: $db,
+            $table: $db.xpHistory,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> badgesRefs(
+    Expression<bool> Function($$BadgesTableFilterComposer f) f,
+  ) {
+    final $$BadgesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.badges,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BadgesTableFilterComposer(
+            $db: $db,
+            $table: $db.badges,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> dailyChallengesRefs(
+    Expression<bool> Function($$DailyChallengesTableFilterComposer f) f,
+  ) {
+    final $$DailyChallengesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.dailyChallenges,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DailyChallengesTableFilterComposer(
+            $db: $db,
+            $table: $db.dailyChallenges,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> weeklyMissionsRefs(
+    Expression<bool> Function($$WeeklyMissionsTableFilterComposer f) f,
+  ) {
+    final $$WeeklyMissionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.weeklyMissions,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WeeklyMissionsTableFilterComposer(
+            $db: $db,
+            $table: $db.weeklyMissions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$UsersTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $UsersTable> {
+    extends Composer<_$PrepNodeDatabase, $UsersTable> {
   $$UsersTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -14273,7 +18766,7 @@ class $$UsersTableOrderingComposer
 }
 
 class $$UsersTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $UsersTable> {
+    extends Composer<_$PrepNodeDatabase, $UsersTable> {
   $$UsersTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -14655,12 +19148,213 @@ class $$UsersTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> roadmapPreferencesRefs<T extends Object>(
+    Expression<T> Function($$RoadmapPreferencesTableAnnotationComposer a) f,
+  ) {
+    final $$RoadmapPreferencesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.userId,
+          referencedTable: $db.roadmapPreferences,
+          getReferencedColumn: (t) => t.userId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$RoadmapPreferencesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.roadmapPreferences,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> roadmapDaysRefs<T extends Object>(
+    Expression<T> Function($$RoadmapDaysTableAnnotationComposer a) f,
+  ) {
+    final $$RoadmapDaysTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.roadmapDays,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapDaysTableAnnotationComposer(
+            $db: $db,
+            $table: $db.roadmapDays,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> roadmapTasksRefs<T extends Object>(
+    Expression<T> Function($$RoadmapTasksTableAnnotationComposer a) f,
+  ) {
+    final $$RoadmapTasksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.roadmapTasks,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapTasksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.roadmapTasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> streaksRefs<T extends Object>(
+    Expression<T> Function($$StreaksTableAnnotationComposer a) f,
+  ) {
+    final $$StreaksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.streaks,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$StreaksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.streaks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> xpHistoryRefs<T extends Object>(
+    Expression<T> Function($$XpHistoryTableAnnotationComposer a) f,
+  ) {
+    final $$XpHistoryTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.xpHistory,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$XpHistoryTableAnnotationComposer(
+            $db: $db,
+            $table: $db.xpHistory,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> badgesRefs<T extends Object>(
+    Expression<T> Function($$BadgesTableAnnotationComposer a) f,
+  ) {
+    final $$BadgesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.badges,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BadgesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.badges,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> dailyChallengesRefs<T extends Object>(
+    Expression<T> Function($$DailyChallengesTableAnnotationComposer a) f,
+  ) {
+    final $$DailyChallengesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.dailyChallenges,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DailyChallengesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.dailyChallenges,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> weeklyMissionsRefs<T extends Object>(
+    Expression<T> Function($$WeeklyMissionsTableAnnotationComposer a) f,
+  ) {
+    final $$WeeklyMissionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.weeklyMissions,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WeeklyMissionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.weeklyMissions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$UsersTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UsersTable,
           User,
           $$UsersTableFilterComposer,
@@ -14684,9 +19378,17 @@ class $$UsersTableTableManager
             bool confidenceCheckinsRefs,
             bool achievementsRefs,
             bool bookmarksRefs,
+            bool roadmapPreferencesRefs,
+            bool roadmapDaysRefs,
+            bool roadmapTasksRefs,
+            bool streaksRefs,
+            bool xpHistoryRefs,
+            bool badgesRefs,
+            bool dailyChallengesRefs,
+            bool weeklyMissionsRefs,
           })
         > {
-  $$UsersTableTableManager(_$PrepGraphDatabase db, $UsersTable table)
+  $$UsersTableTableManager(_$PrepNodeDatabase db, $UsersTable table)
     : super(
         TableManagerState(
           db: db,
@@ -14786,6 +19488,14 @@ class $$UsersTableTableManager
                 confidenceCheckinsRefs = false,
                 achievementsRefs = false,
                 bookmarksRefs = false,
+                roadmapPreferencesRefs = false,
+                roadmapDaysRefs = false,
+                roadmapTasksRefs = false,
+                streaksRefs = false,
+                xpHistoryRefs = false,
+                badgesRefs = false,
+                dailyChallengesRefs = false,
+                weeklyMissionsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -14802,6 +19512,14 @@ class $$UsersTableTableManager
                     if (confidenceCheckinsRefs) db.confidenceCheckins,
                     if (achievementsRefs) db.achievements,
                     if (bookmarksRefs) db.bookmarks,
+                    if (roadmapPreferencesRefs) db.roadmapPreferences,
+                    if (roadmapDaysRefs) db.roadmapDays,
+                    if (roadmapTasksRefs) db.roadmapTasks,
+                    if (streaksRefs) db.streaks,
+                    if (xpHistoryRefs) db.xpHistory,
+                    if (badgesRefs) db.badges,
+                    if (dailyChallengesRefs) db.dailyChallenges,
+                    if (weeklyMissionsRefs) db.weeklyMissions,
                   ],
                   addJoins:
                       <
@@ -15077,6 +19795,154 @@ class $$UsersTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (roadmapPreferencesRefs)
+                        await $_getPrefetchedData<
+                          User,
+                          $UsersTable,
+                          RoadmapPreference
+                        >(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._roadmapPreferencesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).roadmapPreferencesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.userId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (roadmapDaysRefs)
+                        await $_getPrefetchedData<
+                          User,
+                          $UsersTable,
+                          RoadmapDay
+                        >(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._roadmapDaysRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).roadmapDaysRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.userId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (roadmapTasksRefs)
+                        await $_getPrefetchedData<
+                          User,
+                          $UsersTable,
+                          RoadmapTask
+                        >(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._roadmapTasksRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).roadmapTasksRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.userId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (streaksRefs)
+                        await $_getPrefetchedData<User, $UsersTable, Streak>(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._streaksRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(db, table, p0).streaksRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.userId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (xpHistoryRefs)
+                        await $_getPrefetchedData<User, $UsersTable, XpEntry>(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._xpHistoryRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).xpHistoryRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.userId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (badgesRefs)
+                        await $_getPrefetchedData<User, $UsersTable, Badge>(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._badgesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(db, table, p0).badgesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.userId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (dailyChallengesRefs)
+                        await $_getPrefetchedData<
+                          User,
+                          $UsersTable,
+                          DailyChallenge
+                        >(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._dailyChallengesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).dailyChallengesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.userId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (weeklyMissionsRefs)
+                        await $_getPrefetchedData<
+                          User,
+                          $UsersTable,
+                          WeeklyMission
+                        >(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._weeklyMissionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).weeklyMissionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.userId,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -15087,7 +19953,7 @@ class $$UsersTableTableManager
 
 typedef $$UsersTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $UsersTable,
       User,
       $$UsersTableFilterComposer,
@@ -15111,6 +19977,14 @@ typedef $$UsersTableProcessedTableManager =
         bool confidenceCheckinsRefs,
         bool achievementsRefs,
         bool bookmarksRefs,
+        bool roadmapPreferencesRefs,
+        bool roadmapDaysRefs,
+        bool roadmapTasksRefs,
+        bool streaksRefs,
+        bool xpHistoryRefs,
+        bool badgesRefs,
+        bool dailyChallengesRefs,
+        bool weeklyMissionsRefs,
       })
     >;
 typedef $$UserPreferencesTableCreateCompanionBuilder =
@@ -15149,7 +20023,7 @@ typedef $$UserPreferencesTableUpdateCompanionBuilder =
 final class $$UserPreferencesTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UserPreferencesTable,
           UserPreference
         > {
@@ -15159,7 +20033,7 @@ final class $$UserPreferencesTableReferences
     super.$_typedResult,
   );
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('user_preferences__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -15178,7 +20052,7 @@ final class $$UserPreferencesTableReferences
 }
 
 class $$UserPreferencesTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $UserPreferencesTable> {
+    extends Composer<_$PrepNodeDatabase, $UserPreferencesTable> {
   $$UserPreferencesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -15266,7 +20140,7 @@ class $$UserPreferencesTableFilterComposer
 }
 
 class $$UserPreferencesTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $UserPreferencesTable> {
+    extends Composer<_$PrepNodeDatabase, $UserPreferencesTable> {
   $$UserPreferencesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -15355,7 +20229,7 @@ class $$UserPreferencesTableOrderingComposer
 }
 
 class $$UserPreferencesTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $UserPreferencesTable> {
+    extends Composer<_$PrepNodeDatabase, $UserPreferencesTable> {
   $$UserPreferencesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -15444,7 +20318,7 @@ class $$UserPreferencesTableAnnotationComposer
 class $$UserPreferencesTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UserPreferencesTable,
           UserPreference,
           $$UserPreferencesTableFilterComposer,
@@ -15457,7 +20331,7 @@ class $$UserPreferencesTableTableManager
           PrefetchHooks Function({bool userId})
         > {
   $$UserPreferencesTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $UserPreferencesTable table,
   ) : super(
         TableManagerState(
@@ -15588,7 +20462,7 @@ class $$UserPreferencesTableTableManager
 
 typedef $$UserPreferencesTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $UserPreferencesTable,
       UserPreference,
       $$UserPreferencesTableFilterComposer,
@@ -15625,14 +20499,14 @@ typedef $$RefreshTokensTableUpdateCompanionBuilder =
 
 final class $$RefreshTokensTableReferences
     extends
-        BaseReferences<_$PrepGraphDatabase, $RefreshTokensTable, RefreshToken> {
+        BaseReferences<_$PrepNodeDatabase, $RefreshTokensTable, RefreshToken> {
   $$RefreshTokensTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
   );
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('refresh_tokens__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -15651,7 +20525,7 @@ final class $$RefreshTokensTableReferences
 }
 
 class $$RefreshTokensTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $RefreshTokensTable> {
+    extends Composer<_$PrepNodeDatabase, $RefreshTokensTable> {
   $$RefreshTokensTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -15714,7 +20588,7 @@ class $$RefreshTokensTableFilterComposer
 }
 
 class $$RefreshTokensTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $RefreshTokensTable> {
+    extends Composer<_$PrepNodeDatabase, $RefreshTokensTable> {
   $$RefreshTokensTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -15777,7 +20651,7 @@ class $$RefreshTokensTableOrderingComposer
 }
 
 class $$RefreshTokensTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $RefreshTokensTable> {
+    extends Composer<_$PrepNodeDatabase, $RefreshTokensTable> {
   $$RefreshTokensTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -15832,7 +20706,7 @@ class $$RefreshTokensTableAnnotationComposer
 class $$RefreshTokensTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $RefreshTokensTable,
           RefreshToken,
           $$RefreshTokensTableFilterComposer,
@@ -15845,7 +20719,7 @@ class $$RefreshTokensTableTableManager
           PrefetchHooks Function({bool userId})
         > {
   $$RefreshTokensTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $RefreshTokensTable table,
   ) : super(
         TableManagerState(
@@ -15952,7 +20826,7 @@ class $$RefreshTokensTableTableManager
 
 typedef $$RefreshTokensTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $RefreshTokensTable,
       RefreshToken,
       $$RefreshTokensTableFilterComposer,
@@ -15982,10 +20856,10 @@ typedef $$SubjectsTableUpdateCompanionBuilder =
     });
 
 final class $$SubjectsTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $SubjectsTable, Subject> {
+    extends BaseReferences<_$PrepNodeDatabase, $SubjectsTable, Subject> {
   $$SubjectsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $ExamsTable _examIdTable(_$PrepGraphDatabase db) =>
+  static $ExamsTable _examIdTable(_$PrepNodeDatabase db) =>
       db.exams.createAlias('subjects__exam_id__exams__exam_id');
 
   $$ExamsTableProcessedTableManager get examId {
@@ -16003,7 +20877,7 @@ final class $$SubjectsTableReferences
   }
 
   static MultiTypedResultKey<$TopicsTable, List<Topic>> _topicsRefsTable(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.topics,
     aliasName: 'subjects__subject_id__topics__subject_id',
@@ -16022,7 +20896,7 @@ final class $$SubjectsTableReferences
   }
 
   static MultiTypedResultKey<$QuestionsTable, List<Question>>
-  _questionsRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _questionsRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.questions,
     aliasName: 'subjects__subject_id__questions__subject_id',
   );
@@ -16040,7 +20914,7 @@ final class $$SubjectsTableReferences
   }
 
   static MultiTypedResultKey<$MockTestsTable, List<MockTest>>
-  _mockTestsRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _mockTestsRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.mockTests,
     aliasName: 'subjects__subject_id__mock_tests__subject_id',
   );
@@ -16059,7 +20933,7 @@ final class $$SubjectsTableReferences
 }
 
 class $$SubjectsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $SubjectsTable> {
+    extends Composer<_$PrepNodeDatabase, $SubjectsTable> {
   $$SubjectsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -16182,7 +21056,7 @@ class $$SubjectsTableFilterComposer
 }
 
 class $$SubjectsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $SubjectsTable> {
+    extends Composer<_$PrepNodeDatabase, $SubjectsTable> {
   $$SubjectsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -16230,7 +21104,7 @@ class $$SubjectsTableOrderingComposer
 }
 
 class $$SubjectsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $SubjectsTable> {
+    extends Composer<_$PrepNodeDatabase, $SubjectsTable> {
   $$SubjectsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -16353,7 +21227,7 @@ class $$SubjectsTableAnnotationComposer
 class $$SubjectsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $SubjectsTable,
           Subject,
           $$SubjectsTableFilterComposer,
@@ -16370,7 +21244,7 @@ class $$SubjectsTableTableManager
             bool mockTestsRefs,
           })
         > {
-  $$SubjectsTableTableManager(_$PrepGraphDatabase db, $SubjectsTable table)
+  $$SubjectsTableTableManager(_$PrepNodeDatabase db, $SubjectsTable table)
     : super(
         TableManagerState(
           db: db,
@@ -16538,7 +21412,7 @@ class $$SubjectsTableTableManager
 
 typedef $$SubjectsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $SubjectsTable,
       Subject,
       $$SubjectsTableFilterComposer,
@@ -16577,10 +21451,10 @@ typedef $$TopicsTableUpdateCompanionBuilder =
     });
 
 final class $$TopicsTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $TopicsTable, Topic> {
+    extends BaseReferences<_$PrepNodeDatabase, $TopicsTable, Topic> {
   $$TopicsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $SubjectsTable _subjectIdTable(_$PrepGraphDatabase db) =>
+  static $SubjectsTable _subjectIdTable(_$PrepNodeDatabase db) =>
       db.subjects.createAlias('topics__subject_id__subjects__subject_id');
 
   $$SubjectsTableProcessedTableManager get subjectId {
@@ -16597,7 +21471,7 @@ final class $$TopicsTableReferences
     );
   }
 
-  static $TopicsTable _parentTopicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _parentTopicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('topics__parent_topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager? get parentTopicId {
@@ -16615,7 +21489,7 @@ final class $$TopicsTableReferences
   }
 
   static MultiTypedResultKey<$QuestionsTable, List<Question>>
-  _questionsRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _questionsRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.questions,
     aliasName: 'topics__topic_id__questions__topic_id',
   );
@@ -16632,7 +21506,7 @@ final class $$TopicsTableReferences
   }
 
   static MultiTypedResultKey<$ResourcesTable, List<Resource>>
-  _resourcesRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _resourcesRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.resources,
     aliasName: 'topics__topic_id__resources__topic_id',
   );
@@ -16649,7 +21523,7 @@ final class $$TopicsTableReferences
   }
 
   static MultiTypedResultKey<$StudySessionsTable, List<StudySessionData>>
-  _studySessionsRefsTable(_$PrepGraphDatabase db) =>
+  _studySessionsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.studySessions,
         aliasName: 'topics__topic_id__study_sessions__topic_id',
@@ -16668,7 +21542,7 @@ final class $$TopicsTableReferences
   }
 
   static MultiTypedResultKey<$MockTestsTable, List<MockTest>>
-  _mockTestsRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _mockTestsRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.mockTests,
     aliasName: 'topics__topic_id__mock_tests__topic_id',
   );
@@ -16685,7 +21559,7 @@ final class $$TopicsTableReferences
   }
 
   static MultiTypedResultKey<$StudyPlansTable, List<StudyPlan>>
-  _studyPlansRefsTable(_$PrepGraphDatabase db) => MultiTypedResultKey.fromTable(
+  _studyPlansRefsTable(_$PrepNodeDatabase db) => MultiTypedResultKey.fromTable(
     db.studyPlans,
     aliasName: 'topics__topic_id__study_plans__topic_id',
   );
@@ -16705,7 +21579,7 @@ final class $$TopicsTableReferences
     $UserTopicProgressTable,
     List<UserTopicProgressData>
   >
-  _userTopicProgressRefsTable(_$PrepGraphDatabase db) =>
+  _userTopicProgressRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.userTopicProgress,
         aliasName: 'topics__topic_id__user_topic_progress__topic_id',
@@ -16729,7 +21603,7 @@ final class $$TopicsTableReferences
   }
 
   static MultiTypedResultKey<$ConfidenceCheckinsTable, List<ConfidenceCheckin>>
-  _confidenceCheckinsRefsTable(_$PrepGraphDatabase db) =>
+  _confidenceCheckinsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.confidenceCheckins,
         aliasName: 'topics__topic_id__confidence_checkins__topic_id',
@@ -16753,7 +21627,7 @@ final class $$TopicsTableReferences
   }
 
   static MultiTypedResultKey<$AchievementsTable, List<Achievement>>
-  _achievementsRefsTable(_$PrepGraphDatabase db) =>
+  _achievementsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.achievements,
         aliasName: 'topics__topic_id__achievements__related_topic_id',
@@ -16772,10 +21646,29 @@ final class $$TopicsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$RoadmapTasksTable, List<RoadmapTask>>
+  _roadmapTasksRefsTable(_$PrepNodeDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.roadmapTasks,
+        aliasName: 'topics__topic_id__roadmap_tasks__topic_id',
+      );
+
+  $$RoadmapTasksTableProcessedTableManager get roadmapTasksRefs {
+    final manager = $$RoadmapTasksTableTableManager($_db, $_db.roadmapTasks)
+        .filter(
+          (f) => f.topicId.topicId.sqlEquals($_itemColumn<String>('topic_id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_roadmapTasksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$TopicsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $TopicsTable> {
+    extends Composer<_$PrepNodeDatabase, $TopicsTable> {
   $$TopicsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -17048,10 +21941,35 @@ class $$TopicsTableFilterComposer
     );
     return f(composer);
   }
+
+  Expression<bool> roadmapTasksRefs(
+    Expression<bool> Function($$RoadmapTasksTableFilterComposer f) f,
+  ) {
+    final $$RoadmapTasksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.topicId,
+      referencedTable: $db.roadmapTasks,
+      getReferencedColumn: (t) => t.topicId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapTasksTableFilterComposer(
+            $db: $db,
+            $table: $db.roadmapTasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$TopicsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $TopicsTable> {
+    extends Composer<_$PrepNodeDatabase, $TopicsTable> {
   $$TopicsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -17127,7 +22045,7 @@ class $$TopicsTableOrderingComposer
 }
 
 class $$TopicsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $TopicsTable> {
+    extends Composer<_$PrepNodeDatabase, $TopicsTable> {
   $$TopicsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -17398,12 +22316,37 @@ class $$TopicsTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> roadmapTasksRefs<T extends Object>(
+    Expression<T> Function($$RoadmapTasksTableAnnotationComposer a) f,
+  ) {
+    final $$RoadmapTasksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.topicId,
+      referencedTable: $db.roadmapTasks,
+      getReferencedColumn: (t) => t.topicId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapTasksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.roadmapTasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$TopicsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $TopicsTable,
           Topic,
           $$TopicsTableFilterComposer,
@@ -17424,9 +22367,10 @@ class $$TopicsTableTableManager
             bool userTopicProgressRefs,
             bool confidenceCheckinsRefs,
             bool achievementsRefs,
+            bool roadmapTasksRefs,
           })
         > {
-  $$TopicsTableTableManager(_$PrepGraphDatabase db, $TopicsTable table)
+  $$TopicsTableTableManager(_$PrepNodeDatabase db, $TopicsTable table)
     : super(
         TableManagerState(
           db: db,
@@ -17491,6 +22435,7 @@ class $$TopicsTableTableManager
                 userTopicProgressRefs = false,
                 confidenceCheckinsRefs = false,
                 achievementsRefs = false,
+                roadmapTasksRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -17503,6 +22448,7 @@ class $$TopicsTableTableManager
                     if (userTopicProgressRefs) db.userTopicProgress,
                     if (confidenceCheckinsRefs) db.confidenceCheckins,
                     if (achievementsRefs) db.achievements,
+                    if (roadmapTasksRefs) db.roadmapTasks,
                   ],
                   addJoins:
                       <
@@ -17719,6 +22665,27 @@ class $$TopicsTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (roadmapTasksRefs)
+                        await $_getPrefetchedData<
+                          Topic,
+                          $TopicsTable,
+                          RoadmapTask
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TopicsTableReferences
+                              ._roadmapTasksRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TopicsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).roadmapTasksRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.topicId == item.topicId,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -17729,7 +22696,7 @@ class $$TopicsTableTableManager
 
 typedef $$TopicsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $TopicsTable,
       Topic,
       $$TopicsTableFilterComposer,
@@ -17750,6 +22717,7 @@ typedef $$TopicsTableProcessedTableManager =
         bool userTopicProgressRefs,
         bool confidenceCheckinsRefs,
         bool achievementsRefs,
+        bool roadmapTasksRefs,
       })
     >;
 typedef $$ConceptRelationshipsTableCreateCompanionBuilder =
@@ -17772,7 +22740,7 @@ typedef $$ConceptRelationshipsTableUpdateCompanionBuilder =
 final class $$ConceptRelationshipsTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ConceptRelationshipsTable,
           ConceptRelationship
         > {
@@ -17782,7 +22750,7 @@ final class $$ConceptRelationshipsTableReferences
     super.$_typedResult,
   );
 
-  static $TopicsTable _sourceTopicIdTable(_$PrepGraphDatabase db) => db.topics
+  static $TopicsTable _sourceTopicIdTable(_$PrepNodeDatabase db) => db.topics
       .createAlias('concept_relationships__source_topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager get sourceTopicId {
@@ -17799,7 +22767,7 @@ final class $$ConceptRelationshipsTableReferences
     );
   }
 
-  static $TopicsTable _targetTopicIdTable(_$PrepGraphDatabase db) => db.topics
+  static $TopicsTable _targetTopicIdTable(_$PrepNodeDatabase db) => db.topics
       .createAlias('concept_relationships__target_topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager get targetTopicId {
@@ -17818,7 +22786,7 @@ final class $$ConceptRelationshipsTableReferences
 }
 
 class $$ConceptRelationshipsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $ConceptRelationshipsTable> {
+    extends Composer<_$PrepNodeDatabase, $ConceptRelationshipsTable> {
   $$ConceptRelationshipsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -17884,7 +22852,7 @@ class $$ConceptRelationshipsTableFilterComposer
 }
 
 class $$ConceptRelationshipsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $ConceptRelationshipsTable> {
+    extends Composer<_$PrepNodeDatabase, $ConceptRelationshipsTable> {
   $$ConceptRelationshipsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -17950,7 +22918,7 @@ class $$ConceptRelationshipsTableOrderingComposer
 }
 
 class $$ConceptRelationshipsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $ConceptRelationshipsTable> {
+    extends Composer<_$PrepNodeDatabase, $ConceptRelationshipsTable> {
   $$ConceptRelationshipsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -18018,7 +22986,7 @@ class $$ConceptRelationshipsTableAnnotationComposer
 class $$ConceptRelationshipsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ConceptRelationshipsTable,
           ConceptRelationship,
           $$ConceptRelationshipsTableFilterComposer,
@@ -18031,7 +22999,7 @@ class $$ConceptRelationshipsTableTableManager
           PrefetchHooks Function({bool sourceTopicId, bool targetTopicId})
         > {
   $$ConceptRelationshipsTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $ConceptRelationshipsTable table,
   ) : super(
         TableManagerState(
@@ -18150,7 +23118,7 @@ class $$ConceptRelationshipsTableTableManager
 
 typedef $$ConceptRelationshipsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $ConceptRelationshipsTable,
       ConceptRelationship,
       $$ConceptRelationshipsTableFilterComposer,
@@ -18206,10 +23174,10 @@ typedef $$QuestionsTableUpdateCompanionBuilder =
     });
 
 final class $$QuestionsTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $QuestionsTable, Question> {
+    extends BaseReferences<_$PrepNodeDatabase, $QuestionsTable, Question> {
   $$QuestionsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $ExamsTable _examIdTable(_$PrepGraphDatabase db) =>
+  static $ExamsTable _examIdTable(_$PrepNodeDatabase db) =>
       db.exams.createAlias('questions__exam_id__exams__exam_id');
 
   $$ExamsTableProcessedTableManager get examId {
@@ -18226,7 +23194,7 @@ final class $$QuestionsTableReferences
     );
   }
 
-  static $SubjectsTable _subjectIdTable(_$PrepGraphDatabase db) =>
+  static $SubjectsTable _subjectIdTable(_$PrepNodeDatabase db) =>
       db.subjects.createAlias('questions__subject_id__subjects__subject_id');
 
   $$SubjectsTableProcessedTableManager get subjectId {
@@ -18243,7 +23211,7 @@ final class $$QuestionsTableReferences
     );
   }
 
-  static $TopicsTable _topicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _topicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('questions__topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager get topicId {
@@ -18264,7 +23232,7 @@ final class $$QuestionsTableReferences
     $UserQuestionAttemptsTable,
     List<UserQuestionAttempt>
   >
-  _userQuestionAttemptsRefsTable(_$PrepGraphDatabase db) =>
+  _userQuestionAttemptsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.userQuestionAttempts,
         aliasName:
@@ -18292,7 +23260,7 @@ final class $$QuestionsTableReferences
   }
 
   static MultiTypedResultKey<$MockTestQuestionsTable, List<MockTestQuestion>>
-  _mockTestQuestionsRefsTable(_$PrepGraphDatabase db) =>
+  _mockTestQuestionsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.mockTestQuestions,
         aliasName: 'questions__question_id__mock_test_questions__question_id',
@@ -18318,7 +23286,7 @@ final class $$QuestionsTableReferences
   }
 
   static MultiTypedResultKey<$MockTestAnswersTable, List<MockTestAnswer>>
-  _mockTestAnswersRefsTable(_$PrepGraphDatabase db) =>
+  _mockTestAnswersRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.mockTestAnswers,
         aliasName: 'questions__question_id__mock_test_answers__question_id',
@@ -18342,7 +23310,7 @@ final class $$QuestionsTableReferences
 }
 
 class $$QuestionsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $QuestionsTable> {
+    extends Composer<_$PrepNodeDatabase, $QuestionsTable> {
   $$QuestionsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -18566,7 +23534,7 @@ class $$QuestionsTableFilterComposer
 }
 
 class $$QuestionsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $QuestionsTable> {
+    extends Composer<_$PrepNodeDatabase, $QuestionsTable> {
   $$QuestionsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -18715,7 +23683,7 @@ class $$QuestionsTableOrderingComposer
 }
 
 class $$QuestionsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $QuestionsTable> {
+    extends Composer<_$PrepNodeDatabase, $QuestionsTable> {
   $$QuestionsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -18927,7 +23895,7 @@ class $$QuestionsTableAnnotationComposer
 class $$QuestionsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $QuestionsTable,
           Question,
           $$QuestionsTableFilterComposer,
@@ -18946,7 +23914,7 @@ class $$QuestionsTableTableManager
             bool mockTestAnswersRefs,
           })
         > {
-  $$QuestionsTableTableManager(_$PrepGraphDatabase db, $QuestionsTable table)
+  $$QuestionsTableTableManager(_$PrepNodeDatabase db, $QuestionsTable table)
     : super(
         TableManagerState(
           db: db,
@@ -19194,7 +24162,7 @@ class $$QuestionsTableTableManager
 
 typedef $$QuestionsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $QuestionsTable,
       Question,
       $$QuestionsTableFilterComposer,
@@ -19269,10 +24237,10 @@ typedef $$ResourcesTableUpdateCompanionBuilder =
     });
 
 final class $$ResourcesTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $ResourcesTable, Resource> {
+    extends BaseReferences<_$PrepNodeDatabase, $ResourcesTable, Resource> {
   $$ResourcesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $TopicsTable _topicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _topicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('resources__topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager get topicId {
@@ -19290,7 +24258,7 @@ final class $$ResourcesTableReferences
   }
 
   static MultiTypedResultKey<$ResourceRatingsTable, List<ResourceRating>>
-  _resourceRatingsRefsTable(_$PrepGraphDatabase db) =>
+  _resourceRatingsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.resourceRatings,
         aliasName: 'resources__resource_id__resource_ratings__resource_id',
@@ -19314,7 +24282,7 @@ final class $$ResourcesTableReferences
 }
 
 class $$ResourcesTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $ResourcesTable> {
+    extends Composer<_$PrepNodeDatabase, $ResourcesTable> {
   $$ResourcesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -19482,7 +24450,7 @@ class $$ResourcesTableFilterComposer
 }
 
 class $$ResourcesTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $ResourcesTable> {
+    extends Composer<_$PrepNodeDatabase, $ResourcesTable> {
   $$ResourcesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -19625,7 +24593,7 @@ class $$ResourcesTableOrderingComposer
 }
 
 class $$ResourcesTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $ResourcesTable> {
+    extends Composer<_$PrepNodeDatabase, $ResourcesTable> {
   $$ResourcesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -19775,7 +24743,7 @@ class $$ResourcesTableAnnotationComposer
 class $$ResourcesTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ResourcesTable,
           Resource,
           $$ResourcesTableFilterComposer,
@@ -19787,7 +24755,7 @@ class $$ResourcesTableTableManager
           Resource,
           PrefetchHooks Function({bool topicId, bool resourceRatingsRefs})
         > {
-  $$ResourcesTableTableManager(_$PrepGraphDatabase db, $ResourcesTable table)
+  $$ResourcesTableTableManager(_$PrepNodeDatabase db, $ResourcesTable table)
     : super(
         TableManagerState(
           db: db,
@@ -19982,7 +24950,7 @@ class $$ResourcesTableTableManager
 
 typedef $$ResourcesTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $ResourcesTable,
       Resource,
       $$ResourcesTableFilterComposer,
@@ -20016,7 +24984,7 @@ typedef $$ResourceRatingsTableUpdateCompanionBuilder =
 final class $$ResourceRatingsTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ResourceRatingsTable,
           ResourceRating
         > {
@@ -20026,8 +24994,7 @@ final class $$ResourceRatingsTableReferences
     super.$_typedResult,
   );
 
-  static $ResourcesTable _resourceIdTable(_$PrepGraphDatabase db) => db
-      .resources
+  static $ResourcesTable _resourceIdTable(_$PrepNodeDatabase db) => db.resources
       .createAlias('resource_ratings__resource_id__resources__resource_id');
 
   $$ResourcesTableProcessedTableManager get resourceId {
@@ -20044,7 +25011,7 @@ final class $$ResourceRatingsTableReferences
     );
   }
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('resource_ratings__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -20063,7 +25030,7 @@ final class $$ResourceRatingsTableReferences
 }
 
 class $$ResourceRatingsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $ResourceRatingsTable> {
+    extends Composer<_$PrepNodeDatabase, $ResourceRatingsTable> {
   $$ResourceRatingsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -20134,7 +25101,7 @@ class $$ResourceRatingsTableFilterComposer
 }
 
 class $$ResourceRatingsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $ResourceRatingsTable> {
+    extends Composer<_$PrepNodeDatabase, $ResourceRatingsTable> {
   $$ResourceRatingsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -20205,7 +25172,7 @@ class $$ResourceRatingsTableOrderingComposer
 }
 
 class $$ResourceRatingsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $ResourceRatingsTable> {
+    extends Composer<_$PrepNodeDatabase, $ResourceRatingsTable> {
   $$ResourceRatingsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -20272,7 +25239,7 @@ class $$ResourceRatingsTableAnnotationComposer
 class $$ResourceRatingsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ResourceRatingsTable,
           ResourceRating,
           $$ResourceRatingsTableFilterComposer,
@@ -20285,7 +25252,7 @@ class $$ResourceRatingsTableTableManager
           PrefetchHooks Function({bool resourceId, bool userId})
         > {
   $$ResourceRatingsTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $ResourceRatingsTable table,
   ) : super(
         TableManagerState(
@@ -20401,7 +25368,7 @@ class $$ResourceRatingsTableTableManager
 
 typedef $$ResourceRatingsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $ResourceRatingsTable,
       ResourceRating,
       $$ResourceRatingsTableFilterComposer,
@@ -20443,10 +25410,10 @@ typedef $$CutoffDataTableUpdateCompanionBuilder =
     });
 
 final class $$CutoffDataTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $CutoffDataTable, CutoffDatum> {
+    extends BaseReferences<_$PrepNodeDatabase, $CutoffDataTable, CutoffDatum> {
   $$CutoffDataTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $ExamsTable _examIdTable(_$PrepGraphDatabase db) =>
+  static $ExamsTable _examIdTable(_$PrepNodeDatabase db) =>
       db.exams.createAlias('cutoff_data__exam_id__exams__exam_id');
 
   $$ExamsTableProcessedTableManager get examId {
@@ -20465,7 +25432,7 @@ final class $$CutoffDataTableReferences
 }
 
 class $$CutoffDataTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $CutoffDataTable> {
+    extends Composer<_$PrepNodeDatabase, $CutoffDataTable> {
   $$CutoffDataTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -20543,7 +25510,7 @@ class $$CutoffDataTableFilterComposer
 }
 
 class $$CutoffDataTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $CutoffDataTable> {
+    extends Composer<_$PrepNodeDatabase, $CutoffDataTable> {
   $$CutoffDataTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -20621,7 +25588,7 @@ class $$CutoffDataTableOrderingComposer
 }
 
 class $$CutoffDataTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $CutoffDataTable> {
+    extends Composer<_$PrepNodeDatabase, $CutoffDataTable> {
   $$CutoffDataTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -20693,7 +25660,7 @@ class $$CutoffDataTableAnnotationComposer
 class $$CutoffDataTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $CutoffDataTable,
           CutoffDatum,
           $$CutoffDataTableFilterComposer,
@@ -20705,7 +25672,7 @@ class $$CutoffDataTableTableManager
           CutoffDatum,
           PrefetchHooks Function({bool examId})
         > {
-  $$CutoffDataTableTableManager(_$PrepGraphDatabase db, $CutoffDataTable table)
+  $$CutoffDataTableTableManager(_$PrepNodeDatabase db, $CutoffDataTable table)
     : super(
         TableManagerState(
           db: db,
@@ -20823,7 +25790,7 @@ class $$CutoffDataTableTableManager
 
 typedef $$CutoffDataTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $CutoffDataTable,
       CutoffDatum,
       $$CutoffDataTableFilterComposer,
@@ -20861,7 +25828,7 @@ typedef $$UserQuestionAttemptsTableUpdateCompanionBuilder =
 final class $$UserQuestionAttemptsTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UserQuestionAttemptsTable,
           UserQuestionAttempt
         > {
@@ -20871,7 +25838,7 @@ final class $$UserQuestionAttemptsTableReferences
     super.$_typedResult,
   );
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('user_question_attempts__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -20888,7 +25855,7 @@ final class $$UserQuestionAttemptsTableReferences
     );
   }
 
-  static $QuestionsTable _questionIdTable(_$PrepGraphDatabase db) =>
+  static $QuestionsTable _questionIdTable(_$PrepNodeDatabase db) =>
       db.questions.createAlias(
         'user_question_attempts__question_id__questions__question_id',
       );
@@ -20909,7 +25876,7 @@ final class $$UserQuestionAttemptsTableReferences
 }
 
 class $$UserQuestionAttemptsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $UserQuestionAttemptsTable> {
+    extends Composer<_$PrepNodeDatabase, $UserQuestionAttemptsTable> {
   $$UserQuestionAttemptsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -20990,7 +25957,7 @@ class $$UserQuestionAttemptsTableFilterComposer
 }
 
 class $$UserQuestionAttemptsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $UserQuestionAttemptsTable> {
+    extends Composer<_$PrepNodeDatabase, $UserQuestionAttemptsTable> {
   $$UserQuestionAttemptsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -21071,7 +26038,7 @@ class $$UserQuestionAttemptsTableOrderingComposer
 }
 
 class $$UserQuestionAttemptsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $UserQuestionAttemptsTable> {
+    extends Composer<_$PrepNodeDatabase, $UserQuestionAttemptsTable> {
   $$UserQuestionAttemptsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -21150,7 +26117,7 @@ class $$UserQuestionAttemptsTableAnnotationComposer
 class $$UserQuestionAttemptsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UserQuestionAttemptsTable,
           UserQuestionAttempt,
           $$UserQuestionAttemptsTableFilterComposer,
@@ -21163,7 +26130,7 @@ class $$UserQuestionAttemptsTableTableManager
           PrefetchHooks Function({bool userId, bool questionId})
         > {
   $$UserQuestionAttemptsTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $UserQuestionAttemptsTable table,
   ) : super(
         TableManagerState(
@@ -21293,7 +26260,7 @@ class $$UserQuestionAttemptsTableTableManager
 
 typedef $$UserQuestionAttemptsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $UserQuestionAttemptsTable,
       UserQuestionAttempt,
       $$UserQuestionAttemptsTableFilterComposer,
@@ -21308,7 +26275,7 @@ typedef $$UserQuestionAttemptsTableProcessedTableManager =
 typedef $$UserAnalyticsTableCreateCompanionBuilder =
     UserAnalyticsCompanion Function({
       required String userId,
-      Value<double> prepGraphScore,
+      Value<double> prepNodeScore,
       Value<double> topicCompletion,
       Value<double> pyqPerformance,
       Value<double> mockAccuracy,
@@ -21320,7 +26287,7 @@ typedef $$UserAnalyticsTableCreateCompanionBuilder =
 typedef $$UserAnalyticsTableUpdateCompanionBuilder =
     UserAnalyticsCompanion Function({
       Value<String> userId,
-      Value<double> prepGraphScore,
+      Value<double> prepNodeScore,
       Value<double> topicCompletion,
       Value<double> pyqPerformance,
       Value<double> mockAccuracy,
@@ -21333,7 +26300,7 @@ typedef $$UserAnalyticsTableUpdateCompanionBuilder =
 final class $$UserAnalyticsTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UserAnalyticsTable,
           UserAnalyticsData
         > {
@@ -21343,7 +26310,7 @@ final class $$UserAnalyticsTableReferences
     super.$_typedResult,
   );
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('user_analytics__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -21362,7 +26329,7 @@ final class $$UserAnalyticsTableReferences
 }
 
 class $$UserAnalyticsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $UserAnalyticsTable> {
+    extends Composer<_$PrepNodeDatabase, $UserAnalyticsTable> {
   $$UserAnalyticsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -21370,8 +26337,8 @@ class $$UserAnalyticsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<double> get prepGraphScore => $composableBuilder(
-    column: $table.prepGraphScore,
+  ColumnFilters<double> get prepNodeScore => $composableBuilder(
+    column: $table.prepNodeScore,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -21430,7 +26397,7 @@ class $$UserAnalyticsTableFilterComposer
 }
 
 class $$UserAnalyticsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $UserAnalyticsTable> {
+    extends Composer<_$PrepNodeDatabase, $UserAnalyticsTable> {
   $$UserAnalyticsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -21438,8 +26405,8 @@ class $$UserAnalyticsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<double> get prepGraphScore => $composableBuilder(
-    column: $table.prepGraphScore,
+  ColumnOrderings<double> get prepNodeScore => $composableBuilder(
+    column: $table.prepNodeScore,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -21498,7 +26465,7 @@ class $$UserAnalyticsTableOrderingComposer
 }
 
 class $$UserAnalyticsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $UserAnalyticsTable> {
+    extends Composer<_$PrepNodeDatabase, $UserAnalyticsTable> {
   $$UserAnalyticsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -21506,8 +26473,8 @@ class $$UserAnalyticsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<double> get prepGraphScore => $composableBuilder(
-    column: $table.prepGraphScore,
+  GeneratedColumn<double> get prepNodeScore => $composableBuilder(
+    column: $table.prepNodeScore,
     builder: (column) => column,
   );
 
@@ -21568,7 +26535,7 @@ class $$UserAnalyticsTableAnnotationComposer
 class $$UserAnalyticsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UserAnalyticsTable,
           UserAnalyticsData,
           $$UserAnalyticsTableFilterComposer,
@@ -21581,7 +26548,7 @@ class $$UserAnalyticsTableTableManager
           PrefetchHooks Function({bool userId})
         > {
   $$UserAnalyticsTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $UserAnalyticsTable table,
   ) : super(
         TableManagerState(
@@ -21596,7 +26563,7 @@ class $$UserAnalyticsTableTableManager
           updateCompanionCallback:
               ({
                 Value<String> userId = const Value.absent(),
-                Value<double> prepGraphScore = const Value.absent(),
+                Value<double> prepNodeScore = const Value.absent(),
                 Value<double> topicCompletion = const Value.absent(),
                 Value<double> pyqPerformance = const Value.absent(),
                 Value<double> mockAccuracy = const Value.absent(),
@@ -21606,7 +26573,7 @@ class $$UserAnalyticsTableTableManager
                 Value<int> rowid = const Value.absent(),
               }) => UserAnalyticsCompanion(
                 userId: userId,
-                prepGraphScore: prepGraphScore,
+                prepNodeScore: prepNodeScore,
                 topicCompletion: topicCompletion,
                 pyqPerformance: pyqPerformance,
                 mockAccuracy: mockAccuracy,
@@ -21618,7 +26585,7 @@ class $$UserAnalyticsTableTableManager
           createCompanionCallback:
               ({
                 required String userId,
-                Value<double> prepGraphScore = const Value.absent(),
+                Value<double> prepNodeScore = const Value.absent(),
                 Value<double> topicCompletion = const Value.absent(),
                 Value<double> pyqPerformance = const Value.absent(),
                 Value<double> mockAccuracy = const Value.absent(),
@@ -21628,7 +26595,7 @@ class $$UserAnalyticsTableTableManager
                 Value<int> rowid = const Value.absent(),
               }) => UserAnalyticsCompanion.insert(
                 userId: userId,
-                prepGraphScore: prepGraphScore,
+                prepNodeScore: prepNodeScore,
                 topicCompletion: topicCompletion,
                 pyqPerformance: pyqPerformance,
                 mockAccuracy: mockAccuracy,
@@ -21692,7 +26659,7 @@ class $$UserAnalyticsTableTableManager
 
 typedef $$UserAnalyticsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $UserAnalyticsTable,
       UserAnalyticsData,
       $$UserAnalyticsTableFilterComposer,
@@ -21732,7 +26699,7 @@ typedef $$StudySessionsTableUpdateCompanionBuilder =
 final class $$StudySessionsTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $StudySessionsTable,
           StudySessionData
         > {
@@ -21742,7 +26709,7 @@ final class $$StudySessionsTableReferences
     super.$_typedResult,
   );
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('study_sessions__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -21759,7 +26726,7 @@ final class $$StudySessionsTableReferences
     );
   }
 
-  static $TopicsTable _topicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _topicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('study_sessions__topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager get topicId {
@@ -21778,7 +26745,7 @@ final class $$StudySessionsTableReferences
 }
 
 class $$StudySessionsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $StudySessionsTable> {
+    extends Composer<_$PrepNodeDatabase, $StudySessionsTable> {
   $$StudySessionsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -21864,7 +26831,7 @@ class $$StudySessionsTableFilterComposer
 }
 
 class $$StudySessionsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $StudySessionsTable> {
+    extends Composer<_$PrepNodeDatabase, $StudySessionsTable> {
   $$StudySessionsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -21950,7 +26917,7 @@ class $$StudySessionsTableOrderingComposer
 }
 
 class $$StudySessionsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $StudySessionsTable> {
+    extends Composer<_$PrepNodeDatabase, $StudySessionsTable> {
   $$StudySessionsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -22028,7 +26995,7 @@ class $$StudySessionsTableAnnotationComposer
 class $$StudySessionsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $StudySessionsTable,
           StudySessionData,
           $$StudySessionsTableFilterComposer,
@@ -22041,7 +27008,7 @@ class $$StudySessionsTableTableManager
           PrefetchHooks Function({bool userId, bool topicId})
         > {
   $$StudySessionsTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $StudySessionsTable table,
   ) : super(
         TableManagerState(
@@ -22165,7 +27132,7 @@ class $$StudySessionsTableTableManager
 
 typedef $$StudySessionsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $StudySessionsTable,
       StudySessionData,
       $$StudySessionsTableFilterComposer,
@@ -22211,10 +27178,10 @@ typedef $$MockTestsTableUpdateCompanionBuilder =
     });
 
 final class $$MockTestsTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $MockTestsTable, MockTest> {
+    extends BaseReferences<_$PrepNodeDatabase, $MockTestsTable, MockTest> {
   $$MockTestsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('mock_tests__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -22231,7 +27198,7 @@ final class $$MockTestsTableReferences
     );
   }
 
-  static $ExamsTable _examIdTable(_$PrepGraphDatabase db) =>
+  static $ExamsTable _examIdTable(_$PrepNodeDatabase db) =>
       db.exams.createAlias('mock_tests__exam_id__exams__exam_id');
 
   $$ExamsTableProcessedTableManager get examId {
@@ -22248,7 +27215,7 @@ final class $$MockTestsTableReferences
     );
   }
 
-  static $SubjectsTable _subjectIdTable(_$PrepGraphDatabase db) =>
+  static $SubjectsTable _subjectIdTable(_$PrepNodeDatabase db) =>
       db.subjects.createAlias('mock_tests__subject_id__subjects__subject_id');
 
   $$SubjectsTableProcessedTableManager? get subjectId {
@@ -22265,7 +27232,7 @@ final class $$MockTestsTableReferences
     );
   }
 
-  static $TopicsTable _topicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _topicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('mock_tests__topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager? get topicId {
@@ -22283,7 +27250,7 @@ final class $$MockTestsTableReferences
   }
 
   static MultiTypedResultKey<$MockTestQuestionsTable, List<MockTestQuestion>>
-  _mockTestQuestionsRefsTable(_$PrepGraphDatabase db) =>
+  _mockTestQuestionsRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.mockTestQuestions,
         aliasName: 'mock_tests__test_id__mock_test_questions__test_id',
@@ -22307,7 +27274,7 @@ final class $$MockTestsTableReferences
   }
 
   static MultiTypedResultKey<$MockTestAnswersTable, List<MockTestAnswer>>
-  _mockTestAnswersRefsTable(_$PrepGraphDatabase db) =>
+  _mockTestAnswersRefsTable(_$PrepNodeDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.mockTestAnswers,
         aliasName: 'mock_tests__test_id__mock_test_answers__test_id',
@@ -22329,7 +27296,7 @@ final class $$MockTestsTableReferences
 }
 
 class $$MockTestsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestsTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestsTable> {
   $$MockTestsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -22521,7 +27488,7 @@ class $$MockTestsTableFilterComposer
 }
 
 class $$MockTestsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestsTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestsTable> {
   $$MockTestsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -22663,7 +27630,7 @@ class $$MockTestsTableOrderingComposer
 }
 
 class $$MockTestsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestsTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestsTable> {
   $$MockTestsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -22848,7 +27815,7 @@ class $$MockTestsTableAnnotationComposer
 class $$MockTestsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $MockTestsTable,
           MockTest,
           $$MockTestsTableFilterComposer,
@@ -22867,7 +27834,7 @@ class $$MockTestsTableTableManager
             bool mockTestAnswersRefs,
           })
         > {
-  $$MockTestsTableTableManager(_$PrepGraphDatabase db, $MockTestsTable table)
+  $$MockTestsTableTableManager(_$PrepNodeDatabase db, $MockTestsTable table)
     : super(
         TableManagerState(
           db: db,
@@ -23086,7 +28053,7 @@ class $$MockTestsTableTableManager
 
 typedef $$MockTestsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $MockTestsTable,
       MockTest,
       $$MockTestsTableFilterComposer,
@@ -23123,7 +28090,7 @@ typedef $$MockTestQuestionsTableUpdateCompanionBuilder =
 final class $$MockTestQuestionsTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $MockTestQuestionsTable,
           MockTestQuestion
         > {
@@ -23133,7 +28100,7 @@ final class $$MockTestQuestionsTableReferences
     super.$_typedResult,
   );
 
-  static $MockTestsTable _testIdTable(_$PrepGraphDatabase db) => db.mockTests
+  static $MockTestsTable _testIdTable(_$PrepNodeDatabase db) => db.mockTests
       .createAlias('mock_test_questions__test_id__mock_tests__test_id');
 
   $$MockTestsTableProcessedTableManager get testId {
@@ -23150,8 +28117,7 @@ final class $$MockTestQuestionsTableReferences
     );
   }
 
-  static $QuestionsTable _questionIdTable(_$PrepGraphDatabase db) => db
-      .questions
+  static $QuestionsTable _questionIdTable(_$PrepNodeDatabase db) => db.questions
       .createAlias('mock_test_questions__question_id__questions__question_id');
 
   $$QuestionsTableProcessedTableManager get questionId {
@@ -23170,7 +28136,7 @@ final class $$MockTestQuestionsTableReferences
 }
 
 class $$MockTestQuestionsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestQuestionsTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestQuestionsTable> {
   $$MockTestQuestionsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -23231,7 +28197,7 @@ class $$MockTestQuestionsTableFilterComposer
 }
 
 class $$MockTestQuestionsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestQuestionsTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestQuestionsTable> {
   $$MockTestQuestionsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -23292,7 +28258,7 @@ class $$MockTestQuestionsTableOrderingComposer
 }
 
 class $$MockTestQuestionsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestQuestionsTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestQuestionsTable> {
   $$MockTestQuestionsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -23355,7 +28321,7 @@ class $$MockTestQuestionsTableAnnotationComposer
 class $$MockTestQuestionsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $MockTestQuestionsTable,
           MockTestQuestion,
           $$MockTestQuestionsTableFilterComposer,
@@ -23368,7 +28334,7 @@ class $$MockTestQuestionsTableTableManager
           PrefetchHooks Function({bool testId, bool questionId})
         > {
   $$MockTestQuestionsTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $MockTestQuestionsTable table,
   ) : super(
         TableManagerState(
@@ -23479,7 +28445,7 @@ class $$MockTestQuestionsTableTableManager
 
 typedef $$MockTestQuestionsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $MockTestQuestionsTable,
       MockTestQuestion,
       $$MockTestQuestionsTableFilterComposer,
@@ -23511,7 +28477,7 @@ typedef $$MockTestAnswersTableUpdateCompanionBuilder =
 final class $$MockTestAnswersTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $MockTestAnswersTable,
           MockTestAnswer
         > {
@@ -23521,7 +28487,7 @@ final class $$MockTestAnswersTableReferences
     super.$_typedResult,
   );
 
-  static $MockTestsTable _testIdTable(_$PrepGraphDatabase db) => db.mockTests
+  static $MockTestsTable _testIdTable(_$PrepNodeDatabase db) => db.mockTests
       .createAlias('mock_test_answers__test_id__mock_tests__test_id');
 
   $$MockTestsTableProcessedTableManager get testId {
@@ -23538,8 +28504,7 @@ final class $$MockTestAnswersTableReferences
     );
   }
 
-  static $QuestionsTable _questionIdTable(_$PrepGraphDatabase db) => db
-      .questions
+  static $QuestionsTable _questionIdTable(_$PrepNodeDatabase db) => db.questions
       .createAlias('mock_test_answers__question_id__questions__question_id');
 
   $$QuestionsTableProcessedTableManager get questionId {
@@ -23558,7 +28523,7 @@ final class $$MockTestAnswersTableReferences
 }
 
 class $$MockTestAnswersTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestAnswersTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestAnswersTable> {
   $$MockTestAnswersTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -23624,7 +28589,7 @@ class $$MockTestAnswersTableFilterComposer
 }
 
 class $$MockTestAnswersTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestAnswersTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestAnswersTable> {
   $$MockTestAnswersTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -23690,7 +28655,7 @@ class $$MockTestAnswersTableOrderingComposer
 }
 
 class $$MockTestAnswersTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $MockTestAnswersTable> {
+    extends Composer<_$PrepNodeDatabase, $MockTestAnswersTable> {
   $$MockTestAnswersTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -23756,7 +28721,7 @@ class $$MockTestAnswersTableAnnotationComposer
 class $$MockTestAnswersTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $MockTestAnswersTable,
           MockTestAnswer,
           $$MockTestAnswersTableFilterComposer,
@@ -23769,7 +28734,7 @@ class $$MockTestAnswersTableTableManager
           PrefetchHooks Function({bool testId, bool questionId})
         > {
   $$MockTestAnswersTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $MockTestAnswersTable table,
   ) : super(
         TableManagerState(
@@ -23881,7 +28846,7 @@ class $$MockTestAnswersTableTableManager
 
 typedef $$MockTestAnswersTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $MockTestAnswersTable,
       MockTestAnswer,
       $$MockTestAnswersTableFilterComposer,
@@ -23923,10 +28888,10 @@ typedef $$StudyPlansTableUpdateCompanionBuilder =
     });
 
 final class $$StudyPlansTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $StudyPlansTable, StudyPlan> {
+    extends BaseReferences<_$PrepNodeDatabase, $StudyPlansTable, StudyPlan> {
   $$StudyPlansTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('study_plans__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -23943,7 +28908,7 @@ final class $$StudyPlansTableReferences
     );
   }
 
-  static $TopicsTable _topicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _topicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('study_plans__topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager get topicId {
@@ -23962,7 +28927,7 @@ final class $$StudyPlansTableReferences
 }
 
 class $$StudyPlansTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $StudyPlansTable> {
+    extends Composer<_$PrepNodeDatabase, $StudyPlansTable> {
   $$StudyPlansTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -24058,7 +29023,7 @@ class $$StudyPlansTableFilterComposer
 }
 
 class $$StudyPlansTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $StudyPlansTable> {
+    extends Composer<_$PrepNodeDatabase, $StudyPlansTable> {
   $$StudyPlansTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -24154,7 +29119,7 @@ class $$StudyPlansTableOrderingComposer
 }
 
 class $$StudyPlansTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $StudyPlansTable> {
+    extends Composer<_$PrepNodeDatabase, $StudyPlansTable> {
   $$StudyPlansTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -24238,7 +29203,7 @@ class $$StudyPlansTableAnnotationComposer
 class $$StudyPlansTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $StudyPlansTable,
           StudyPlan,
           $$StudyPlansTableFilterComposer,
@@ -24250,7 +29215,7 @@ class $$StudyPlansTableTableManager
           StudyPlan,
           PrefetchHooks Function({bool userId, bool topicId})
         > {
-  $$StudyPlansTableTableManager(_$PrepGraphDatabase db, $StudyPlansTable table)
+  $$StudyPlansTableTableManager(_$PrepNodeDatabase db, $StudyPlansTable table)
     : super(
         TableManagerState(
           db: db,
@@ -24381,7 +29346,7 @@ class $$StudyPlansTableTableManager
 
 typedef $$StudyPlansTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $StudyPlansTable,
       StudyPlan,
       $$StudyPlansTableFilterComposer,
@@ -24423,7 +29388,7 @@ typedef $$UserTopicProgressTableUpdateCompanionBuilder =
 final class $$UserTopicProgressTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UserTopicProgressTable,
           UserTopicProgressData
         > {
@@ -24433,7 +29398,7 @@ final class $$UserTopicProgressTableReferences
     super.$_typedResult,
   );
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('user_topic_progress__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -24450,7 +29415,7 @@ final class $$UserTopicProgressTableReferences
     );
   }
 
-  static $TopicsTable _topicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _topicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('user_topic_progress__topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager get topicId {
@@ -24469,7 +29434,7 @@ final class $$UserTopicProgressTableReferences
 }
 
 class $$UserTopicProgressTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $UserTopicProgressTable> {
+    extends Composer<_$PrepNodeDatabase, $UserTopicProgressTable> {
   $$UserTopicProgressTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -24560,7 +29525,7 @@ class $$UserTopicProgressTableFilterComposer
 }
 
 class $$UserTopicProgressTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $UserTopicProgressTable> {
+    extends Composer<_$PrepNodeDatabase, $UserTopicProgressTable> {
   $$UserTopicProgressTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -24651,7 +29616,7 @@ class $$UserTopicProgressTableOrderingComposer
 }
 
 class $$UserTopicProgressTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $UserTopicProgressTable> {
+    extends Composer<_$PrepNodeDatabase, $UserTopicProgressTable> {
   $$UserTopicProgressTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -24742,7 +29707,7 @@ class $$UserTopicProgressTableAnnotationComposer
 class $$UserTopicProgressTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $UserTopicProgressTable,
           UserTopicProgressData,
           $$UserTopicProgressTableFilterComposer,
@@ -24755,7 +29720,7 @@ class $$UserTopicProgressTableTableManager
           PrefetchHooks Function({bool userId, bool topicId})
         > {
   $$UserTopicProgressTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $UserTopicProgressTable table,
   ) : super(
         TableManagerState(
@@ -24890,7 +29855,7 @@ class $$UserTopicProgressTableTableManager
 
 typedef $$UserTopicProgressTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $UserTopicProgressTable,
       UserTopicProgressData,
       $$UserTopicProgressTableFilterComposer,
@@ -24924,7 +29889,7 @@ typedef $$ConfidenceCheckinsTableUpdateCompanionBuilder =
 final class $$ConfidenceCheckinsTableReferences
     extends
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ConfidenceCheckinsTable,
           ConfidenceCheckin
         > {
@@ -24934,7 +29899,7 @@ final class $$ConfidenceCheckinsTableReferences
     super.$_typedResult,
   );
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('confidence_checkins__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -24951,7 +29916,7 @@ final class $$ConfidenceCheckinsTableReferences
     );
   }
 
-  static $TopicsTable _topicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _topicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('confidence_checkins__topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager get topicId {
@@ -24970,7 +29935,7 @@ final class $$ConfidenceCheckinsTableReferences
 }
 
 class $$ConfidenceCheckinsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $ConfidenceCheckinsTable> {
+    extends Composer<_$PrepNodeDatabase, $ConfidenceCheckinsTable> {
   $$ConfidenceCheckinsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -25041,7 +30006,7 @@ class $$ConfidenceCheckinsTableFilterComposer
 }
 
 class $$ConfidenceCheckinsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $ConfidenceCheckinsTable> {
+    extends Composer<_$PrepNodeDatabase, $ConfidenceCheckinsTable> {
   $$ConfidenceCheckinsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -25112,7 +30077,7 @@ class $$ConfidenceCheckinsTableOrderingComposer
 }
 
 class $$ConfidenceCheckinsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $ConfidenceCheckinsTable> {
+    extends Composer<_$PrepNodeDatabase, $ConfidenceCheckinsTable> {
   $$ConfidenceCheckinsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -25181,7 +30146,7 @@ class $$ConfidenceCheckinsTableAnnotationComposer
 class $$ConfidenceCheckinsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ConfidenceCheckinsTable,
           ConfidenceCheckin,
           $$ConfidenceCheckinsTableFilterComposer,
@@ -25194,7 +30159,7 @@ class $$ConfidenceCheckinsTableTableManager
           PrefetchHooks Function({bool userId, bool topicId})
         > {
   $$ConfidenceCheckinsTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $ConfidenceCheckinsTable table,
   ) : super(
         TableManagerState(
@@ -25313,7 +30278,7 @@ class $$ConfidenceCheckinsTableTableManager
 
 typedef $$ConfidenceCheckinsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $ConfidenceCheckinsTable,
       ConfidenceCheckin,
       $$ConfidenceCheckinsTableFilterComposer,
@@ -25352,10 +30317,10 @@ typedef $$AchievementsTableUpdateCompanionBuilder =
 
 final class $$AchievementsTableReferences
     extends
-        BaseReferences<_$PrepGraphDatabase, $AchievementsTable, Achievement> {
+        BaseReferences<_$PrepNodeDatabase, $AchievementsTable, Achievement> {
   $$AchievementsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('achievements__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -25372,7 +30337,7 @@ final class $$AchievementsTableReferences
     );
   }
 
-  static $TopicsTable _relatedTopicIdTable(_$PrepGraphDatabase db) =>
+  static $TopicsTable _relatedTopicIdTable(_$PrepNodeDatabase db) =>
       db.topics.createAlias('achievements__related_topic_id__topics__topic_id');
 
   $$TopicsTableProcessedTableManager? get relatedTopicId {
@@ -25391,7 +30356,7 @@ final class $$AchievementsTableReferences
 }
 
 class $$AchievementsTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $AchievementsTable> {
+    extends Composer<_$PrepNodeDatabase, $AchievementsTable> {
   $$AchievementsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -25477,7 +30442,7 @@ class $$AchievementsTableFilterComposer
 }
 
 class $$AchievementsTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $AchievementsTable> {
+    extends Composer<_$PrepNodeDatabase, $AchievementsTable> {
   $$AchievementsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -25563,7 +30528,7 @@ class $$AchievementsTableOrderingComposer
 }
 
 class $$AchievementsTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $AchievementsTable> {
+    extends Composer<_$PrepNodeDatabase, $AchievementsTable> {
   $$AchievementsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -25647,7 +30612,7 @@ class $$AchievementsTableAnnotationComposer
 class $$AchievementsTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $AchievementsTable,
           Achievement,
           $$AchievementsTableFilterComposer,
@@ -25660,7 +30625,7 @@ class $$AchievementsTableTableManager
           PrefetchHooks Function({bool userId, bool relatedTopicId})
         > {
   $$AchievementsTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $AchievementsTable table,
   ) : super(
         TableManagerState(
@@ -25784,7 +30749,7 @@ class $$AchievementsTableTableManager
 
 typedef $$AchievementsTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $AchievementsTable,
       Achievement,
       $$AchievementsTableFilterComposer,
@@ -25816,10 +30781,10 @@ typedef $$BookmarksTableUpdateCompanionBuilder =
     });
 
 final class $$BookmarksTableReferences
-    extends BaseReferences<_$PrepGraphDatabase, $BookmarksTable, Bookmark> {
+    extends BaseReferences<_$PrepNodeDatabase, $BookmarksTable, Bookmark> {
   $$BookmarksTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UsersTable _userIdTable(_$PrepGraphDatabase db) =>
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
       db.users.createAlias('bookmarks__user_id__users__user_id');
 
   $$UsersTableProcessedTableManager get userId {
@@ -25838,7 +30803,7 @@ final class $$BookmarksTableReferences
 }
 
 class $$BookmarksTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $BookmarksTable> {
+    extends Composer<_$PrepNodeDatabase, $BookmarksTable> {
   $$BookmarksTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -25891,7 +30856,7 @@ class $$BookmarksTableFilterComposer
 }
 
 class $$BookmarksTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $BookmarksTable> {
+    extends Composer<_$PrepNodeDatabase, $BookmarksTable> {
   $$BookmarksTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -25944,7 +30909,7 @@ class $$BookmarksTableOrderingComposer
 }
 
 class $$BookmarksTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $BookmarksTable> {
+    extends Composer<_$PrepNodeDatabase, $BookmarksTable> {
   $$BookmarksTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -25995,7 +30960,7 @@ class $$BookmarksTableAnnotationComposer
 class $$BookmarksTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $BookmarksTable,
           Bookmark,
           $$BookmarksTableFilterComposer,
@@ -26007,7 +30972,7 @@ class $$BookmarksTableTableManager
           Bookmark,
           PrefetchHooks Function({bool userId})
         > {
-  $$BookmarksTableTableManager(_$PrepGraphDatabase db, $BookmarksTable table)
+  $$BookmarksTableTableManager(_$PrepNodeDatabase db, $BookmarksTable table)
     : super(
         TableManagerState(
           db: db,
@@ -26105,7 +31070,7 @@ class $$BookmarksTableTableManager
 
 typedef $$BookmarksTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $BookmarksTable,
       Bookmark,
       $$BookmarksTableFilterComposer,
@@ -26135,7 +31100,7 @@ typedef $$ContentSyncMetadataTableUpdateCompanionBuilder =
     });
 
 class $$ContentSyncMetadataTableFilterComposer
-    extends Composer<_$PrepGraphDatabase, $ContentSyncMetadataTable> {
+    extends Composer<_$PrepNodeDatabase, $ContentSyncMetadataTable> {
   $$ContentSyncMetadataTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -26165,7 +31130,7 @@ class $$ContentSyncMetadataTableFilterComposer
 }
 
 class $$ContentSyncMetadataTableOrderingComposer
-    extends Composer<_$PrepGraphDatabase, $ContentSyncMetadataTable> {
+    extends Composer<_$PrepNodeDatabase, $ContentSyncMetadataTable> {
   $$ContentSyncMetadataTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -26195,7 +31160,7 @@ class $$ContentSyncMetadataTableOrderingComposer
 }
 
 class $$ContentSyncMetadataTableAnnotationComposer
-    extends Composer<_$PrepGraphDatabase, $ContentSyncMetadataTable> {
+    extends Composer<_$PrepNodeDatabase, $ContentSyncMetadataTable> {
   $$ContentSyncMetadataTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -26227,7 +31192,7 @@ class $$ContentSyncMetadataTableAnnotationComposer
 class $$ContentSyncMetadataTableTableManager
     extends
         RootTableManager<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ContentSyncMetadataTable,
           ContentSyncRecord,
           $$ContentSyncMetadataTableFilterComposer,
@@ -26238,7 +31203,7 @@ class $$ContentSyncMetadataTableTableManager
           (
             ContentSyncRecord,
             BaseReferences<
-              _$PrepGraphDatabase,
+              _$PrepNodeDatabase,
               $ContentSyncMetadataTable,
               ContentSyncRecord
             >,
@@ -26247,7 +31212,7 @@ class $$ContentSyncMetadataTableTableManager
           PrefetchHooks Function()
         > {
   $$ContentSyncMetadataTableTableManager(
-    _$PrepGraphDatabase db,
+    _$PrepNodeDatabase db,
     $ContentSyncMetadataTable table,
   ) : super(
         TableManagerState(
@@ -26303,7 +31268,7 @@ class $$ContentSyncMetadataTableTableManager
 
 typedef $$ContentSyncMetadataTableProcessedTableManager =
     ProcessedTableManager<
-      _$PrepGraphDatabase,
+      _$PrepNodeDatabase,
       $ContentSyncMetadataTable,
       ContentSyncRecord,
       $$ContentSyncMetadataTableFilterComposer,
@@ -26314,7 +31279,7 @@ typedef $$ContentSyncMetadataTableProcessedTableManager =
       (
         ContentSyncRecord,
         BaseReferences<
-          _$PrepGraphDatabase,
+          _$PrepNodeDatabase,
           $ContentSyncMetadataTable,
           ContentSyncRecord
         >,
@@ -26322,10 +31287,3320 @@ typedef $$ContentSyncMetadataTableProcessedTableManager =
       ContentSyncRecord,
       PrefetchHooks Function()
     >;
+typedef $$RoadmapPreferencesTableCreateCompanionBuilder =
+    RoadmapPreferencesCompanion Function({
+      required String userId,
+      required String examId,
+      required String level,
+      required int hoursPerDay,
+      required String preferredTime,
+      required int targetMonth,
+      required int targetYear,
+      required String studentType,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+typedef $$RoadmapPreferencesTableUpdateCompanionBuilder =
+    RoadmapPreferencesCompanion Function({
+      Value<String> userId,
+      Value<String> examId,
+      Value<String> level,
+      Value<int> hoursPerDay,
+      Value<String> preferredTime,
+      Value<int> targetMonth,
+      Value<int> targetYear,
+      Value<String> studentType,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
 
-class $PrepGraphDatabaseManager {
-  final _$PrepGraphDatabase _db;
-  $PrepGraphDatabaseManager(this._db);
+final class $$RoadmapPreferencesTableReferences
+    extends
+        BaseReferences<
+          _$PrepNodeDatabase,
+          $RoadmapPreferencesTable,
+          RoadmapPreference
+        > {
+  $$RoadmapPreferencesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
+      db.users.createAlias('roadmap_preferences__user_id__users__user_id');
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$RoadmapPreferencesTableFilterComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapPreferencesTable> {
+  $$RoadmapPreferencesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get examId => $composableBuilder(
+    column: $table.examId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get level => $composableBuilder(
+    column: $table.level,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get hoursPerDay => $composableBuilder(
+    column: $table.hoursPerDay,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get preferredTime => $composableBuilder(
+    column: $table.preferredTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get targetMonth => $composableBuilder(
+    column: $table.targetMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get targetYear => $composableBuilder(
+    column: $table.targetYear,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get studentType => $composableBuilder(
+    column: $table.studentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RoadmapPreferencesTableOrderingComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapPreferencesTable> {
+  $$RoadmapPreferencesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get examId => $composableBuilder(
+    column: $table.examId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get level => $composableBuilder(
+    column: $table.level,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get hoursPerDay => $composableBuilder(
+    column: $table.hoursPerDay,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get preferredTime => $composableBuilder(
+    column: $table.preferredTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get targetMonth => $composableBuilder(
+    column: $table.targetMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get targetYear => $composableBuilder(
+    column: $table.targetYear,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get studentType => $composableBuilder(
+    column: $table.studentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RoadmapPreferencesTableAnnotationComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapPreferencesTable> {
+  $$RoadmapPreferencesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get examId =>
+      $composableBuilder(column: $table.examId, builder: (column) => column);
+
+  GeneratedColumn<String> get level =>
+      $composableBuilder(column: $table.level, builder: (column) => column);
+
+  GeneratedColumn<int> get hoursPerDay => $composableBuilder(
+    column: $table.hoursPerDay,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get preferredTime => $composableBuilder(
+    column: $table.preferredTime,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get targetMonth => $composableBuilder(
+    column: $table.targetMonth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get targetYear => $composableBuilder(
+    column: $table.targetYear,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get studentType => $composableBuilder(
+    column: $table.studentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RoadmapPreferencesTableTableManager
+    extends
+        RootTableManager<
+          _$PrepNodeDatabase,
+          $RoadmapPreferencesTable,
+          RoadmapPreference,
+          $$RoadmapPreferencesTableFilterComposer,
+          $$RoadmapPreferencesTableOrderingComposer,
+          $$RoadmapPreferencesTableAnnotationComposer,
+          $$RoadmapPreferencesTableCreateCompanionBuilder,
+          $$RoadmapPreferencesTableUpdateCompanionBuilder,
+          (RoadmapPreference, $$RoadmapPreferencesTableReferences),
+          RoadmapPreference,
+          PrefetchHooks Function({bool userId})
+        > {
+  $$RoadmapPreferencesTableTableManager(
+    _$PrepNodeDatabase db,
+    $RoadmapPreferencesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RoadmapPreferencesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RoadmapPreferencesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RoadmapPreferencesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> userId = const Value.absent(),
+                Value<String> examId = const Value.absent(),
+                Value<String> level = const Value.absent(),
+                Value<int> hoursPerDay = const Value.absent(),
+                Value<String> preferredTime = const Value.absent(),
+                Value<int> targetMonth = const Value.absent(),
+                Value<int> targetYear = const Value.absent(),
+                Value<String> studentType = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RoadmapPreferencesCompanion(
+                userId: userId,
+                examId: examId,
+                level: level,
+                hoursPerDay: hoursPerDay,
+                preferredTime: preferredTime,
+                targetMonth: targetMonth,
+                targetYear: targetYear,
+                studentType: studentType,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String userId,
+                required String examId,
+                required String level,
+                required int hoursPerDay,
+                required String preferredTime,
+                required int targetMonth,
+                required int targetYear,
+                required String studentType,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RoadmapPreferencesCompanion.insert(
+                userId: userId,
+                examId: examId,
+                level: level,
+                hoursPerDay: hoursPerDay,
+                preferredTime: preferredTime,
+                targetMonth: targetMonth,
+                targetYear: targetYear,
+                studentType: studentType,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$RoadmapPreferencesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({userId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable:
+                                    $$RoadmapPreferencesTableReferences
+                                        ._userIdTable(db),
+                                referencedColumn:
+                                    $$RoadmapPreferencesTableReferences
+                                        ._userIdTable(db)
+                                        .userId,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$RoadmapPreferencesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PrepNodeDatabase,
+      $RoadmapPreferencesTable,
+      RoadmapPreference,
+      $$RoadmapPreferencesTableFilterComposer,
+      $$RoadmapPreferencesTableOrderingComposer,
+      $$RoadmapPreferencesTableAnnotationComposer,
+      $$RoadmapPreferencesTableCreateCompanionBuilder,
+      $$RoadmapPreferencesTableUpdateCompanionBuilder,
+      (RoadmapPreference, $$RoadmapPreferencesTableReferences),
+      RoadmapPreference,
+      PrefetchHooks Function({bool userId})
+    >;
+typedef $$RoadmapDaysTableCreateCompanionBuilder =
+    RoadmapDaysCompanion Function({
+      required String dayId,
+      required String userId,
+      required int dayNumber,
+      required int weekNumber,
+      required DateTime date,
+      required String focusLabel,
+      Value<String> status,
+      Value<DateTime> generatedAt,
+      Value<DateTime?> completedAt,
+      Value<int> rowid,
+    });
+typedef $$RoadmapDaysTableUpdateCompanionBuilder =
+    RoadmapDaysCompanion Function({
+      Value<String> dayId,
+      Value<String> userId,
+      Value<int> dayNumber,
+      Value<int> weekNumber,
+      Value<DateTime> date,
+      Value<String> focusLabel,
+      Value<String> status,
+      Value<DateTime> generatedAt,
+      Value<DateTime?> completedAt,
+      Value<int> rowid,
+    });
+
+final class $$RoadmapDaysTableReferences
+    extends BaseReferences<_$PrepNodeDatabase, $RoadmapDaysTable, RoadmapDay> {
+  $$RoadmapDaysTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
+      db.users.createAlias('roadmap_days__user_id__users__user_id');
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$RoadmapTasksTable, List<RoadmapTask>>
+  _roadmapTasksRefsTable(_$PrepNodeDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.roadmapTasks,
+        aliasName: 'roadmap_days__day_id__roadmap_tasks__day_id',
+      );
+
+  $$RoadmapTasksTableProcessedTableManager get roadmapTasksRefs {
+    final manager = $$RoadmapTasksTableTableManager(
+      $_db,
+      $_db.roadmapTasks,
+    ).filter((f) => f.dayId.dayId.sqlEquals($_itemColumn<String>('day_id')!));
+
+    final cache = $_typedResult.readTableOrNull(_roadmapTasksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$RoadmapDaysTableFilterComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapDaysTable> {
+  $$RoadmapDaysTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get dayId => $composableBuilder(
+    column: $table.dayId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dayNumber => $composableBuilder(
+    column: $table.dayNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get weekNumber => $composableBuilder(
+    column: $table.weekNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get focusLabel => $composableBuilder(
+    column: $table.focusLabel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get generatedAt => $composableBuilder(
+    column: $table.generatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> roadmapTasksRefs(
+    Expression<bool> Function($$RoadmapTasksTableFilterComposer f) f,
+  ) {
+    final $$RoadmapTasksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.dayId,
+      referencedTable: $db.roadmapTasks,
+      getReferencedColumn: (t) => t.dayId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapTasksTableFilterComposer(
+            $db: $db,
+            $table: $db.roadmapTasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$RoadmapDaysTableOrderingComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapDaysTable> {
+  $$RoadmapDaysTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get dayId => $composableBuilder(
+    column: $table.dayId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dayNumber => $composableBuilder(
+    column: $table.dayNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get weekNumber => $composableBuilder(
+    column: $table.weekNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get focusLabel => $composableBuilder(
+    column: $table.focusLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get generatedAt => $composableBuilder(
+    column: $table.generatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RoadmapDaysTableAnnotationComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapDaysTable> {
+  $$RoadmapDaysTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get dayId =>
+      $composableBuilder(column: $table.dayId, builder: (column) => column);
+
+  GeneratedColumn<int> get dayNumber =>
+      $composableBuilder(column: $table.dayNumber, builder: (column) => column);
+
+  GeneratedColumn<int> get weekNumber => $composableBuilder(
+    column: $table.weekNumber,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get focusLabel => $composableBuilder(
+    column: $table.focusLabel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get generatedAt => $composableBuilder(
+    column: $table.generatedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> roadmapTasksRefs<T extends Object>(
+    Expression<T> Function($$RoadmapTasksTableAnnotationComposer a) f,
+  ) {
+    final $$RoadmapTasksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.dayId,
+      referencedTable: $db.roadmapTasks,
+      getReferencedColumn: (t) => t.dayId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapTasksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.roadmapTasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$RoadmapDaysTableTableManager
+    extends
+        RootTableManager<
+          _$PrepNodeDatabase,
+          $RoadmapDaysTable,
+          RoadmapDay,
+          $$RoadmapDaysTableFilterComposer,
+          $$RoadmapDaysTableOrderingComposer,
+          $$RoadmapDaysTableAnnotationComposer,
+          $$RoadmapDaysTableCreateCompanionBuilder,
+          $$RoadmapDaysTableUpdateCompanionBuilder,
+          (RoadmapDay, $$RoadmapDaysTableReferences),
+          RoadmapDay,
+          PrefetchHooks Function({bool userId, bool roadmapTasksRefs})
+        > {
+  $$RoadmapDaysTableTableManager(_$PrepNodeDatabase db, $RoadmapDaysTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RoadmapDaysTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RoadmapDaysTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RoadmapDaysTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> dayId = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<int> dayNumber = const Value.absent(),
+                Value<int> weekNumber = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String> focusLabel = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<DateTime> generatedAt = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RoadmapDaysCompanion(
+                dayId: dayId,
+                userId: userId,
+                dayNumber: dayNumber,
+                weekNumber: weekNumber,
+                date: date,
+                focusLabel: focusLabel,
+                status: status,
+                generatedAt: generatedAt,
+                completedAt: completedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String dayId,
+                required String userId,
+                required int dayNumber,
+                required int weekNumber,
+                required DateTime date,
+                required String focusLabel,
+                Value<String> status = const Value.absent(),
+                Value<DateTime> generatedAt = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RoadmapDaysCompanion.insert(
+                dayId: dayId,
+                userId: userId,
+                dayNumber: dayNumber,
+                weekNumber: weekNumber,
+                date: date,
+                focusLabel: focusLabel,
+                status: status,
+                generatedAt: generatedAt,
+                completedAt: completedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$RoadmapDaysTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({userId = false, roadmapTasksRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (roadmapTasksRefs) db.roadmapTasks],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable: $$RoadmapDaysTableReferences
+                                    ._userIdTable(db),
+                                referencedColumn: $$RoadmapDaysTableReferences
+                                    ._userIdTable(db)
+                                    .userId,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (roadmapTasksRefs)
+                    await $_getPrefetchedData<
+                      RoadmapDay,
+                      $RoadmapDaysTable,
+                      RoadmapTask
+                    >(
+                      currentTable: table,
+                      referencedTable: $$RoadmapDaysTableReferences
+                          ._roadmapTasksRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$RoadmapDaysTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).roadmapTasksRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.dayId == item.dayId),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$RoadmapDaysTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PrepNodeDatabase,
+      $RoadmapDaysTable,
+      RoadmapDay,
+      $$RoadmapDaysTableFilterComposer,
+      $$RoadmapDaysTableOrderingComposer,
+      $$RoadmapDaysTableAnnotationComposer,
+      $$RoadmapDaysTableCreateCompanionBuilder,
+      $$RoadmapDaysTableUpdateCompanionBuilder,
+      (RoadmapDay, $$RoadmapDaysTableReferences),
+      RoadmapDay,
+      PrefetchHooks Function({bool userId, bool roadmapTasksRefs})
+    >;
+typedef $$RoadmapTasksTableCreateCompanionBuilder =
+    RoadmapTasksCompanion Function({
+      required String taskId,
+      required String dayId,
+      required String userId,
+      Value<String?> topicId,
+      required String title,
+      required String kind,
+      required int estimatedMinutes,
+      Value<String> status,
+      Value<int> orderIndex,
+      Value<DateTime?> completedAt,
+      Value<int> rowid,
+    });
+typedef $$RoadmapTasksTableUpdateCompanionBuilder =
+    RoadmapTasksCompanion Function({
+      Value<String> taskId,
+      Value<String> dayId,
+      Value<String> userId,
+      Value<String?> topicId,
+      Value<String> title,
+      Value<String> kind,
+      Value<int> estimatedMinutes,
+      Value<String> status,
+      Value<int> orderIndex,
+      Value<DateTime?> completedAt,
+      Value<int> rowid,
+    });
+
+final class $$RoadmapTasksTableReferences
+    extends
+        BaseReferences<_$PrepNodeDatabase, $RoadmapTasksTable, RoadmapTask> {
+  $$RoadmapTasksTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $RoadmapDaysTable _dayIdTable(_$PrepNodeDatabase db) =>
+      db.roadmapDays.createAlias('roadmap_tasks__day_id__roadmap_days__day_id');
+
+  $$RoadmapDaysTableProcessedTableManager get dayId {
+    final $_column = $_itemColumn<String>('day_id')!;
+
+    final manager = $$RoadmapDaysTableTableManager(
+      $_db,
+      $_db.roadmapDays,
+    ).filter((f) => f.dayId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_dayIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
+      db.users.createAlias('roadmap_tasks__user_id__users__user_id');
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TopicsTable _topicIdTable(_$PrepNodeDatabase db) =>
+      db.topics.createAlias('roadmap_tasks__topic_id__topics__topic_id');
+
+  $$TopicsTableProcessedTableManager? get topicId {
+    final $_column = $_itemColumn<String>('topic_id');
+    if ($_column == null) return null;
+    final manager = $$TopicsTableTableManager(
+      $_db,
+      $_db.topics,
+    ).filter((f) => f.topicId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_topicIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$RoadmapTasksTableFilterComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapTasksTable> {
+  $$RoadmapTasksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get taskId => $composableBuilder(
+    column: $table.taskId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get estimatedMinutes => $composableBuilder(
+    column: $table.estimatedMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get orderIndex => $composableBuilder(
+    column: $table.orderIndex,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$RoadmapDaysTableFilterComposer get dayId {
+    final $$RoadmapDaysTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.dayId,
+      referencedTable: $db.roadmapDays,
+      getReferencedColumn: (t) => t.dayId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapDaysTableFilterComposer(
+            $db: $db,
+            $table: $db.roadmapDays,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TopicsTableFilterComposer get topicId {
+    final $$TopicsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.topicId,
+      referencedTable: $db.topics,
+      getReferencedColumn: (t) => t.topicId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TopicsTableFilterComposer(
+            $db: $db,
+            $table: $db.topics,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RoadmapTasksTableOrderingComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapTasksTable> {
+  $$RoadmapTasksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get taskId => $composableBuilder(
+    column: $table.taskId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get estimatedMinutes => $composableBuilder(
+    column: $table.estimatedMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get orderIndex => $composableBuilder(
+    column: $table.orderIndex,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$RoadmapDaysTableOrderingComposer get dayId {
+    final $$RoadmapDaysTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.dayId,
+      referencedTable: $db.roadmapDays,
+      getReferencedColumn: (t) => t.dayId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapDaysTableOrderingComposer(
+            $db: $db,
+            $table: $db.roadmapDays,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TopicsTableOrderingComposer get topicId {
+    final $$TopicsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.topicId,
+      referencedTable: $db.topics,
+      getReferencedColumn: (t) => t.topicId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TopicsTableOrderingComposer(
+            $db: $db,
+            $table: $db.topics,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RoadmapTasksTableAnnotationComposer
+    extends Composer<_$PrepNodeDatabase, $RoadmapTasksTable> {
+  $$RoadmapTasksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get taskId =>
+      $composableBuilder(column: $table.taskId, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<int> get estimatedMinutes => $composableBuilder(
+    column: $table.estimatedMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<int> get orderIndex => $composableBuilder(
+    column: $table.orderIndex,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  $$RoadmapDaysTableAnnotationComposer get dayId {
+    final $$RoadmapDaysTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.dayId,
+      referencedTable: $db.roadmapDays,
+      getReferencedColumn: (t) => t.dayId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RoadmapDaysTableAnnotationComposer(
+            $db: $db,
+            $table: $db.roadmapDays,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TopicsTableAnnotationComposer get topicId {
+    final $$TopicsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.topicId,
+      referencedTable: $db.topics,
+      getReferencedColumn: (t) => t.topicId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TopicsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.topics,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RoadmapTasksTableTableManager
+    extends
+        RootTableManager<
+          _$PrepNodeDatabase,
+          $RoadmapTasksTable,
+          RoadmapTask,
+          $$RoadmapTasksTableFilterComposer,
+          $$RoadmapTasksTableOrderingComposer,
+          $$RoadmapTasksTableAnnotationComposer,
+          $$RoadmapTasksTableCreateCompanionBuilder,
+          $$RoadmapTasksTableUpdateCompanionBuilder,
+          (RoadmapTask, $$RoadmapTasksTableReferences),
+          RoadmapTask,
+          PrefetchHooks Function({bool dayId, bool userId, bool topicId})
+        > {
+  $$RoadmapTasksTableTableManager(
+    _$PrepNodeDatabase db,
+    $RoadmapTasksTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RoadmapTasksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RoadmapTasksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RoadmapTasksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> taskId = const Value.absent(),
+                Value<String> dayId = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<String?> topicId = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<int> estimatedMinutes = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<int> orderIndex = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RoadmapTasksCompanion(
+                taskId: taskId,
+                dayId: dayId,
+                userId: userId,
+                topicId: topicId,
+                title: title,
+                kind: kind,
+                estimatedMinutes: estimatedMinutes,
+                status: status,
+                orderIndex: orderIndex,
+                completedAt: completedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String taskId,
+                required String dayId,
+                required String userId,
+                Value<String?> topicId = const Value.absent(),
+                required String title,
+                required String kind,
+                required int estimatedMinutes,
+                Value<String> status = const Value.absent(),
+                Value<int> orderIndex = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RoadmapTasksCompanion.insert(
+                taskId: taskId,
+                dayId: dayId,
+                userId: userId,
+                topicId: topicId,
+                title: title,
+                kind: kind,
+                estimatedMinutes: estimatedMinutes,
+                status: status,
+                orderIndex: orderIndex,
+                completedAt: completedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$RoadmapTasksTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({dayId = false, userId = false, topicId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (dayId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.dayId,
+                                    referencedTable:
+                                        $$RoadmapTasksTableReferences
+                                            ._dayIdTable(db),
+                                    referencedColumn:
+                                        $$RoadmapTasksTableReferences
+                                            ._dayIdTable(db)
+                                            .dayId,
+                                  )
+                                  as T;
+                        }
+                        if (userId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.userId,
+                                    referencedTable:
+                                        $$RoadmapTasksTableReferences
+                                            ._userIdTable(db),
+                                    referencedColumn:
+                                        $$RoadmapTasksTableReferences
+                                            ._userIdTable(db)
+                                            .userId,
+                                  )
+                                  as T;
+                        }
+                        if (topicId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.topicId,
+                                    referencedTable:
+                                        $$RoadmapTasksTableReferences
+                                            ._topicIdTable(db),
+                                    referencedColumn:
+                                        $$RoadmapTasksTableReferences
+                                            ._topicIdTable(db)
+                                            .topicId,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$RoadmapTasksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PrepNodeDatabase,
+      $RoadmapTasksTable,
+      RoadmapTask,
+      $$RoadmapTasksTableFilterComposer,
+      $$RoadmapTasksTableOrderingComposer,
+      $$RoadmapTasksTableAnnotationComposer,
+      $$RoadmapTasksTableCreateCompanionBuilder,
+      $$RoadmapTasksTableUpdateCompanionBuilder,
+      (RoadmapTask, $$RoadmapTasksTableReferences),
+      RoadmapTask,
+      PrefetchHooks Function({bool dayId, bool userId, bool topicId})
+    >;
+typedef $$StreaksTableCreateCompanionBuilder =
+    StreaksCompanion Function({
+      required String userId,
+      Value<int> currentStreak,
+      Value<int> longestStreak,
+      Value<DateTime?> lastStudyDate,
+      Value<int> freezeCount,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+typedef $$StreaksTableUpdateCompanionBuilder =
+    StreaksCompanion Function({
+      Value<String> userId,
+      Value<int> currentStreak,
+      Value<int> longestStreak,
+      Value<DateTime?> lastStudyDate,
+      Value<int> freezeCount,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$StreaksTableReferences
+    extends BaseReferences<_$PrepNodeDatabase, $StreaksTable, Streak> {
+  $$StreaksTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
+      db.users.createAlias('streaks__user_id__users__user_id');
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$StreaksTableFilterComposer
+    extends Composer<_$PrepNodeDatabase, $StreaksTable> {
+  $$StreaksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get currentStreak => $composableBuilder(
+    column: $table.currentStreak,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get longestStreak => $composableBuilder(
+    column: $table.longestStreak,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastStudyDate => $composableBuilder(
+    column: $table.lastStudyDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get freezeCount => $composableBuilder(
+    column: $table.freezeCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$StreaksTableOrderingComposer
+    extends Composer<_$PrepNodeDatabase, $StreaksTable> {
+  $$StreaksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get currentStreak => $composableBuilder(
+    column: $table.currentStreak,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get longestStreak => $composableBuilder(
+    column: $table.longestStreak,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastStudyDate => $composableBuilder(
+    column: $table.lastStudyDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get freezeCount => $composableBuilder(
+    column: $table.freezeCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$StreaksTableAnnotationComposer
+    extends Composer<_$PrepNodeDatabase, $StreaksTable> {
+  $$StreaksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get currentStreak => $composableBuilder(
+    column: $table.currentStreak,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get longestStreak => $composableBuilder(
+    column: $table.longestStreak,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastStudyDate => $composableBuilder(
+    column: $table.lastStudyDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get freezeCount => $composableBuilder(
+    column: $table.freezeCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$StreaksTableTableManager
+    extends
+        RootTableManager<
+          _$PrepNodeDatabase,
+          $StreaksTable,
+          Streak,
+          $$StreaksTableFilterComposer,
+          $$StreaksTableOrderingComposer,
+          $$StreaksTableAnnotationComposer,
+          $$StreaksTableCreateCompanionBuilder,
+          $$StreaksTableUpdateCompanionBuilder,
+          (Streak, $$StreaksTableReferences),
+          Streak,
+          PrefetchHooks Function({bool userId})
+        > {
+  $$StreaksTableTableManager(_$PrepNodeDatabase db, $StreaksTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$StreaksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$StreaksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$StreaksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> userId = const Value.absent(),
+                Value<int> currentStreak = const Value.absent(),
+                Value<int> longestStreak = const Value.absent(),
+                Value<DateTime?> lastStudyDate = const Value.absent(),
+                Value<int> freezeCount = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => StreaksCompanion(
+                userId: userId,
+                currentStreak: currentStreak,
+                longestStreak: longestStreak,
+                lastStudyDate: lastStudyDate,
+                freezeCount: freezeCount,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String userId,
+                Value<int> currentStreak = const Value.absent(),
+                Value<int> longestStreak = const Value.absent(),
+                Value<DateTime?> lastStudyDate = const Value.absent(),
+                Value<int> freezeCount = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => StreaksCompanion.insert(
+                userId: userId,
+                currentStreak: currentStreak,
+                longestStreak: longestStreak,
+                lastStudyDate: lastStudyDate,
+                freezeCount: freezeCount,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$StreaksTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({userId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable: $$StreaksTableReferences
+                                    ._userIdTable(db),
+                                referencedColumn: $$StreaksTableReferences
+                                    ._userIdTable(db)
+                                    .userId,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$StreaksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PrepNodeDatabase,
+      $StreaksTable,
+      Streak,
+      $$StreaksTableFilterComposer,
+      $$StreaksTableOrderingComposer,
+      $$StreaksTableAnnotationComposer,
+      $$StreaksTableCreateCompanionBuilder,
+      $$StreaksTableUpdateCompanionBuilder,
+      (Streak, $$StreaksTableReferences),
+      Streak,
+      PrefetchHooks Function({bool userId})
+    >;
+typedef $$XpHistoryTableCreateCompanionBuilder =
+    XpHistoryCompanion Function({
+      required String entryId,
+      required String userId,
+      required String source,
+      required int amount,
+      Value<String?> note,
+      Value<String?> dedupeKey,
+      Value<DateTime> earnedAt,
+      Value<int> rowid,
+    });
+typedef $$XpHistoryTableUpdateCompanionBuilder =
+    XpHistoryCompanion Function({
+      Value<String> entryId,
+      Value<String> userId,
+      Value<String> source,
+      Value<int> amount,
+      Value<String?> note,
+      Value<String?> dedupeKey,
+      Value<DateTime> earnedAt,
+      Value<int> rowid,
+    });
+
+final class $$XpHistoryTableReferences
+    extends BaseReferences<_$PrepNodeDatabase, $XpHistoryTable, XpEntry> {
+  $$XpHistoryTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
+      db.users.createAlias('xp_history__user_id__users__user_id');
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$XpHistoryTableFilterComposer
+    extends Composer<_$PrepNodeDatabase, $XpHistoryTable> {
+  $$XpHistoryTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get entryId => $composableBuilder(
+    column: $table.entryId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get dedupeKey => $composableBuilder(
+    column: $table.dedupeKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get earnedAt => $composableBuilder(
+    column: $table.earnedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$XpHistoryTableOrderingComposer
+    extends Composer<_$PrepNodeDatabase, $XpHistoryTable> {
+  $$XpHistoryTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get entryId => $composableBuilder(
+    column: $table.entryId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get dedupeKey => $composableBuilder(
+    column: $table.dedupeKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get earnedAt => $composableBuilder(
+    column: $table.earnedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$XpHistoryTableAnnotationComposer
+    extends Composer<_$PrepNodeDatabase, $XpHistoryTable> {
+  $$XpHistoryTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get entryId =>
+      $composableBuilder(column: $table.entryId, builder: (column) => column);
+
+  GeneratedColumn<String> get source =>
+      $composableBuilder(column: $table.source, builder: (column) => column);
+
+  GeneratedColumn<int> get amount =>
+      $composableBuilder(column: $table.amount, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<String> get dedupeKey =>
+      $composableBuilder(column: $table.dedupeKey, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get earnedAt =>
+      $composableBuilder(column: $table.earnedAt, builder: (column) => column);
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$XpHistoryTableTableManager
+    extends
+        RootTableManager<
+          _$PrepNodeDatabase,
+          $XpHistoryTable,
+          XpEntry,
+          $$XpHistoryTableFilterComposer,
+          $$XpHistoryTableOrderingComposer,
+          $$XpHistoryTableAnnotationComposer,
+          $$XpHistoryTableCreateCompanionBuilder,
+          $$XpHistoryTableUpdateCompanionBuilder,
+          (XpEntry, $$XpHistoryTableReferences),
+          XpEntry,
+          PrefetchHooks Function({bool userId})
+        > {
+  $$XpHistoryTableTableManager(_$PrepNodeDatabase db, $XpHistoryTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$XpHistoryTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$XpHistoryTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$XpHistoryTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> entryId = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<int> amount = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<String?> dedupeKey = const Value.absent(),
+                Value<DateTime> earnedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => XpHistoryCompanion(
+                entryId: entryId,
+                userId: userId,
+                source: source,
+                amount: amount,
+                note: note,
+                dedupeKey: dedupeKey,
+                earnedAt: earnedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String entryId,
+                required String userId,
+                required String source,
+                required int amount,
+                Value<String?> note = const Value.absent(),
+                Value<String?> dedupeKey = const Value.absent(),
+                Value<DateTime> earnedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => XpHistoryCompanion.insert(
+                entryId: entryId,
+                userId: userId,
+                source: source,
+                amount: amount,
+                note: note,
+                dedupeKey: dedupeKey,
+                earnedAt: earnedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$XpHistoryTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({userId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable: $$XpHistoryTableReferences
+                                    ._userIdTable(db),
+                                referencedColumn: $$XpHistoryTableReferences
+                                    ._userIdTable(db)
+                                    .userId,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$XpHistoryTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PrepNodeDatabase,
+      $XpHistoryTable,
+      XpEntry,
+      $$XpHistoryTableFilterComposer,
+      $$XpHistoryTableOrderingComposer,
+      $$XpHistoryTableAnnotationComposer,
+      $$XpHistoryTableCreateCompanionBuilder,
+      $$XpHistoryTableUpdateCompanionBuilder,
+      (XpEntry, $$XpHistoryTableReferences),
+      XpEntry,
+      PrefetchHooks Function({bool userId})
+    >;
+typedef $$BadgesTableCreateCompanionBuilder =
+    BadgesCompanion Function({
+      required String badgeId,
+      required String userId,
+      required String code,
+      Value<DateTime> earnedAt,
+      Value<int> rowid,
+    });
+typedef $$BadgesTableUpdateCompanionBuilder =
+    BadgesCompanion Function({
+      Value<String> badgeId,
+      Value<String> userId,
+      Value<String> code,
+      Value<DateTime> earnedAt,
+      Value<int> rowid,
+    });
+
+final class $$BadgesTableReferences
+    extends BaseReferences<_$PrepNodeDatabase, $BadgesTable, Badge> {
+  $$BadgesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
+      db.users.createAlias('badges__user_id__users__user_id');
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$BadgesTableFilterComposer
+    extends Composer<_$PrepNodeDatabase, $BadgesTable> {
+  $$BadgesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get badgeId => $composableBuilder(
+    column: $table.badgeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get earnedAt => $composableBuilder(
+    column: $table.earnedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BadgesTableOrderingComposer
+    extends Composer<_$PrepNodeDatabase, $BadgesTable> {
+  $$BadgesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get badgeId => $composableBuilder(
+    column: $table.badgeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get earnedAt => $composableBuilder(
+    column: $table.earnedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BadgesTableAnnotationComposer
+    extends Composer<_$PrepNodeDatabase, $BadgesTable> {
+  $$BadgesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get badgeId =>
+      $composableBuilder(column: $table.badgeId, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get earnedAt =>
+      $composableBuilder(column: $table.earnedAt, builder: (column) => column);
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BadgesTableTableManager
+    extends
+        RootTableManager<
+          _$PrepNodeDatabase,
+          $BadgesTable,
+          Badge,
+          $$BadgesTableFilterComposer,
+          $$BadgesTableOrderingComposer,
+          $$BadgesTableAnnotationComposer,
+          $$BadgesTableCreateCompanionBuilder,
+          $$BadgesTableUpdateCompanionBuilder,
+          (Badge, $$BadgesTableReferences),
+          Badge,
+          PrefetchHooks Function({bool userId})
+        > {
+  $$BadgesTableTableManager(_$PrepNodeDatabase db, $BadgesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BadgesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BadgesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BadgesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> badgeId = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<DateTime> earnedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BadgesCompanion(
+                badgeId: badgeId,
+                userId: userId,
+                code: code,
+                earnedAt: earnedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String badgeId,
+                required String userId,
+                required String code,
+                Value<DateTime> earnedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BadgesCompanion.insert(
+                badgeId: badgeId,
+                userId: userId,
+                code: code,
+                earnedAt: earnedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) =>
+                    (e.readTable(table), $$BadgesTableReferences(db, table, e)),
+              )
+              .toList(),
+          prefetchHooksCallback: ({userId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable: $$BadgesTableReferences
+                                    ._userIdTable(db),
+                                referencedColumn: $$BadgesTableReferences
+                                    ._userIdTable(db)
+                                    .userId,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$BadgesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PrepNodeDatabase,
+      $BadgesTable,
+      Badge,
+      $$BadgesTableFilterComposer,
+      $$BadgesTableOrderingComposer,
+      $$BadgesTableAnnotationComposer,
+      $$BadgesTableCreateCompanionBuilder,
+      $$BadgesTableUpdateCompanionBuilder,
+      (Badge, $$BadgesTableReferences),
+      Badge,
+      PrefetchHooks Function({bool userId})
+    >;
+typedef $$DailyChallengesTableCreateCompanionBuilder =
+    DailyChallengesCompanion Function({
+      required String challengeId,
+      required String userId,
+      required DateTime date,
+      required String code,
+      required String title,
+      required int targetCount,
+      Value<int> progressCount,
+      Value<DateTime?> completedAt,
+      Value<int> rowid,
+    });
+typedef $$DailyChallengesTableUpdateCompanionBuilder =
+    DailyChallengesCompanion Function({
+      Value<String> challengeId,
+      Value<String> userId,
+      Value<DateTime> date,
+      Value<String> code,
+      Value<String> title,
+      Value<int> targetCount,
+      Value<int> progressCount,
+      Value<DateTime?> completedAt,
+      Value<int> rowid,
+    });
+
+final class $$DailyChallengesTableReferences
+    extends
+        BaseReferences<
+          _$PrepNodeDatabase,
+          $DailyChallengesTable,
+          DailyChallenge
+        > {
+  $$DailyChallengesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
+      db.users.createAlias('daily_challenges__user_id__users__user_id');
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$DailyChallengesTableFilterComposer
+    extends Composer<_$PrepNodeDatabase, $DailyChallengesTable> {
+  $$DailyChallengesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get challengeId => $composableBuilder(
+    column: $table.challengeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get targetCount => $composableBuilder(
+    column: $table.targetCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get progressCount => $composableBuilder(
+    column: $table.progressCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DailyChallengesTableOrderingComposer
+    extends Composer<_$PrepNodeDatabase, $DailyChallengesTable> {
+  $$DailyChallengesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get challengeId => $composableBuilder(
+    column: $table.challengeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get targetCount => $composableBuilder(
+    column: $table.targetCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get progressCount => $composableBuilder(
+    column: $table.progressCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DailyChallengesTableAnnotationComposer
+    extends Composer<_$PrepNodeDatabase, $DailyChallengesTable> {
+  $$DailyChallengesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get challengeId => $composableBuilder(
+    column: $table.challengeId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<int> get targetCount => $composableBuilder(
+    column: $table.targetCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get progressCount => $composableBuilder(
+    column: $table.progressCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DailyChallengesTableTableManager
+    extends
+        RootTableManager<
+          _$PrepNodeDatabase,
+          $DailyChallengesTable,
+          DailyChallenge,
+          $$DailyChallengesTableFilterComposer,
+          $$DailyChallengesTableOrderingComposer,
+          $$DailyChallengesTableAnnotationComposer,
+          $$DailyChallengesTableCreateCompanionBuilder,
+          $$DailyChallengesTableUpdateCompanionBuilder,
+          (DailyChallenge, $$DailyChallengesTableReferences),
+          DailyChallenge,
+          PrefetchHooks Function({bool userId})
+        > {
+  $$DailyChallengesTableTableManager(
+    _$PrepNodeDatabase db,
+    $DailyChallengesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DailyChallengesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DailyChallengesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DailyChallengesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> challengeId = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<int> targetCount = const Value.absent(),
+                Value<int> progressCount = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DailyChallengesCompanion(
+                challengeId: challengeId,
+                userId: userId,
+                date: date,
+                code: code,
+                title: title,
+                targetCount: targetCount,
+                progressCount: progressCount,
+                completedAt: completedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String challengeId,
+                required String userId,
+                required DateTime date,
+                required String code,
+                required String title,
+                required int targetCount,
+                Value<int> progressCount = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DailyChallengesCompanion.insert(
+                challengeId: challengeId,
+                userId: userId,
+                date: date,
+                code: code,
+                title: title,
+                targetCount: targetCount,
+                progressCount: progressCount,
+                completedAt: completedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$DailyChallengesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({userId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable:
+                                    $$DailyChallengesTableReferences
+                                        ._userIdTable(db),
+                                referencedColumn:
+                                    $$DailyChallengesTableReferences
+                                        ._userIdTable(db)
+                                        .userId,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$DailyChallengesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PrepNodeDatabase,
+      $DailyChallengesTable,
+      DailyChallenge,
+      $$DailyChallengesTableFilterComposer,
+      $$DailyChallengesTableOrderingComposer,
+      $$DailyChallengesTableAnnotationComposer,
+      $$DailyChallengesTableCreateCompanionBuilder,
+      $$DailyChallengesTableUpdateCompanionBuilder,
+      (DailyChallenge, $$DailyChallengesTableReferences),
+      DailyChallenge,
+      PrefetchHooks Function({bool userId})
+    >;
+typedef $$WeeklyMissionsTableCreateCompanionBuilder =
+    WeeklyMissionsCompanion Function({
+      required String missionId,
+      required String userId,
+      required DateTime weekStart,
+      required String code,
+      required String title,
+      required int targetCount,
+      Value<int> progressCount,
+      Value<DateTime?> completedAt,
+      Value<int> rowid,
+    });
+typedef $$WeeklyMissionsTableUpdateCompanionBuilder =
+    WeeklyMissionsCompanion Function({
+      Value<String> missionId,
+      Value<String> userId,
+      Value<DateTime> weekStart,
+      Value<String> code,
+      Value<String> title,
+      Value<int> targetCount,
+      Value<int> progressCount,
+      Value<DateTime?> completedAt,
+      Value<int> rowid,
+    });
+
+final class $$WeeklyMissionsTableReferences
+    extends
+        BaseReferences<
+          _$PrepNodeDatabase,
+          $WeeklyMissionsTable,
+          WeeklyMission
+        > {
+  $$WeeklyMissionsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $UsersTable _userIdTable(_$PrepNodeDatabase db) =>
+      db.users.createAlias('weekly_missions__user_id__users__user_id');
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$WeeklyMissionsTableFilterComposer
+    extends Composer<_$PrepNodeDatabase, $WeeklyMissionsTable> {
+  $$WeeklyMissionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get missionId => $composableBuilder(
+    column: $table.missionId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get weekStart => $composableBuilder(
+    column: $table.weekStart,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get targetCount => $composableBuilder(
+    column: $table.targetCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get progressCount => $composableBuilder(
+    column: $table.progressCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$WeeklyMissionsTableOrderingComposer
+    extends Composer<_$PrepNodeDatabase, $WeeklyMissionsTable> {
+  $$WeeklyMissionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get missionId => $composableBuilder(
+    column: $table.missionId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get weekStart => $composableBuilder(
+    column: $table.weekStart,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get targetCount => $composableBuilder(
+    column: $table.targetCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get progressCount => $composableBuilder(
+    column: $table.progressCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$WeeklyMissionsTableAnnotationComposer
+    extends Composer<_$PrepNodeDatabase, $WeeklyMissionsTable> {
+  $$WeeklyMissionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get missionId =>
+      $composableBuilder(column: $table.missionId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get weekStart =>
+      $composableBuilder(column: $table.weekStart, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<int> get targetCount => $composableBuilder(
+    column: $table.targetCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get progressCount => $composableBuilder(
+    column: $table.progressCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$WeeklyMissionsTableTableManager
+    extends
+        RootTableManager<
+          _$PrepNodeDatabase,
+          $WeeklyMissionsTable,
+          WeeklyMission,
+          $$WeeklyMissionsTableFilterComposer,
+          $$WeeklyMissionsTableOrderingComposer,
+          $$WeeklyMissionsTableAnnotationComposer,
+          $$WeeklyMissionsTableCreateCompanionBuilder,
+          $$WeeklyMissionsTableUpdateCompanionBuilder,
+          (WeeklyMission, $$WeeklyMissionsTableReferences),
+          WeeklyMission,
+          PrefetchHooks Function({bool userId})
+        > {
+  $$WeeklyMissionsTableTableManager(
+    _$PrepNodeDatabase db,
+    $WeeklyMissionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$WeeklyMissionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WeeklyMissionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WeeklyMissionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> missionId = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<DateTime> weekStart = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<int> targetCount = const Value.absent(),
+                Value<int> progressCount = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => WeeklyMissionsCompanion(
+                missionId: missionId,
+                userId: userId,
+                weekStart: weekStart,
+                code: code,
+                title: title,
+                targetCount: targetCount,
+                progressCount: progressCount,
+                completedAt: completedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String missionId,
+                required String userId,
+                required DateTime weekStart,
+                required String code,
+                required String title,
+                required int targetCount,
+                Value<int> progressCount = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => WeeklyMissionsCompanion.insert(
+                missionId: missionId,
+                userId: userId,
+                weekStart: weekStart,
+                code: code,
+                title: title,
+                targetCount: targetCount,
+                progressCount: progressCount,
+                completedAt: completedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$WeeklyMissionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({userId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable: $$WeeklyMissionsTableReferences
+                                    ._userIdTable(db),
+                                referencedColumn:
+                                    $$WeeklyMissionsTableReferences
+                                        ._userIdTable(db)
+                                        .userId,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$WeeklyMissionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PrepNodeDatabase,
+      $WeeklyMissionsTable,
+      WeeklyMission,
+      $$WeeklyMissionsTableFilterComposer,
+      $$WeeklyMissionsTableOrderingComposer,
+      $$WeeklyMissionsTableAnnotationComposer,
+      $$WeeklyMissionsTableCreateCompanionBuilder,
+      $$WeeklyMissionsTableUpdateCompanionBuilder,
+      (WeeklyMission, $$WeeklyMissionsTableReferences),
+      WeeklyMission,
+      PrefetchHooks Function({bool userId})
+    >;
+
+class $PrepNodeDatabaseManager {
+  final _$PrepNodeDatabase _db;
+  $PrepNodeDatabaseManager(this._db);
   $$ExamsTableTableManager get exams =>
       $$ExamsTableTableManager(_db, _db.exams);
   $$UsersTableTableManager get users =>
@@ -26372,4 +34647,20 @@ class $PrepGraphDatabaseManager {
       $$BookmarksTableTableManager(_db, _db.bookmarks);
   $$ContentSyncMetadataTableTableManager get contentSyncMetadata =>
       $$ContentSyncMetadataTableTableManager(_db, _db.contentSyncMetadata);
+  $$RoadmapPreferencesTableTableManager get roadmapPreferences =>
+      $$RoadmapPreferencesTableTableManager(_db, _db.roadmapPreferences);
+  $$RoadmapDaysTableTableManager get roadmapDays =>
+      $$RoadmapDaysTableTableManager(_db, _db.roadmapDays);
+  $$RoadmapTasksTableTableManager get roadmapTasks =>
+      $$RoadmapTasksTableTableManager(_db, _db.roadmapTasks);
+  $$StreaksTableTableManager get streaks =>
+      $$StreaksTableTableManager(_db, _db.streaks);
+  $$XpHistoryTableTableManager get xpHistory =>
+      $$XpHistoryTableTableManager(_db, _db.xpHistory);
+  $$BadgesTableTableManager get badges =>
+      $$BadgesTableTableManager(_db, _db.badges);
+  $$DailyChallengesTableTableManager get dailyChallenges =>
+      $$DailyChallengesTableTableManager(_db, _db.dailyChallenges);
+  $$WeeklyMissionsTableTableManager get weeklyMissions =>
+      $$WeeklyMissionsTableTableManager(_db, _db.weeklyMissions);
 }

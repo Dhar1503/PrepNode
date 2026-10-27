@@ -1,7 +1,7 @@
-# PrepGraph Module Dependency Diagram
+# PrepNode Module Dependency Diagram
 
 ## Overview
-This document outlines the module dependencies and architectural relationships within the PrepGraph application.
+This document outlines the module dependencies and architectural relationships within the PrepNode application.
 
 ## Core Layers
 

@@ -1,6 +1,6 @@
-# prepgraph
+# PrepNode
 
-A new Flutter project.
+Offline-first TNPSC exam preparation — knowledge graph, mock tests, PYQ practice, planner and analytics.
 
 ## Getting Started
 

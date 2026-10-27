@@ -7,7 +7,7 @@ import '../result.dart';
 /// Handles initialization, seeding, and migration
 class DatabaseService {
   static DatabaseService? _instance;
-  static PrepGraphDatabase? _database;
+  static PrepNodeDatabase? _database;
 
   DatabaseService._();
 
@@ -18,7 +18,7 @@ class DatabaseService {
   }
 
   /// Get database instance
-  PrepGraphDatabase get database {
+  PrepNodeDatabase get database {
     if (_database == null) {
       throw StateError('Database not initialized. Call initialize() first.');
     }
@@ -28,7 +28,7 @@ class DatabaseService {
   /// Initialize database
   Future<Result<void>> initialize({bool seedData = true}) async {
     try {
-      _database = await PrepGraphDatabase.create();
+      _database = await PrepNodeDatabase.create();
       await _ensureInsightsTables();
 
       if (seedData) {
@@ -44,7 +44,7 @@ class DatabaseService {
   /// Initialize in-memory database for testing
   Future<Result<void>> initializeInMemory({bool seedData = true}) async {
     try {
-      _database = await PrepGraphDatabase.createInMemory();
+      _database = await PrepNodeDatabase.createInMemory();
       await _ensureInsightsTables();
 
       if (seedData) {
@@ -132,7 +132,7 @@ class DatabaseService {
     await _database!.customStatement('''
       CREATE TABLE IF NOT EXISTS user_analytics (
         user_id TEXT PRIMARY KEY REFERENCES users (user_id),
-        prep_graph_score REAL NOT NULL DEFAULT 0,
+        prep_node_score REAL NOT NULL DEFAULT 0,
         topic_completion REAL NOT NULL DEFAULT 0,
         pyq_performance REAL NOT NULL DEFAULT 0,
         mock_accuracy REAL NOT NULL DEFAULT 0,

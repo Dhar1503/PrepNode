@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
 
 /// Onboarding Page Indicator
 /// Shows 4 dots with active state as a pill

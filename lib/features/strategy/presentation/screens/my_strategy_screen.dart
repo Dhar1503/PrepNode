@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/features/strategy/domain/entities/roadmap.dart';
-import 'package:prepgraph/features/strategy/domain/entities/strategy_recommendation.dart';
-import 'package:prepgraph/features/strategy/domain/entities/study_capacity.dart';
-import 'package:prepgraph/features/strategy/presentation/providers/strategy_providers.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/features/strategy/domain/entities/roadmap.dart';
+import 'package:prepnode/features/strategy/domain/entities/strategy_recommendation.dart';
+import 'package:prepnode/features/strategy/domain/entities/study_capacity.dart';
+import 'package:prepnode/features/strategy/presentation/providers/strategy_providers.dart';
 
 const String _defaultExamId = 'tnpsc-group2';
 

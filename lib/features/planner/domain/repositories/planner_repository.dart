@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/planner/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
-import 'package:prepgraph/features/planner/domain/entities/study_session.dart';
-import 'package:prepgraph/features/planner/domain/entities/weekly_plan.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/planner/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/features/planner/domain/entities/study_session.dart';
+import 'package:prepnode/features/planner/domain/entities/weekly_plan.dart';
 
 /// Planner Repository Interface
 /// Abstract contract for planner data operations

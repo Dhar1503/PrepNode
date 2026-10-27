@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/core/widgets/skeleton_loader.dart';
-import 'package:prepgraph/core/widgets/empty_state.dart';
-import 'package:prepgraph/core/widgets/error_state.dart';
-import 'package:prepgraph/features/auth/presentation/providers/auth_providers.dart';
-import 'package:prepgraph/features/cutoff/presentation/providers/cutoff_providers.dart';
-import 'package:prepgraph/features/dashboard/presentation/providers/dashboard_providers.dart';
-import 'package:prepgraph/features/insights/presentation/providers/insights_providers.dart';
-import 'package:prepgraph/features/planner/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/planner/domain/entities/planner_task.dart';
-import 'package:prepgraph/features/planner/presentation/providers/planner_providers.dart';
-import 'package:prepgraph/features/strategy/domain/entities/roadmap.dart';
-import 'package:prepgraph/features/strategy/presentation/providers/strategy_providers.dart';
-import 'package:prepgraph/features/planner/presentation/widgets/reschedule_bottom_sheet.dart';
-import 'package:prepgraph/features/planner/presentation/widgets/segmented_control.dart';
-import 'package:prepgraph/features/planner/presentation/widgets/task_card.dart';
-import 'package:prepgraph/features/planner/presentation/widgets/task_form_bottom_sheet.dart';
-import 'package:prepgraph/features/planner/presentation/widgets/week_strip.dart';
-import 'package:prepgraph/features/resources/presentation/providers/resource_providers.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/core/widgets/skeleton_loader.dart';
+import 'package:prepnode/core/widgets/empty_state.dart';
+import 'package:prepnode/core/widgets/error_state.dart';
+import 'package:prepnode/features/auth/presentation/providers/auth_providers.dart';
+import 'package:prepnode/features/cutoff/presentation/providers/cutoff_providers.dart';
+import 'package:prepnode/features/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:prepnode/features/insights/presentation/providers/insights_providers.dart';
+import 'package:prepnode/features/planner/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/planner/domain/entities/planner_task.dart';
+import 'package:prepnode/features/planner/presentation/providers/planner_providers.dart';
+import 'package:prepnode/features/strategy/domain/entities/roadmap.dart';
+import 'package:prepnode/features/strategy/presentation/providers/strategy_providers.dart';
+import 'package:prepnode/features/planner/presentation/widgets/reschedule_bottom_sheet.dart';
+import 'package:prepnode/features/planner/presentation/widgets/segmented_control.dart';
+import 'package:prepnode/features/planner/presentation/widgets/task_card.dart';
+import 'package:prepnode/features/planner/presentation/widgets/task_form_bottom_sheet.dart';
+import 'package:prepnode/features/planner/presentation/widgets/week_strip.dart';
+import 'package:prepnode/features/resources/presentation/providers/resource_providers.dart';
 
 /// AI Planner Screen (S4.1-S4.4)
 /// Full daily/weekly personalized schedule with explainable reasoning
@@ -298,12 +298,18 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.paper50,
         elevation: 0,
-        title: Text(
-          'AI Planner',
-          style: GoogleFonts.fraunces(
-            fontSize: AppConstants.fontSizeHeadlineSmall,
-            fontWeight: FontWeight.w500,
-            color: AppColors.ink900,
+        // scaleDown: this bar carries several action icons, so the title
+        // must shrink rather than ellipsize at a large font scale.
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'AI Planner',
+            style: GoogleFonts.fraunces(
+              fontSize: AppConstants.fontSizeHeadlineSmall,
+              fontWeight: FontWeight.w500,
+              color: AppColors.ink900,
+            ),
           ),
         ),
         actions: [
@@ -623,7 +629,7 @@ class _RelatedResourcesSheet extends ConsumerWidget {
                       fontWeight: FontWeight.w600,
                       color: AppColors.ink900,
                     ),
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

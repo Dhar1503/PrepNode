@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/resources/domain/entities/bookmark.dart';
-import 'package:prepgraph/features/resources/domain/entities/download_status.dart';
-import 'package:prepgraph/features/resources/domain/entities/recommended_resource.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_category.dart';
-import 'package:prepgraph/features/resources/domain/entities/resource_collection.dart';
-import 'package:prepgraph/features/resources/domain/entities/study_resource.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/resources/domain/entities/bookmark.dart';
+import 'package:prepnode/features/resources/domain/entities/download_status.dart';
+import 'package:prepnode/features/resources/domain/entities/recommended_resource.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_category.dart';
+import 'package:prepnode/features/resources/domain/entities/resource_collection.dart';
+import 'package:prepnode/features/resources/domain/entities/study_resource.dart';
 
 /// Resource Repository Interface
 /// Defines operations for managing study resources

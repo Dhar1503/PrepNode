@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_data.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/widgets/breadcrumb_navigation.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/widgets/interactive_graph_view.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_data.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/widgets/breadcrumb_navigation.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/widgets/interactive_graph_view.dart';
 
 /// Graph View Screen (S3.4)
 /// Full interactive knowledge graph with zoom, pan, and node tap
@@ -55,12 +55,18 @@ class _GraphViewState extends ConsumerState<GraphViewScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'Knowledge Graph',
-          style: GoogleFonts.fraunces(
-            fontSize: AppConstants.fontSizeHeadlineSmall,
-            fontWeight: FontWeight.w500,
-            color: AppColors.ink900,
+        // scaleDown: this bar carries several action icons, so the title
+        // must shrink rather than ellipsize at a large font scale.
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Knowledge Graph',
+            style: GoogleFonts.fraunces(
+              fontSize: AppConstants.fontSizeHeadlineSmall,
+              fontWeight: FontWeight.w500,
+              color: AppColors.ink900,
+            ),
           ),
         ),
         actions: [

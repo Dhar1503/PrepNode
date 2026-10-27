@@ -1,18 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/core/data/datasources/planner_local_datasource.dart';
-import 'package:prepgraph/core/utils/failures.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/daily_plan.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/daily_task.dart';
-import 'package:prepgraph/features/dashboard/domain/entities/progress_summary.dart' as domain;
-import 'package:prepgraph/features/dashboard/domain/entities/recent_activity.dart' as domain;
-import 'package:prepgraph/features/dashboard/domain/entities/upcoming_schedule.dart' as domain;
-import 'package:prepgraph/features/dashboard/domain/repositories/dashboard_repository.dart';
-import 'package:prepgraph/features/insights/domain/repositories/insights_repository.dart';
-import 'package:prepgraph/features/planner/domain/entities/study_session.dart';
-import 'package:prepgraph/features/planner/domain/repositories/planner_repository.dart';
-import 'package:prepgraph/features/pyq/data/datasources/pyq_local_datasource.dart';
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/core/data/datasources/planner_local_datasource.dart';
+import 'package:prepnode/core/utils/failures.dart';
+import 'package:prepnode/features/dashboard/domain/entities/daily_plan.dart';
+import 'package:prepnode/features/dashboard/domain/entities/daily_task.dart';
+import 'package:prepnode/features/dashboard/domain/entities/progress_summary.dart' as domain;
+import 'package:prepnode/features/dashboard/domain/entities/recent_activity.dart' as domain;
+import 'package:prepnode/features/dashboard/domain/entities/upcoming_schedule.dart' as domain;
+import 'package:prepnode/features/dashboard/domain/repositories/dashboard_repository.dart';
+import 'package:prepnode/features/insights/domain/repositories/insights_repository.dart';
+import 'package:prepnode/features/planner/domain/entities/study_session.dart';
+import 'package:prepnode/features/planner/domain/repositories/planner_repository.dart';
+import 'package:prepnode/features/pyq/data/datasources/pyq_local_datasource.dart';
 
 /// Dashboard Repository Implementation
 /// getDailyPlan/updateTaskStatus are backed by the local Drift database

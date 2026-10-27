@@ -3,16 +3,15 @@
 library;
 
 import 'package:drift/drift.dart';
-import 'package:prepgraph/core/data/database/database.dart' hide Exam, Subject, Topic;
-import 'package:prepgraph/core/data/database/database_service.dart';
-import 'package:prepgraph/core/data/dtos/content_dto.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/exam.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/subject.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/topic.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_edge.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_data.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/topic_detail.dart';
+import 'package:prepnode/core/data/database/database.dart' hide Exam, Subject, Topic;
+import 'package:prepnode/core/data/database/database_service.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/exam.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/subject.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/topic.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_edge.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_data.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/topic_detail.dart';
 
 class KnowledgeGraphLocalDataSource {
   final DatabaseService _databaseService;
@@ -431,6 +430,223 @@ class KnowledgeGraphLocalDataSource {
       default:
         return DifficultyLevel.intermediate;
     }
+  }
+
+  /// Builds the whole syllabus as a connected graph:
+  /// Exam -> Subjects -> Topics -> Subtopics.
+  ///
+  /// This is what the Knowledge Graph screen renders. It replaces the
+  /// previous approach of asking for a radius-1 neighbourhood around one
+  /// topic, which returned a single node on this dataset (no
+  /// ConceptRelationships rows are ever seeded) and so drew a lone dot.
+  ///
+  /// Every node is read from Drift — nothing here is hardcoded — and each
+  /// one carries live mastery so the graph re-colours itself as the user
+  /// answers questions.
+  Future<GraphData> getSyllabusGraph({
+    required String examId,
+    String? userId,
+  }) async {
+    final db = _databaseService.database;
+
+    final subjectRows = await (db.select(db.subjects)
+          ..where((tbl) => tbl.examId.equals(examId)))
+        .get();
+    if (subjectRows.isEmpty) {
+      return const GraphData(nodes: [], edges: []);
+    }
+
+    final subjectIds = subjectRows.map((s) => s.subjectId).toList();
+    final topicRows = await (db.select(db.topics)
+          ..where((tbl) => tbl.subjectId.isIn(subjectIds)))
+        .get();
+
+    final mastery = await _topicMastery(userId);
+    final attempts = await _topicAttemptCounts(userId);
+
+    final nodes = <GraphNode>[];
+    final edges = <GraphEdge>[];
+
+    final examRow = await (db.select(db.exams)
+          ..where((tbl) => tbl.examId.equals(examId)))
+        .getSingleOrNull();
+
+    // Children first, so a parent can average what is underneath it.
+    final childrenOf = <String, List<String>>{};
+    for (final topic in topicRows) {
+      if (topic.parentTopicId != null) {
+        childrenOf.putIfAbsent(topic.parentTopicId!, () => []).add(topic.topicId);
+      }
+    }
+
+    /// A parent topic has no attempts of its own — its mastery is whatever
+    /// its subtopics add up to, so progress visibly rolls up the tree.
+    double masteryFor(String topicId) {
+      final own = mastery[topicId];
+      final children = childrenOf[topicId];
+      if (children == null || children.isEmpty) return own ?? 0.0;
+
+      final childValues = children.map(masteryFor).toList();
+      final childAverage =
+          childValues.reduce((a, b) => a + b) / childValues.length;
+      if (own == null) return childAverage;
+      return (own + childAverage) / 2;
+    }
+
+    int attemptsFor(String topicId) {
+      final own = attempts[topicId] ?? 0;
+      final children = childrenOf[topicId] ?? const <String>[];
+      return children.fold(own, (sum, child) => sum + attemptsFor(child));
+    }
+
+    for (final topic in topicRows) {
+      final topicMastery = masteryFor(topic.topicId);
+      nodes.add(GraphNode(
+        id: topic.topicId,
+        name: topic.topicName,
+        type: topic.parentTopicId == null ? NodeType.topic : NodeType.subtopic,
+        masteryState: _resolveMasteryState(
+          topicMastery,
+          attemptsFor(topic.topicId),
+        ),
+        masteryPercentage: topicMastery,
+        difficulty: _mapDifficulty(topic.difficulty),
+        importanceScore: topic.importanceScore,
+        parentId: topic.parentTopicId ?? topic.subjectId,
+      ));
+
+      edges.add(GraphEdge(
+        id: 'edge-${topic.parentTopicId ?? topic.subjectId}-${topic.topicId}',
+        sourceNodeId: topic.parentTopicId ?? topic.subjectId,
+        targetNodeId: topic.topicId,
+        type: EdgeType.parentChild,
+      ));
+    }
+
+    for (final subject in subjectRows) {
+      final rootTopics = topicRows
+          .where((t) => t.subjectId == subject.subjectId && t.parentTopicId == null)
+          .toList();
+      final subjectMastery = rootTopics.isEmpty
+          ? 0.0
+          : rootTopics.map((t) => masteryFor(t.topicId)).reduce((a, b) => a + b) /
+              rootTopics.length;
+      final subjectAttempts = rootTopics.fold<int>(
+          0, (sum, t) => sum + attemptsFor(t.topicId));
+
+      nodes.add(GraphNode(
+        id: subject.subjectId,
+        name: subject.subjectName,
+        type: NodeType.subject,
+        masteryState: _resolveMasteryState(subjectMastery, subjectAttempts),
+        masteryPercentage: subjectMastery,
+        importanceScore: subject.importanceWeight,
+        parentId: examId,
+      ));
+
+      edges.add(GraphEdge(
+        id: 'edge-$examId-${subject.subjectId}',
+        sourceNodeId: examId,
+        targetNodeId: subject.subjectId,
+        type: EdgeType.parentChild,
+      ));
+    }
+
+    final subjectNodes = nodes.where((n) => n.type == NodeType.subject).toList();
+    final examMastery = subjectNodes.isEmpty
+        ? 0.0
+        : subjectNodes.map((n) => n.masteryPercentage).reduce((a, b) => a + b) /
+            subjectNodes.length;
+
+    nodes.add(GraphNode(
+      id: examId,
+      name: examRow?.examName ?? 'Exam',
+      type: NodeType.exam,
+      masteryState: _resolveMasteryState(
+        examMastery,
+        attempts.values.fold(0, (a, b) => a + b),
+      ),
+      masteryPercentage: examMastery,
+    ));
+
+    return GraphData(nodes: nodes, edges: edges);
+  }
+
+  /// Per-topic mastery, derived from what the user has actually answered.
+  ///
+  /// `user_topic_progress` is authoritative when a row exists (the planner
+  /// and study sessions write it), but answering a PYQ only ever writes
+  /// `user_question_attempts` — so accuracy over those attempts is used as
+  /// the fallback. Without it, practising questions moved nothing on the
+  /// graph.
+  Future<Map<String, double>> _topicMastery(String? userId) async {
+    if (userId == null || userId.isEmpty) return {};
+    final db = _databaseService.database;
+
+    final result = <String, double>{};
+
+    final attemptRows = await db.customSelect(
+      '''
+      SELECT q.topic_id AS topic_id,
+             COUNT(*) AS attempted,
+             SUM(CASE WHEN a.is_correct THEN 1 ELSE 0 END) AS correct
+      FROM user_question_attempts a
+      JOIN questions q ON q.question_id = a.question_id
+      WHERE a.user_id = ?
+      GROUP BY q.topic_id
+      ''',
+      variables: [Variable.withString(userId)],
+    ).get();
+
+    for (final row in attemptRows) {
+      final attempted = row.read<int>('attempted');
+      if (attempted == 0) continue;
+      final correct = row.read<int?>('correct') ?? 0;
+      result[row.read<String>('topic_id')] = (correct / attempted) * 100;
+    }
+
+    final progressRows = await (db.select(db.userTopicProgress)
+          ..where((tbl) => tbl.userId.equals(userId)))
+        .get();
+    for (final row in progressRows) {
+      if (row.masteryPercentage > 0) {
+        result[row.topicId] = row.masteryPercentage;
+      }
+    }
+
+    return result;
+  }
+
+  /// How many questions the user has attempted per topic — the difference
+  /// between "not started" (grey) and "weak" (warning colour).
+  Future<Map<String, int>> _topicAttemptCounts(String? userId) async {
+    if (userId == null || userId.isEmpty) return {};
+    final db = _databaseService.database;
+
+    final rows = await db.customSelect(
+      '''
+      SELECT q.topic_id AS topic_id, COUNT(*) AS attempted
+      FROM user_question_attempts a
+      JOIN questions q ON q.question_id = a.question_id
+      WHERE a.user_id = ?
+      GROUP BY q.topic_id
+      ''',
+      variables: [Variable.withString(userId)],
+    ).get();
+
+    return {
+      for (final row in rows)
+        row.read<String>('topic_id'): row.read<int>('attempted'),
+    };
+  }
+
+  /// Untouched topics stay neutral rather than being painted as failures —
+  /// a brand-new user should not open the graph to a wall of red.
+  MasteryState _resolveMasteryState(double mastery, int attempted) {
+    if (attempted == 0) return MasteryState.notStarted;
+    if (mastery >= 75) return MasteryState.mastered;
+    if (mastery < 50) return MasteryState.needsRevision;
+    return MasteryState.inProgress;
   }
 
   /// Clear all cached knowledge graph data

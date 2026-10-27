@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/knowledge_graph/domain/entities/graph_node.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/widgets/breadcrumb_navigation.dart';
-import 'package:prepgraph/features/knowledge_graph/presentation/widgets/topic_list_tile.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/knowledge_graph/domain/entities/graph_node.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/providers/knowledge_graph_providers.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/widgets/breadcrumb_navigation.dart';
+import 'package:prepnode/features/knowledge_graph/presentation/widgets/topic_list_tile.dart';
 
 /// Topic List Screen (S3.2)
 /// Hierarchical syllabus browser within a subject

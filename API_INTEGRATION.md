@@ -2,7 +2,7 @@
 
 ## Overview
 
-This report documents the complete implementation of the production-ready API integration layer for PrepGraph, following the approved API Documentation and Technical Architecture specifications.
+This report documents the complete implementation of the production-ready API integration layer for PrepNode, following the approved API Documentation and Technical Architecture specifications.
 
 ## Implementation Summary
 
@@ -18,7 +18,7 @@ Updated `pubspec.yaml` with the following networking dependencies:
 ### 2. Core Network Components
 
 #### 2.1 API Constants (`lib/core/network/api_constants.dart`)
-- Base URL: `https://api.prepgraph.app/api/v1`
+- Base URL: `https://api.prepnode.app/api/v1`
 - Timeout configurations (30s for connect, receive, send)
 - Token expiration time (15 minutes)
 - Storage keys for tokens and user ID

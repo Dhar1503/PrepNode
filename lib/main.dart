@@ -6,11 +6,11 @@ import 'features/settings/presentation/providers/settings_providers.dart';
 import 'routes/app_router.dart';
 
 void main() {
-  runApp(const ProviderScope(child: PrepGraphApp()));
+  runApp(const ProviderScope(child: PrepNodeApp()));
 }
 
-class PrepGraphApp extends ConsumerWidget {
-  const PrepGraphApp({super.key});
+class PrepNodeApp extends ConsumerWidget {
+  const PrepNodeApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

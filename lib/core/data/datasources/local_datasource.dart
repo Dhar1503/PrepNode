@@ -5,7 +5,7 @@ import '../failures.dart';
 /// All local data sources should extend this interface
 abstract class LocalDataSource {
   /// Get the database instance
-  PrepGraphDatabase get database;
+  PrepNodeDatabase get database;
 
   /// Initialize the data source
   Future<void> initialize();
@@ -20,12 +20,12 @@ abstract class LocalDataSource {
 /// Base implementation of LocalDataSource
 /// Provides common functionality for all local data sources
 abstract class BaseLocalDataSource implements LocalDataSource {
-  final PrepGraphDatabase _database;
+  final PrepNodeDatabase _database;
 
   BaseLocalDataSource(this._database);
 
   @override
-  PrepGraphDatabase get database => _database;
+  PrepNodeDatabase get database => _database;
 
   @override
   Future<void> initialize() async {

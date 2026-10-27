@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
-import 'package:prepgraph/core/constants/app_constants.dart';
-import 'package:prepgraph/features/insights/domain/entities/mastery_analytics.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
+import 'package:prepnode/core/constants/app_constants.dart';
+import 'package:prepnode/features/insights/domain/entities/mastery_analytics.dart';
 
 /// Strength Map Preview
 /// Preview of mastery visualization
@@ -102,8 +102,11 @@ class StrengthMapPreview extends StatelessWidget {
     final color = _getMasteryColor(mastery);
     
     return Container(
+      // Tighter horizontal inset than vertical: two chips per row leave little
+      // width, and at spaceSm the subject name was ellipsised down to a single
+      // letter ("G… 100%").
       padding: const EdgeInsets.symmetric(
-        horizontal: AppConstants.spaceSm,
+        horizontal: AppConstants.spaceXs,
         vertical: AppConstants.spaceSm,
       ),
       decoration: BoxDecoration(
@@ -124,10 +127,11 @@ class StrengthMapPreview extends StatelessWidget {
               shape: BoxShape.circle,
             ),
           ),
-          const SizedBox(width: AppConstants.spaceSm),
+          const SizedBox(width: 6),
           Expanded(
             child: Text(
               subjectName,
+              maxLines: 1,
               style: GoogleFonts.inter(
                 fontSize: AppConstants.fontSizeBodySmall,
                 color: AppColors.graphite700,
@@ -136,6 +140,7 @@ class StrengthMapPreview extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          const SizedBox(width: 4),
           Text(
             '${(mastery * 100).toInt()}%',
             style: GoogleFonts.inter(

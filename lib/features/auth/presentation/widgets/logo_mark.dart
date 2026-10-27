@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:prepgraph/core/theme/app_colors.dart';
+import 'package:prepnode/core/theme/app_colors.dart';
 
-/// PrepGraph Logo Mark
+/// PrepNode Logo Mark
 ///
 /// Three circular nodes joined into a closed triangle — the same mark used
-/// for the launcher icon (see assets/images/prepgraph_logo_icon.svg).
+/// for the launcher icon (see assets/images/prepnode_logo_icon.svg).
 /// Geometry is expressed as fractions of [size] so the mark scales
 /// correctly at any size; the previous version hardcoded a 6px node radius
 /// and 2px stroke regardless of size, so it only looked right at 48-64px.
